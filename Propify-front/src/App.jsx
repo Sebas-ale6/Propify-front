@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 
 import LoginPage from "./pages/Login";
+import RegisterPage from "./pages/Register";
 
 
 
@@ -12,6 +13,10 @@ const App = () => {
     {
       element: <LoginPage />,
       path: "/",
+    },
+    {
+      element: <RegisterPage />,
+      path: "/register",
     }
    
   ]);

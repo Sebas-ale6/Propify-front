@@ -47,11 +47,13 @@ const RegisterForm = () => {
         password: passwordState,
       };
 
-      navigate("/");
+      
 
       await Auth.register(body);
 
-      window.location.href = `${env.frontUrl}`;
+      navigate("/");
+
+    
 
       
     } catch (error) {

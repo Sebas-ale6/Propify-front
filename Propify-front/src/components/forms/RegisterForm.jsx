@@ -47,11 +47,11 @@ const RegisterForm = () => {
         password: passwordState,
       };
 
-      navigate("/");
+       await Auth.register(body);
 
-      await Auth.register(body);
+      navigate("/"); //
 
-      window.location.href = `${env.frontUrl}`;
+    
 
       
     } catch (error) {

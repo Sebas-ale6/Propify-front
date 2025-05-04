@@ -1,3 +1,5 @@
+import env from "../utils/enviroment.js"
+
 const Auth = {
     login: async (body) => {
       

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import Button from "../buttons/Button";
 
@@ -8,6 +9,7 @@ const RegisterForm = () => {
   const [passwordState, setPasswordState] = useState("");
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
   const [usernameState, setUsernameState] = useState("");
+  const navigate = useNavigate();
 
   const handleEmailState = (event) => {
     setEmailState(event.target.value);
@@ -27,16 +29,16 @@ const RegisterForm = () => {
       event.preventDefault();
 
       if (!emailState.includes("@")) {
-        throw new Error("Che, esto no es un mail");
+        throw new Error("Esto no es un mail");
       }
       if (!passwordState) {
-        throw new Error("Che, llena el password");
+        throw new Error("Llena el password");
       }
       if (passwordState !== confirmPasswordState) {
         throw new Error("Las contraseñas no coinciden");
       }
       if (!usernameState) {
-        throw new Error("Che, llena el username");
+        throw new Error("Llena el username");
       }
 
       const body = {
@@ -44,6 +46,12 @@ const RegisterForm = () => {
         email: emailState,
         password: passwordState,
       };
+
+      navigate("/");
+
+      await Auth.register(body);
+
+      window.location.href = `${env.frontUrl}`;
 
       
     } catch (error) {

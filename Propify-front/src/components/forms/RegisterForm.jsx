@@ -47,11 +47,9 @@ const RegisterForm = () => {
         password: passwordState,
       };
 
-      
+       await Auth.register(body);
 
-      await Auth.register(body);
-
-      navigate("/");
+      navigate("/"); //
 
     
 

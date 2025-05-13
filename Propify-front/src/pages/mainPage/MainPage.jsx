@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useLanguage } from "../../context/LanguageContext";
+import { useLanguage } from "../../components/context/LanguageContext";
 
 import "./MainPageStyle.css";
 import section1Image from "../../assets/cabin.png";

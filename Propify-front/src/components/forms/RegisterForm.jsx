@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../context/LanguageContext";
+
 
 import Button from "../buttons/Button";
 
@@ -9,6 +11,11 @@ const RegisterForm = () => {
   const [passwordState, setPasswordState] = useState("");
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
   const [usernameState, setUsernameState] = useState("");
+  const { t, language, setLanguage } = useLanguage();
+
+const handleLanguageToggle = () => {
+  setLanguage(language === "es" ? "en" : "es");
+};
   const navigate = useNavigate();
 
   const handleEmailState = (event) => {
@@ -62,37 +69,42 @@ const RegisterForm = () => {
   return (
     <div className="register">
       <form>
-        <h1>Registrate</h1>
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <button type = "button"onClick={handleLanguageToggle}>
+            {language === "es" ? "EN" : "ES"}
+          </button>
+        </div>
+        <h1>{t("register")}</h1>
         <input
           type="text"
-          placeholder="Usuario"
+          placeholder={t("username")}
           value={usernameState}
           onChange={handleUsernameState}
           required={true}
         />
         <input
           type="text"
-          placeholder="Email"
+          placeholder={t("email")}
           value={emailState}
           onChange={handleEmailState}
           required={true}
         />
         <input
           type="password"
-          placeholder="Contraseña"
+          placeholder={t("password")}
           value={passwordState}
           onChange={handlePasswordState}
           required={true}
         />
         <input
           type="password"
-          placeholder="Confirma contraseña"
+          placeholder={t("confirmPassword")}
           value={confirmPasswordState}
           onChange={handleConfirmPasswordState}
           required={true}
         />
 
-        <Button text={"Aceptar"} action={handleSendData} />
+        <Button text={t("accept")} action={handleSendData} />
       </form>
     </div>
   );

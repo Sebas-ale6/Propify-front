@@ -1,50 +1,67 @@
 import { Link } from "react-router-dom";
+import { useLanguage } from "../../context/LanguageContext";
 
-import "./MainPageStyle.css"
-import section1Image from "../../assets/cabin.png"
+import "./MainPageStyle.css";
+import section1Image from "../../assets/cabin.png";
 
 const MainPage = () => {
-    return (
-        <div>
-            <section className="section-1">
-                <img src={section1Image} alt="cabin" className="image-cabin" />
-                <nav className="navigation-menu">
-                    <h4 className="logo">Nombre</h4>
-                    <ul className="nav-links">
-                        <li className="language"> <a href="#language">ES</a></li>
-                        <li className="log-in"><Link to="/login">Iniciar Sesión</Link></li>
-                        <li className="sign-up"><Link to="/register">Registrarse</Link></li>
-                        <li className="my-reservations"><a href="#reservations">Mis Reservas</a></li>
-                        <li className="my-reservations"> <a href="#reservations">Mis Reservas</a></li>
-                    </ul>
-                </nav>
-                <div className="text-container">
-                    <h1>Encuentra Tu Próxima Estadía</h1>
-                    <p>Descubrí el lugar perfecto para tu próxima estadía, ya sea por unos días o una temporada completa. Conectamos personas con propiedades que se sienten como en casa.</p>
-                </div>
-                <div className="search-bar-airbnb">
-                    <div className="search-item">
-                        <label>Lugar</label>
-                        <p>Explorar destinos</p>
-                    </div>
-                    <div className="search-item">
-                        <label>Check-in</label>
-                        <p>¿Cuándo?</p>
-                    </div>
-                    <div className="search-item">
-                        <label>Check-out</label>
-                        <p>¿Cuándo?</p>
-                    </div>
-                    <div className="search-item">
-                        <label>Viajeros</label>
-                        <p>¿Cuántos?</p>
-                    </div>
-                    <button className="search-button"></button>
-                </div>
+  const { t, language, setLanguage } = useLanguage();
 
-            </section>
+  const handleLanguageToggle = () => {
+    setLanguage(language === "es" ? "en" : "es");
+  };
+
+  return (
+    <div>
+      <section className="section-1">
+        <img src={section1Image} alt="cabin" className="image-cabin" />
+        <nav className="navigation-menu">
+          <h4 className="logo">{t("logo")}</h4>
+          <ul className="nav-links">
+            <li className="language">
+              <button onClick={handleLanguageToggle}>
+                {language === "es" ? "EN" : "ES"}
+              </button>
+            </li>
+            <li className="log-in">
+              <Link to="/login">{t("login")}</Link>
+            </li>
+            <li className="sign-up">
+              <Link to="/register">{t("register")}</Link>
+            </li>
+            <li className="my-reservations">
+              <a href="#reservations">{t("reservations")}</a>
+            </li>
+          </ul>
+        </nav>
+
+        <div className="text-container">
+          <h1>{t("mainTitle")}</h1>
+          <p>{t("mainParagraph")}</p>
         </div>
-    )
-}
 
-export default MainPage
+        <div className="search-bar-airbnb">
+          <div className="search-item">
+            <label>{t("place")}</label>
+            <p>{t("exploreDestinations")}</p>
+          </div>
+          <div className="search-item">
+            <label>{t("checkIn")}</label>
+            <p>{t("when")}</p>
+          </div>
+          <div className="search-item">
+            <label>{t("checkOut")}</label>
+            <p>{t("when")}</p>
+          </div>
+          <div className="search-item">
+            <label>{t("travelers")}</label>
+            <p>{t("howMany")}</p>
+          </div>
+          <button className="search-button"></button>
+        </div>
+      </section>
+    </div>
+  );
+};
+
+export default MainPage;

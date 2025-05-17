@@ -4,6 +4,17 @@ import { useLanguage } from "../../components/context/LanguageContext";
 import "./MainPageStyle.css";
 import section1Image from "../../assets/cabin.png";
 
+// Swiper React components
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+
+// Swiper styles
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
+import { properties } from "./PropertyData"; 
+
 const MainPage = () => {
   const { t, language, setLanguage } = useLanguage();
 
@@ -59,6 +70,29 @@ const MainPage = () => {
           </div>
           <button className="search-button"></button>
         </div>
+      </section>
+      <section className="section-2">
+        <h2 className="section-title">Top 10 Propiedades</h2>
+        <h3 className="caption">Una selección de nuestros alojamientos más destacados, ideales para todo tipo de estadías.</h3>
+        <Swiper
+          modules={[Navigation, Pagination]}
+          spaceBetween={20}
+          slidesPerView={3}
+          navigation
+          pagination={{ clickable: true }}
+          className="swiper-container"
+        >
+          {properties.map((prop, index) => (
+            <SwiperSlide key={index} className="swiper-slide">
+              <img src={prop.img} alt={prop.name} className="property-image" />
+              <div className="property-info">
+                <h4>{prop.name}</h4>
+                <p className="location">{prop.location}</p>
+                <p className="description">{prop.description}</p>
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </section>
     </div>
   );

@@ -17,6 +17,7 @@ import { properties } from "./PropertyData";
 
 const MainPage = () => {
   const { t, language, setLanguage } = useLanguage();
+  const translatedProperties = t("properties");
 
   const handleLanguageToggle = () => {
     setLanguage(language === "es" ? "en" : "es");
@@ -72,8 +73,8 @@ const MainPage = () => {
         </div>
       </section>
       <section className="section-2">
-        <h2 className="section-title">Top 10 Propiedades</h2>
-        <h3 className="caption">Una selección de nuestros alojamientos más destacados, ideales para todo tipo de estadías.</h3>
+        <h2 className="section-title">{t("topPropertiesTitle")}</h2>
+        <h3 className="caption">{t("topPropertiesCaption")}</h3>
         <Swiper
           modules={[Navigation, Pagination]}
           spaceBetween={20}
@@ -82,7 +83,7 @@ const MainPage = () => {
           pagination={{ clickable: true }}
           className="swiper-container"
         >
-          {properties.map((prop, index) => (
+          {translatedProperties.map((prop, index) => (
             <SwiperSlide key={index} className="swiper-slide">
               <img src={prop.img} alt={prop.name} className="property-image" />
               <div className="property-info">

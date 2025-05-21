@@ -12,7 +12,7 @@ import img10 from "../../assets/img10.jpg";
 
 const translations = {
   es: {
-    logo: "Nombre",
+    logo: "Propify",
     login: "Iniciar Sesión",
     register: "Registrarse",
     username: "Usuario",

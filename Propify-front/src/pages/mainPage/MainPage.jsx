@@ -14,6 +14,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { properties } from "./PropertyData"; 
+import Features from './Features'; 
+
 
 const MainPage = () => {
   const { t, language, setLanguage } = useLanguage();
@@ -95,6 +97,19 @@ const MainPage = () => {
           ))}
         </Swiper>
       </section>
+     <section className="section-3">
+        <div className="section-3-header">
+          <h2 className="section-3-title">
+            Comodidades de nuestro servicio
+          </h2>
+          <h3 className="section-3-caption">
+            Podemos recibir huéspedes por día o por estadías largas, y podemos acomodar a todo tipo de viajeros: individuales, familias, equipos, etc. 
+          </h3>
+        </div>
+        <Features />
+
+      </section>
+
     </div>
   );
 };

@@ -16,7 +16,8 @@
 }
 
 .logo {
-    font-size: 1.2rem;
+    font-family: 'Merriweather', serif;
+    font-size: 1.5rem;
     color: white;
 }
 
@@ -140,7 +141,7 @@
     font-family: 'Merriweather', serif;
     font-size: 2.5rem;
     color: #292E1E;
-  }
+}
   
 .caption {
     font-family: 'Open Sans', sans-serif;
@@ -150,7 +151,8 @@
     line-height: 1.5;
     margin-bottom: 2rem;
 }
-  
+
+/* --------------- ESTILOS DEL SWIPER --------------- */
   
 .swiper-container {
     width: 100%;
@@ -202,4 +204,80 @@
 .property-info .description {
     font-size: 0.85rem;
     color: #444;
+}
+
+.swiper-container .swiper-button-prev,
+.swiper-container .swiper-button-next {
+  color: #292E1E;
+}
+
+.swiper-container .swiper-pagination-bullet {
+  background: #292E1E;
+}
+
+.swiper-container .swiper-pagination-bullet-active {
+  background: #292E1E;
+}
+
+.swiper-pagination {
+  bottom: -3px !important;
+}
+
+/* --------------- SECTION - 3 --------------- */
+
+.section-3 {
+    padding: 3rem 2rem;
+    background-color: #EDE3D6;
+}
+
+
+.section-3-title {
+  font-family: 'Merriweather', serif;
+  font-size: 2.5rem;
+  color: #292E1E;
+}
+
+.section-3-caption {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.1rem;
+  color: #555;
+  font-weight: 300;
+  line-height: 1.5;
+}
+
+/* --------------- ICONS --------------- */
+
+.features-container {
+  display: flex;
+  justify-content: center; 
+  gap: 100px;                
+  padding: 2rem 0;
+  text-align: center;
+  flex-wrap: wrap; 
+}
+
+
+.feature-box {
+  width: 220px;
+  height: 220px;
+  background-color: #fff;
+  border-radius: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.feature-box p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.feature-box:hover {
+  transform: translateY(-5px);
 }

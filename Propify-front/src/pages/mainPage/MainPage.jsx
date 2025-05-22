@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../../components/context/LanguageContext";
 
 import "./MainPageStyle.css";
@@ -7,20 +8,39 @@ import section1Image from "../../assets/cabin.png";
 // Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import { useState } from "react";
 
 // Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import { properties } from "./PropertyData"; 
-import Features from './Features'; 
+import { properties } from "./PropertyData";
+import Features from './Features';
 
 
 const MainPage = () => {
   const { t, language, setLanguage } = useLanguage();
+  const [selectedPlace, setSelectedPlace] = useState("");
+  const [checkIn, setCheckIn] = useState("");
+  const [checkOut, setCheckOut] = useState("");
+  const [travelers, setTravelers] = useState("");
   const translatedProperties = t("properties");
 
+  const navigate = useNavigate();
+
+  const handleSearch = () => {
+  // Armamos la query string con los filtros seleccionados
+  const queryParams = new URLSearchParams({
+    destino: selectedPlace,
+    checkin: checkIn,
+    checkout: checkOut,
+    viajeros: travelers,
+  });
+
+  // Redirigimos a la ruta /search con los parámetros
+  navigate(`/search?${queryParams.toString()}`);
+};
   const handleLanguageToggle = () => {
     setLanguage(language === "es" ? "en" : "es");
   };
@@ -57,21 +77,37 @@ const MainPage = () => {
         <div className="search-bar-airbnb">
           <div className="search-item">
             <label>{t("place")}</label>
-            <p>{t("exploreDestinations")}</p>
+            <select value={selectedPlace} onChange={(e) => setSelectedPlace(e.target.value)}>
+              <option value="">{t("selectPlace")}</option>
+              <option value="rosario">Rosario</option>
+              <option value="buenos-aires">Buenos Aires</option>
+              <option value="cordoba">Córdoba</option>
+            </select>
           </div>
+
           <div className="search-item">
             <label>{t("checkIn")}</label>
-            <p>{t("when")}</p>
+            <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} />
           </div>
+
           <div className="search-item">
             <label>{t("checkOut")}</label>
-            <p>{t("when")}</p>
+            <input type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} />
           </div>
+
           <div className="search-item">
             <label>{t("travelers")}</label>
-            <p>{t("howMany")}</p>
+            <select value={travelers} onChange={(e) => setTravelers(e.target.value)}>
+              <option value="">{t("howMany")}</option>
+              <option value="1">1 viajero</option>
+              <option value="2">2 viajeros</option>
+              <option value="3">3 viajeros</option>
+              <option value="4+">4 o más</option>
+            </select>
           </div>
-          <button className="search-button"></button>
+
+          <button className="search-button" onClick={handleSearch}></button>
+
         </div>
       </section>
       <section className="section-2">
@@ -97,13 +133,13 @@ const MainPage = () => {
           ))}
         </Swiper>
       </section>
-     <section className="section-3">
+      <section className="section-3">
         <div className="section-3-header">
           <h2 className="section-3-title">
             Comodidades de nuestro servicio
           </h2>
           <h3 className="section-3-caption">
-            Podemos recibir huéspedes por día o por estadías largas, y podemos acomodar a todo tipo de viajeros: individuales, familias, equipos, etc. 
+            Podemos recibir huéspedes por día o por estadías largas, y podemos acomodar a todo tipo de viajeros: individuales, familias, equipos, etc.
           </h3>
         </div>
         <Features />

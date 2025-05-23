@@ -17,19 +17,45 @@ import "swiper/css/pagination";
 
 import Features from './Features';
 
-
 const MainPage = () => {
   const { t, language, setLanguage } = useLanguage();
   const [selectedPlace, setSelectedPlace] = useState("");
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [travelers, setTravelers] = useState("");
+  const [formErrors, setFormErrors] = useState({
+    selectedPlace: "",
+    checkIn: "",
+    checkOut: "",
+    travelers: "",
+  });
   const translatedProperties = t("properties");
 
   const navigate = useNavigate();
 
   const handleSearch = () => {
-    // Armamos la query string con los filtros seleccionados
+    const errors = {};
+
+    if (!selectedPlace) errors.selectedPlace = "Seleccioná un destino.";
+    if (!checkIn) errors.checkIn = "Seleccioná fecha de ingreso.";
+    if (!checkOut) errors.checkOut = "Seleccioná fecha de egreso.";
+    if (!travelers) errors.travelers = "Indicá la cantidad de viajeros.";
+    if (checkIn && checkOut && checkOut < checkIn) {
+      errors.checkOut = "La fecha de salida no puede ser anterior a la de entrada.";
+    }
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      return;
+    }
+
+    setFormErrors({
+      selectedPlace: "",
+      checkIn: "",
+      checkOut: "",
+      travelers: "",
+    });
+
     const queryParams = new URLSearchParams({
       destino: selectedPlace,
       checkin: checkIn,
@@ -37,9 +63,9 @@ const MainPage = () => {
       viajeros: travelers,
     });
 
-    // Redirigimos a la ruta /search con los parámetros
     navigate(`/search?${queryParams.toString()}`);
   };
+
   const handleLanguageToggle = () => {
     setLanguage(language === "es" ? "en" : "es");
   };
@@ -76,41 +102,84 @@ const MainPage = () => {
         <div className="search-bar-airbnb">
           <div className="search-item">
             <label>{t("place")}</label>
-            <select value={selectedPlace} onChange={(e) => setSelectedPlace(e.target.value)}>
+            <select value={selectedPlace} onChange={(e) => {
+              setSelectedPlace(e.target.value);
+              if (formErrors.selectedPlace) {
+                setFormErrors((prev) => ({ ...prev, selectedPlace: "" }));
+              }
+            }}>
               <option value="">{t("selectPlace")}</option>
               <option value="Bariloche">Bariloche</option>
               <option value="Cordoba">Córdoba</option>
               <option value="Buenos Aires">Buenos Aires</option>
               <option value="Mar del Plata">Mar del Plata</option>
             </select>
-
+            {formErrors.selectedPlace && (
+              <div className="tooltip-error">
+                {formErrors.selectedPlace}
+                <span className="tooltip-arrow" />
+              </div>
+            )}
           </div>
 
           <div className="search-item">
             <label>{t("checkIn")}</label>
-            <input type="date" value={checkIn} onChange={(e) => setCheckIn(e.target.value)} />
+            <input type="date" value={checkIn} onChange={(e) => {
+              setCheckIn(e.target.value);
+              if (formErrors.checkIn) {
+                setFormErrors((prev) => ({ ...prev, checkIn: "" }));
+              }
+            }} />
+            {formErrors.checkIn && (
+              <div className="tooltip-error">
+                {formErrors.checkIn}
+                <span className="tooltip-arrow" />
+              </div>
+            )}
           </div>
 
           <div className="search-item">
             <label>{t("checkOut")}</label>
-            <input type="date" value={checkOut} onChange={(e) => setCheckOut(e.target.value)} />
+            <input type="date" value={checkOut} onChange={(e) => {
+              setCheckOut(e.target.value);
+              if (formErrors.checkOut) {
+                setFormErrors((prev) => ({ ...prev, checkOut: "" }));
+              }
+            }} />
+            {formErrors.checkOut && (
+              <div className="tooltip-error">
+                {formErrors.checkOut}
+                <span className="tooltip-arrow" />
+              </div>
+            )}
           </div>
 
           <div className="search-item">
             <label>{t("travelers")}</label>
-            <select value={travelers} onChange={(e) => setTravelers(e.target.value)}>
+            <select value={travelers} onChange={(e) => {
+              setTravelers(e.target.value);
+              if (formErrors.travelers) {
+                setFormErrors((prev) => ({ ...prev, travelers: "" }));
+              }
+            }}>
               <option value="">{t("howMany")}</option>
               <option value="1">1 viajero</option>
               <option value="2">2 viajeros</option>
               <option value="3">3 viajeros</option>
               <option value="4+">4 o más</option>
             </select>
+            {formErrors.travelers && (
+              <div className="tooltip-error">
+                {formErrors.travelers}
+                <span className="tooltip-arrow" />
+              </div>
+            )}
           </div>
 
           <button className="search-button" onClick={handleSearch}></button>
-
         </div>
       </section>
+
       <section className="section-2">
         <h2 className="section-title">{t("topPropertiesTitle")}</h2>
         <h3 className="caption">{t("topPropertiesCaption")}</h3>
@@ -134,6 +203,7 @@ const MainPage = () => {
           ))}
         </Swiper>
       </section>
+
       <section className="section-3">
         <div className="section-3-header">
           <h2 className="section-3-title">
@@ -144,9 +214,7 @@ const MainPage = () => {
           </h3>
         </div>
         <Features />
-
       </section>
-
     </div>
   );
 };

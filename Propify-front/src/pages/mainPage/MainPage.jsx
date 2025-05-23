@@ -108,7 +108,7 @@ const MainPage = () => {
                 setFormErrors((prev) => ({ ...prev, selectedPlace: "" }));
               }
             }}>
-              <option value="">{t("selectPlace")}</option>
+              <option value=""disabled hidden>{t("selectPlace")}</option>
               <option value="Bariloche">Bariloche</option>
               <option value="Cordoba">Córdoba</option>
               <option value="Buenos Aires">Buenos Aires</option>
@@ -162,7 +162,7 @@ const MainPage = () => {
                 setFormErrors((prev) => ({ ...prev, travelers: "" }));
               }
             }}>
-              <option value="">{t("howMany")}</option>
+              <option value=""disabled hidden>{t("howMany")}</option>
               <option value="1">1 viajero</option>
               <option value="2">2 viajeros</option>
               <option value="3">3 viajeros</option>

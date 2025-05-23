@@ -176,7 +176,19 @@ const MainPage = () => {
             )}
           </div>
 
-          <button className="search-button" onClick={handleSearch}></button>
+          <button className="search-button" onClick={handleSearch}>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 512 512"
+              width="26"
+              height="26"
+              fill="white"
+              className="search-icon"
+            >
+              <path d="M505 442.7L405.3 343c28.4-34.9 45.7-79 45.7-127C451 96.5 354.5 0 233.5 0S16 96.5 16 216.5 112.5 433 233.5 433c48 0 92.1-17.3 127-45.7L442.7 505c10 10 26.2 10 36.2 0l26.1-26.1c10-10 10-26.2 0-36.2zM233.5 367c-83 0-150.5-67.5-150.5-150.5S150.5 66 233.5 66s150.5 67.5 150.5 150.5S316.5 367 233.5 367z" />
+            </svg>
+          </button>
+
         </div>
       </section>
 

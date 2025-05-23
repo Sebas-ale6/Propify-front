@@ -1,4 +1,4 @@
-export const properties = [
+/*export const properties = [
   {
     name: "Casa del Río",
     location: "Rosario",
@@ -18,3 +18,4 @@ export const properties = [
     description: "Departamento moderno ideal para viajeros urbanos.",
   }
 ];
+*/

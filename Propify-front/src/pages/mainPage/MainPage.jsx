@@ -15,7 +15,6 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
-import { properties } from "./PropertyData";
 import Features from './Features';
 
 
@@ -30,17 +29,17 @@ const MainPage = () => {
   const navigate = useNavigate();
 
   const handleSearch = () => {
-  // Armamos la query string con los filtros seleccionados
-  const queryParams = new URLSearchParams({
-    destino: selectedPlace,
-    checkin: checkIn,
-    checkout: checkOut,
-    viajeros: travelers,
-  });
+    // Armamos la query string con los filtros seleccionados
+    const queryParams = new URLSearchParams({
+      destino: selectedPlace,
+      checkin: checkIn,
+      checkout: checkOut,
+      viajeros: travelers,
+    });
 
-  // Redirigimos a la ruta /search con los parámetros
-  navigate(`/search?${queryParams.toString()}`);
-};
+    // Redirigimos a la ruta /search con los parámetros
+    navigate(`/search?${queryParams.toString()}`);
+  };
   const handleLanguageToggle = () => {
     setLanguage(language === "es" ? "en" : "es");
   };
@@ -79,10 +78,12 @@ const MainPage = () => {
             <label>{t("place")}</label>
             <select value={selectedPlace} onChange={(e) => setSelectedPlace(e.target.value)}>
               <option value="">{t("selectPlace")}</option>
-              <option value="rosario">Rosario</option>
-              <option value="buenos-aires">Buenos Aires</option>
-              <option value="cordoba">Córdoba</option>
+              <option value="Bariloche">Bariloche</option>
+              <option value="Cordoba">Córdoba</option>
+              <option value="Buenos Aires">Buenos Aires</option>
+              <option value="Mar del Plata">Mar del Plata</option>
             </select>
+
           </div>
 
           <div className="search-item">

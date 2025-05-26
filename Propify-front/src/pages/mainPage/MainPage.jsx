@@ -23,6 +23,7 @@ const MainPage = () => {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [travelers, setTravelers] = useState("");
+  const userName = localStorage.getItem("userName");
   const [formErrors, setFormErrors] = useState({
     selectedPlace: "",
     checkIn: "",

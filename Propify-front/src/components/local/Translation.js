@@ -100,7 +100,7 @@ const translations = {
     ],
   },
   en: {
-    logo: "Name",
+    logo: "Propify",
     login: "Login",
     register: "Register",
     username: "User",

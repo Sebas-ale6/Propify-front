@@ -1,53 +1,30 @@
-import env from "../utils/enviroment.js"
-
 const Auth = {
-    login: async (body) => {
-      
-        let url = `${env.backUrl}/api/auth/login`;
+  login: async (body) => {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const foundUser = users.find(
+      (u) => u.email === body.email && u.password === body.password
+    );
 
-      
-        let options = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-        };
+    if (!foundUser) {
+      throw new Error("Usuario o contraseña incorrectos");
+    }
 
-       
-        const request = await fetch(url, options);
+    return "fake-jwt-token";
+  },
 
-        const response = await request.json(); 
+  register: async (body) => {
+    const users = JSON.parse(localStorage.getItem("users")) || [];
 
-        if (response.token) {
-            return response.token; // Retorna el token
-        }
+    const userExists = users.find((u) => u.email === body.email);
+    if (userExists) {
+      throw new Error("El correo ya está registrado");
+    }
 
-       
-        throw new Error('Error al obtener el token');
-    },
+    users.push(body);
+    localStorage.setItem("users", JSON.stringify(users));
 
-    register: async (body) => {
-       
-        let url = `${env.backUrl}/api/auth`;
-
-        let options = {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(body),
-        };
-
-        
-        const request = await fetch(url, options);
-
-       
-        const response = await request.json();
-
-        
-        return response;
-    },
+    return { success: true };
+  },
 };
 
 export default Auth;

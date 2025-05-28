@@ -61,7 +61,7 @@ const LoginForm = () => {
             {language === "es" ? "EN" : "ES"}
           </button>
         </div>
-        <h1>{t("login")}</h1>
+        <h1 style={{color: "black"}}>{t("login")}</h1>
         <input
           type="text"
           placeholder={t("email")}

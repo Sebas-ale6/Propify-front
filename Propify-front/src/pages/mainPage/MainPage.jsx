@@ -8,7 +8,7 @@ import section1Image from "../../assets/cabin.png";
 // Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Swiper styles
 import "swiper/css";
@@ -18,6 +18,7 @@ import "swiper/css/pagination";
 import Features from './Features';
 
 const MainPage = () => {
+  const [tokenState, setTokenState] = useState(null);
   const { t, language, setLanguage } = useLanguage();
   const [selectedPlace, setSelectedPlace] = useState("");
   const [checkIn, setCheckIn] = useState("");
@@ -71,6 +72,23 @@ const MainPage = () => {
     setLanguage(language === "es" ? "en" : "es");
   };
 
+  const LogOut = () => {
+
+    window.localStorage.removeItem("token")
+    console.log("sesion cerrada")
+    setTokenState(null)
+  }
+
+  useEffect( ()=>{
+    let token = window.localStorage.getItem("token")
+    console.log(token);
+    if (token) {
+      setTokenState(token)
+    } else {
+      console.log("usuario no logueado")
+    }
+  },[])
+
   return (
     <div>
       <section className="section-1">
@@ -83,12 +101,18 @@ const MainPage = () => {
                 {language === "es" ? "EN" : "ES"}
               </button>
             </li>
-            <li className="log-in">
+
+
+            {tokenState ? <><li className="Log-out">
+              <button onClick={LogOut}>{t("cerrar sesion")}</button>
+            </li></> : <><li className="log-in">
               <Link to="/login">{t("login")}</Link>
             </li>
             <li className="sign-up">
               <Link to="/register">{t("register")}</Link>
-            </li>
+            </li></>}
+
+
             <li className="my-reservations">
               <a href="#reservations">{t("reservations")}</a>
             </li>

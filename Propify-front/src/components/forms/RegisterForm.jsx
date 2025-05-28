@@ -74,11 +74,11 @@ const RegisterForm = () => {
           </button>
         </div>
 
-        <h1>{t("register")}</h1>
+        <h1 style={{color: "black"}}>{t("register")}</h1>
 
         {/* Selección de rol */}
         <div>
-          <label>
+          <label style={{color: "black"}}>
             <input
               type="radio"
               value="client"
@@ -87,7 +87,7 @@ const RegisterForm = () => {
             />
             Cliente
           </label>
-          <label style={{ marginLeft: "1rem" }}>
+          <label style={{ marginLeft: "1rem", color: "black" }}>
             <input
               type="radio"
               value="owner"

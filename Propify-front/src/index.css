@@ -11,7 +11,7 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+} /*hay que ver estos estilos xq rompen la aplicacion con el tema claro/oscuro*/
 
 a {
   font-weight: 500;

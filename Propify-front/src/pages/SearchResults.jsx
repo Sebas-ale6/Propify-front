@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLanguage } from "../components/context/LanguageContext";
+import Footer from "../components/footer/Footer";
 
 const SearchResults = () => {
   const { t } = useLanguage(); // acceder a traducciones
@@ -57,6 +58,7 @@ const SearchResults = () => {
       ) : (
         <p>No se encontraron propiedades.</p>
       )}
+      <Footer />
     </div>
   );
 };

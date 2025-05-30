@@ -4,6 +4,7 @@ import { useLanguage } from "../../components/context/LanguageContext";
 
 import "./MainPageStyle.css";
 import section1Image from "../../assets/cabin.png";
+import Footer from "../../components/footer/Footer";
 
 // Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -227,6 +228,7 @@ const MainPage = () => {
         </div>
         <Features />
       </section>
+       <Footer />
     </div>
   );
 };

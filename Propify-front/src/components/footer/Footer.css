@@ -24,17 +24,7 @@
   min-width: 160px;
   margin: 0.3rem 0;
 }
-
-.footer-column select {
-  padding: 0.25rem 0.5rem;
-  background-color: transparent;
-  color: white;
-  border: 1px solid white;
-  border-radius: 5px;
-  font-size: 0.8rem;
-}
-
-.footer-column select:focus {
+.footer-column option:focus {
   outline: none;
   border-color: #f0e7dd;
 }

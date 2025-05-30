@@ -5,6 +5,7 @@ import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import MainPage from "./pages/mainPage/MainPage";
 import SearchResults from "./pages/SearchResults";
+import SysAdmin from "./pages/SysAdmin";
 
 
 
@@ -14,6 +15,10 @@ const App = () => {
     {
       element: <MainPage />,
       path: "/",
+    },
+    {
+      element: <SysAdmin />,
+      path: "/sysadmin",
     },
     {
       element: <LoginPage />,

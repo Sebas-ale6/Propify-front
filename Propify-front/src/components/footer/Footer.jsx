@@ -5,7 +5,7 @@ const Footer = () => {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-column">
-          <h2>PROPIFY</h2>
+          <h2>Propify</h2>
           <h5>emailayuda@propify.com.ar</h5>
         </div>
 

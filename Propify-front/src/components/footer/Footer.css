@@ -5,7 +5,9 @@
   font-family: 'Open Sans', sans-serif;
   font-size: 0.85rem;
 }
-
+.footer h2{
+    font-family: 'Merriweather', serif;
+}
 .footer-container {
   max-width: 1200px;
   margin: auto;

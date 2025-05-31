@@ -45,9 +45,29 @@ const LoginForm = () => {
 
       localStorage.setItem("token", token);
       
+      //traemos todos los owners
+      const res = await fetch("http://localhost:5021/api/owner", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-      // Redirigir si querés:
-       navigate("/");
+      if (!res.ok) throw new Error("No se pudieron obtener los owners");
+
+      const owners = await res.json();
+
+      // buscamos el owner con el mismo email
+      const currentUser = owners.find((owner) => owner.email === emailState);
+
+      if (!currentUser) {
+        throw new Error("No se encontró un owner con ese email");
+      }
+
+      localStorage.setItem("currentUser", JSON.stringify(currentUser));
+      localStorage.setItem("role", "owner");
+
+      // Redirigir
+      navigate("/");
     } catch (error) {
       alert(error.message);
     }

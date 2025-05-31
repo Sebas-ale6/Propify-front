@@ -1,4 +1,4 @@
-const Auth = {
+/*const Auth = {
   login: async (body) => {
     const users = JSON.parse(localStorage.getItem("users")) || [];
     const foundUser = users.find(
@@ -24,6 +24,45 @@ const Auth = {
     localStorage.setItem("users", JSON.stringify(users));
 
     return { success: true };
+  },
+};
+
+export default Auth;*/
+
+//Conexión con el back:
+
+const Auth = {
+  login: async (body) => {
+    const res = await fetch("http://localhost:5021/api/owner/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      throw new Error("Usuario o contraseña incorrectos");
+    }
+
+    const token = await res.text(); 
+    return token;
+  },
+
+  register: async (body) => {
+    const res = await fetch("http://localhost:5021/api/owner", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+
+    if (!res.ok) {
+      throw new Error("No se pudo registrar el usuario");
+    }
+
+    return await res.json();
   },
 };
 

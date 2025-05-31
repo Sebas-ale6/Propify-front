@@ -20,6 +20,7 @@ import Features from './Features';
 
 const MainPage = () => {
   const [tokenState, setTokenState] = useState(null);
+  const [isOwner, setIsOwner] = useState(false);
   const { t, language, setLanguage } = useLanguage();
   const [selectedPlace, setSelectedPlace] = useState("");
   const [checkIn, setCheckIn] = useState("");
@@ -82,9 +83,11 @@ const MainPage = () => {
 
   useEffect( ()=>{
     let token = window.localStorage.getItem("token")
+    const role = localStorage.getItem("role");
     console.log(token);
     if (token) {
       setTokenState(token)
+      setIsOwner(role === "owner");
     } else {
       console.log("usuario no logueado")
     }
@@ -112,6 +115,11 @@ const MainPage = () => {
             <li className="sign-up">
               <Link to="/register">{t("register")}</Link>
             </li></>}
+              {isOwner && (
+            <li className="my-properties">
+              <Link to="/my-properties">Mis Propiedades</Link>
+            </li>
+          )}
 
 
             <li className="my-reservations">

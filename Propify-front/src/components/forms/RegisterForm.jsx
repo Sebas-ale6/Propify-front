@@ -5,7 +5,6 @@ import { useLanguage } from "../context/LanguageContext";
 import Auth from "../../Api/auth";
 import Button from "../buttons/Button";
 
-
 const RegisterForm = () => {
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
@@ -14,10 +13,12 @@ const RegisterForm = () => {
   const [role, setRole] = useState("client");
 
   // Nuevos estados para el rol "owner"
+  const [nameState, setNameState] = useState(""); // Nombre
+  const [surnameState, setSurnameState] = useState(""); // Apellido
   const [cbuState, setCbuState] = useState("");
   const [phoneState, setPhoneState] = useState("");
+  const [docTypeState, setDocTypeState] = useState(1); // 1 = DNI por defecto
   const [dniState, setDniState] = useState("");
-  const [docTypeState, setDocTypeState] = useState("DNI");
 
   const { t, language, setLanguage } = useLanguage();
   const navigate = useNavigate();
@@ -34,30 +35,32 @@ const RegisterForm = () => {
       if (!passwordState) throw new Error("Llena el password");
       if (passwordState !== confirmPasswordState)
         throw new Error("Las contraseñas no coinciden");
-      if (!usernameState) throw new Error("Llena el username");
 
       // Validaciones extra para owner
       if (role === "owner") {
+        if (!nameState) throw new Error("Falta el nombre");
+        if (!surnameState) throw new Error("Falta el apellido");
         if (!cbuState) throw new Error("Falta el CBU");
         if (!dniState) throw new Error("Falta el número de documento");
         if (!docTypeState) throw new Error("Falta el tipo de documento");
         if (!phoneState) throw new Error("Falta el número de teléfono");
-      }
 
-      const body = {
-        username: usernameState,
-        email: emailState,
-        password: passwordState,
-        role,
-        ...(role === "owner" && {
-          cbu: cbuState,
-          phone: phoneState,
+        const ownerPayload = {
+          name: nameState,
+          surname: surnameState,
+          email: emailState,
+          password: passwordState,
+          numberPhone: phoneState,
+          documentType: docTypeState, // asegurate que sea número
           dni: dniState,
-          documentType: docTypeState,
-        }),
-      };
-
-      await Auth.register(body);
+          cvu: parseInt(cbuState),
+        };
+        await Auth.register(ownerPayload);
+      } else {
+        // Para cliente, enviá lo que necesites (ejemplo username y email)
+        if (!usernameState) throw new Error("Llena el username");
+        // Aquí pondrías la lógica para registrar cliente
+      }
 
       navigate("/");
     } catch (error) {
@@ -74,11 +77,11 @@ const RegisterForm = () => {
           </button>
         </div>
 
-        <h1 style={{color: "black"}}>{t("register")}</h1>
+        <h1 style={{ color: "black" }}>{t("register")}</h1>
 
         {/* Selección de rol */}
         <div>
-          <label style={{color: "black"}}>
+          <label style={{ color: "black" }}>
             <input
               type="radio"
               value="client"
@@ -98,14 +101,20 @@ const RegisterForm = () => {
           </label>
         </div>
 
+        {/* Campos para cliente */}
+        {role === "client" && (
+          <>
+            <input
+              type="text"
+              placeholder={t("username")}
+              value={usernameState}
+              onChange={(e) => setUsernameState(e.target.value)}
+              required
+            />
+          </>
+        )}
+
         {/* Datos comunes */}
-        <input
-          type="text"
-          placeholder={t("username")}
-          value={usernameState}
-          onChange={(e) => setUsernameState(e.target.value)}
-          required
-        />
 
         <input
           type="text"
@@ -136,6 +145,22 @@ const RegisterForm = () => {
           <>
             <input
               type="text"
+              placeholder="Nombre"
+              value={nameState}
+              onChange={(e) => setNameState(e.target.value)}
+              required
+            />
+
+            <input
+              type="text"
+              placeholder="Apellido"
+              value={surnameState}
+              onChange={(e) => setSurnameState(e.target.value)}
+              required
+            />
+
+            <input
+              type="text"
               placeholder="CBU"
               value={cbuState}
               onChange={(e) => setCbuState(e.target.value)}
@@ -152,10 +177,12 @@ const RegisterForm = () => {
 
             <select
               value={docTypeState}
-              onChange={(e) => setDocTypeState(e.target.value)}
+              onChange={(e) => setDocTypeState(parseInt(e.target.value, 10))}
               required
             >
-              <option value="DNI">DNI</option>
+              <option value={1}>DNI</option>
+              <option value={2}>Passport</option>
+              <option value={3}>License</option>
             </select>
 
             <input

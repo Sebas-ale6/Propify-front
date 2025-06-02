@@ -41,10 +41,8 @@ const LoginForm = () => {
 
       const token = await Auth.login(body);
 
-      alert("Login exitoso. Token: " + token);
-
       localStorage.setItem("token", token);
-      
+
       //traemos todos los owners
       const res = await fetch("http://localhost:5021/api/owner", {
         headers: {
@@ -81,7 +79,7 @@ const LoginForm = () => {
             {language === "es" ? "EN" : "ES"}
           </button>
         </div>
-        <h1 style={{color: "black"}}>{t("login")}</h1>
+        <h1 style={{ color: "black" }}>{t("login")}</h1>
         <input
           type="text"
           placeholder={t("email")}

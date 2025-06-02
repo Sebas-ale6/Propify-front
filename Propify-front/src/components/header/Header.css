@@ -1,0 +1,32 @@
+.header {
+  background-color: #4a3b30;
+  color: white;
+  padding: 0.8rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Open Sans', sans-serif;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.logo {
+  font-family: 'Merriweather', serif;
+  font-size: 1rem;
+}
+
+.user-button {
+  background-color: #6d5a4d;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background-color 0.3s ease;
+}
+
+.user-button:hover {
+  background-color: #846d5b;
+}

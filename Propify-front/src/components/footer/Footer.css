@@ -4,16 +4,21 @@
   padding: 1.2rem 1rem; /* más finito */
   font-family: 'Open Sans', sans-serif;
   font-size: 0.85rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 .footer h2{
     font-family: 'Merriweather', serif;
 }
 .footer-container {
   max-width: 1200px;
-  margin: auto;
+  margin:0 auto;
+  padding: 1rem 2rem;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+  align-self: start;
+  align-items: center;
   gap: 1.2rem;
 }
 

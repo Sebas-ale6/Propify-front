@@ -1,6 +1,7 @@
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useLanguage } from "../components/context/LanguageContext";
+import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 
 const SearchResults = () => {
@@ -33,6 +34,7 @@ const SearchResults = () => {
 
   return (
     <div style={{ padding: "2rem" }}>
+      <Header/>
       <h2>Resultados de búsqueda</h2>
       <p>
         <strong>Destino:</strong> {destino || "N/A"} | <strong>Check-in:</strong> {checkin || "N/A"} |{" "}

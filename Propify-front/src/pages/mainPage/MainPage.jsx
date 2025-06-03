@@ -60,14 +60,24 @@ const MainPage = () => {
       travelers: "",
     });
 
-    const queryParams = new URLSearchParams({
+    const queryParams = {
       destino: selectedPlace,
       checkin: checkIn,
       checkout: checkOut,
       viajeros: travelers,
-    });
+    };
 
-    navigate(`/search?${queryParams.toString()}`);
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      // Guardamos búsqueda pendiente y redirigimos al login
+      localStorage.setItem("pendingSearch", JSON.stringify(queryParams)); 
+      navigate("/login");
+      return;
+    }
+
+    // Si está logueado, redirige con los filtros aplicados
+    navigate(`/search?${new URLSearchParams(queryParams).toString()}`);
   };
 
   const handleLanguageToggle = () => {
@@ -81,7 +91,7 @@ const MainPage = () => {
     setTokenState(null)
   }
 
-  useEffect( ()=>{
+  useEffect(() => {
     let token = window.localStorage.getItem("token")
     const role = localStorage.getItem("role");
     console.log(token);
@@ -91,7 +101,7 @@ const MainPage = () => {
     } else {
       console.log("usuario no logueado")
     }
-  },[])
+  }, [])
 
   return (
     <div>
@@ -112,14 +122,14 @@ const MainPage = () => {
             </li></> : <><li className="log-in">
               <Link to="/login">{t("login")}</Link>
             </li>
-            <li className="sign-up">
-              <Link to="/register">{t("register")}</Link>
-            </li></>}
-              {isOwner && (
-            <li className="my-properties">
-              <Link to="/my-properties">Mis Propiedades</Link>
-            </li>
-          )}
+              <li className="sign-up">
+                <Link to="/register">{t("register")}</Link>
+              </li></>}
+            {isOwner && (
+              <li className="my-properties">
+                <Link to="/my-properties">Mis Propiedades</Link>
+              </li>
+            )}
 
 
             <li className="my-reservations">
@@ -142,7 +152,7 @@ const MainPage = () => {
                 setFormErrors((prev) => ({ ...prev, selectedPlace: "" }));
               }
             }}>
-              <option value=""disabled hidden>{t("selectPlace")}</option>
+              <option value="" disabled hidden>{t("selectPlace")}</option>
               <option value="Bariloche">Bariloche</option>
               <option value="Cordoba">Córdoba</option>
               <option value="Buenos Aires">Buenos Aires</option>
@@ -196,7 +206,7 @@ const MainPage = () => {
                 setFormErrors((prev) => ({ ...prev, travelers: "" }));
               }
             }}>
-              <option value=""disabled hidden>{t("howMany")}</option>
+              <option value="" disabled hidden>{t("howMany")}</option>
               <option value="1">1 viajero</option>
               <option value="2">2 viajeros</option>
               <option value="3">3 viajeros</option>
@@ -261,7 +271,7 @@ const MainPage = () => {
         </div>
         <Features />
       </section>
-       <Footer />
+      <Footer />
     </div>
   );
 };

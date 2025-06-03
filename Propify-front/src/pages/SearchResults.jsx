@@ -1,64 +1,65 @@
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { useLanguage } from "../components/context/LanguageContext";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 
 const SearchResults = () => {
-  const { t } = useLanguage(); // acceder a traducciones
-  const properties = t("properties"); // propiedades según idioma
   const location = useLocation();
   const [filtered, setFiltered] = useState([]);
 
-  // Obtenemos parámetros de la URL
+  // Parámetros de la URL
   const searchParams = new URLSearchParams(location.search);
-  const destino = searchParams.get("destino");
+  const destino = searchParams.get("destino")?.toLowerCase();
   const checkin = searchParams.get("checkin");
   const checkout = searchParams.get("checkout");
-  const viajeros = searchParams.get("viajeros");
+  const viajeros = parseInt(searchParams.get("viajeros"));
 
   useEffect(() => {
-    const normalize = (str) =>
-      str?.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+    const fetchAndFilter = async () => {
+      try {
+        const response = await fetch("http://localhost:5021/api/property");
+        if (!response.ok) throw new Error("Error al obtener propiedades");
+        const data = await response.json();
 
-    if (destino && Array.isArray(properties)) {
-      const destinoNormalizado = normalize(destino);
-      const filteredResults = properties.filter((prop) =>
-        normalize(prop.location).includes(destinoNormalizado)
-      );
-      setFiltered(filteredResults);
-    } else {
-      setFiltered([]);
-    }
-  }, [destino, properties]);
+        // Filtro
+        const results = data.filter((prop) => {
+          const cityMatch = prop.city.toLowerCase().includes(destino);
+          const enoughTenants = prop.maxTenants >= viajeros;
+          return cityMatch && enoughTenants;
+        });
+
+        setFiltered(results);
+      } catch (error) {
+        console.error(error);
+        setFiltered([]);
+      }
+    };
+
+    fetchAndFilter();
+  }, [destino, checkin, checkout, viajeros]);
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <Header/>
+    <div>
+      <Header />
       <h2>Resultados de búsqueda</h2>
       <p>
-        <strong>Destino:</strong> {destino || "N/A"} | <strong>Check-in:</strong> {checkin || "N/A"} |{" "}
-        <strong>Check-out:</strong> {checkout || "N/A"} | <strong>Viajeros:</strong> {viajeros || "N/A"}
+        <strong>Destino:</strong> {destino} | <strong>Check-in:</strong> {checkin} |{" "}
+        <strong>Check-out:</strong> {checkout} | <strong>Viajeros:</strong> {viajeros}
       </p>
-
-      {filtered.length > 0 ? (
-        <ul style={{ listStyle: "none", padding: 0 }}>
-          {filtered.map((prop, index) => (
-            <li key={index} style={{ marginBottom: "2rem" }}>
-              <h4>{prop.name}</h4>
-              <p>{prop.location}</p>
+      {filtered.length ? (
+        <div className="property-list">
+          {filtered.map((prop) => (
+            <div key={prop.id}>
+              <h3>{prop.type} - {prop.city}</h3>
               <p>{prop.description}</p>
-              <img
-                src={prop.img}
-                alt={prop.name}
-                width={300}
-                style={{ borderRadius: "8px" }}
-              />
-            </li>
+              <p>Precio por noche: ${prop.pricePerNight}</p>
+              <p>Capacidad: {prop.maxTenants} personas</p>
+              <button>Reservar</button>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : (
-        <p>No se encontraron propiedades.</p>
+        <p>No se encontraron propiedades disponibles.</p>
       )}
       <Footer />
     </div>
@@ -66,3 +67,4 @@ const SearchResults = () => {
 };
 
 export default SearchResults;
+

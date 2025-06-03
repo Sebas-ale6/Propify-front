@@ -2,6 +2,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
+import "../styles/SearchResultsStyle.css";
 
 const SearchResults = () => {
   const location = useLocation();
@@ -39,27 +40,29 @@ const SearchResults = () => {
   }, [destino, checkin, checkout, viajeros]);
 
   return (
-    <div>
+    <div className="results-wrapper">
       <Header />
+      <div className="results-summary">
       <h2>Resultados de búsqueda</h2>
       <p>
         <strong>Destino:</strong> {destino} | <strong>Check-in:</strong> {checkin} |{" "}
         <strong>Check-out:</strong> {checkout} | <strong>Viajeros:</strong> {viajeros}
       </p>
+      </div >
       {filtered.length ? (
         <div className="property-list">
           {filtered.map((prop) => (
-            <div key={prop.id}>
+            <div key={prop.id} className="property-card">
               <h3>{prop.type} - {prop.city}</h3>
               <p>{prop.description}</p>
               <p>Precio por noche: ${prop.pricePerNight}</p>
               <p>Capacidad: {prop.maxTenants} personas</p>
-              <button>Reservar</button>
+              <button className="reserve-button">Reservar</button>
             </div>
           ))}
         </div>
       ) : (
-        <p>No se encontraron propiedades disponibles.</p>
+        <p className="no-results">No se encontraron propiedades disponibles.</p>
       )}
       <Footer />
     </div>

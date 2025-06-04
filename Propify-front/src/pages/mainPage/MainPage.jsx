@@ -71,7 +71,7 @@ const MainPage = () => {
 
     if (!token) {
       // Guardamos búsqueda pendiente y redirigimos al login
-      localStorage.setItem("pendingSearch", JSON.stringify(queryParams)); 
+      localStorage.setItem("pendingSearch", JSON.stringify(queryParams));
       navigate("/login");
       return;
     }
@@ -153,10 +153,17 @@ const MainPage = () => {
               }
             }}>
               <option value="" disabled hidden>{t("selectPlace")}</option>
-              <option value="Bariloche">Bariloche</option>
-              <option value="Cordoba">Córdoba</option>
-              <option value="Buenos Aires">Buenos Aires</option>
-              <option value="Mar del Plata">Mar del Plata</option>
+              <option value="bariloche">Bariloche</option>
+              <option value="cordoba">Córdoba</option>
+              <option value="buenos aires">Buenos Aires</option>
+              <option value="mar del plata">Mar del Plata</option>
+              <option value="caba">CABA</option>
+              <option value="carlos paz">Carlos Paz</option>
+              <option value="rosario">Rosario</option>
+              <option value="el bolson">El Bolsón</option>
+              <option value="el calafate">El Calafate</option>
+              <option value="mendoza">Mendoza</option>
+              <option value="tierra del fuego">Tierra del Fuego</option>
             </select>
             {formErrors.selectedPlace && (
               <div className="tooltip-error">

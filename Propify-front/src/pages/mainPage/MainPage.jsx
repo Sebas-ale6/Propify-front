@@ -89,6 +89,7 @@ const MainPage = () => {
     window.localStorage.removeItem("token")
     console.log("sesion cerrada")
     setTokenState(null)
+    setIsOwner(false);
   }
 
   useEffect(() => {

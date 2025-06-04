@@ -8,6 +8,7 @@ import SearchResults from "./pages/SearchResults";
 import SysAdmin from "./pages/SysAdmin";
 import MyProperties from "./pages/myProperties";
 import AddProperty from "./pages/addProperty";
+import ReservationPage from "./pages/Reservation";
 
 
 
@@ -41,7 +42,12 @@ const App = () => {
     {
       element: <AddProperty />,
       path: "/add-properties",
+    },
+     {
+      element: <ReservationPage/>,
+      path: "/reservation",
     }
+    
 
   ]);
   return (

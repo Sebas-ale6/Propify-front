@@ -4,6 +4,23 @@ import userData from "../data/UsersData";
 
 const SysAdmin = () => {
   const [roleState, setRoleState] = useState("Cliente");
+  const [inputState, setInputState] = useState("");
+  const [userDataFilterState, setUserDataFilterState] = useState([]);
+
+  const handleInputChange = (e) => {
+    setInputState(e.target.value);
+  };
+
+  const handleSearch = () => {
+    const filtered = userData.filter((user) =>
+      (user.name?.toLowerCase().includes(inputState.toLowerCase()) ||
+       user.apellido?.toLowerCase().includes(inputState.toLowerCase()) ||
+       user.property?.toLowerCase().includes(inputState.toLowerCase()) ||
+       user.rent?.toLowerCase().includes(inputState.toLowerCase()) ||
+       user.date?.toLowerCase().includes(inputState.toLowerCase()))
+    );
+    setUserDataFilterState(filtered);
+  };
 
   return (
     <div>
@@ -44,17 +61,41 @@ const SysAdmin = () => {
         </div>
 
         <div>
-          <input />
-          <button>
-            <img />
+          <input
+            value={inputState}
+            onChange={handleInputChange}
+            style={{
+              backgroundColor: "black",
+              color: "white",
+              padding: "5px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+            }}
+            placeholder="Buscar..."
+          />
+          <button
+            onClick={handleSearch}
+            style={{
+              padding: "5px",
+              border: "1px solid #ccc",
+              borderRadius: "5px",
+              backgroundColor: "black",
+              color: "white",
+            }}
+          >
+            🔍
           </button>
         </div>
       </div>
 
-      <UsersList users={userData} role={roleState}></UsersList>
+      <UsersList
+        users={userDataFilterState.length === 0 ? userData : userDataFilterState}
+        role={roleState}
+      ></UsersList>
     </div>
   );
 };
+
 export default SysAdmin;
 
 

@@ -64,13 +64,20 @@ const LoginForm = () => {
       localStorage.setItem("currentUser", JSON.stringify(currentUser));
       localStorage.setItem("role", "owner");
 
-      // Redirigir
-      navigate("/");
+      // Redirigir según si hay búsqueda pendiente
+      const pendingSearch = localStorage.getItem("pendingSearch");
+
+      if (pendingSearch) {
+        const params = new URLSearchParams(JSON.parse(pendingSearch)).toString();
+        localStorage.removeItem("pendingSearch");
+        navigate(`/search?${params}`);
+      } else {
+        navigate("/");
+      }
     } catch (error) {
       alert(error.message);
     }
   };
-
   return (
     <div className="login">
       <form>

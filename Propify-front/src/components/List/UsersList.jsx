@@ -1,4 +1,4 @@
-const UsersList = ({ users, filter, role }) => {
+const UsersList = ({ users, role, callback }) => {
   const filteredByRole = users.filter((user) => user.role === role);
 
   let headerField;
@@ -18,7 +18,7 @@ const UsersList = ({ users, filter, role }) => {
             <th style={headerStyle}>Nombre</th>
             <th style={headerStyle}>{headerField}</th>
             <th style={headerStyle}>Rol</th>
-            <th style={headerStyle}>Estado</th>
+            <th style={headerStyle}>Acciones</th>
           </tr>
         </thead>
         <tbody>
@@ -37,7 +37,7 @@ const UsersList = ({ users, filter, role }) => {
                 <td style={tdStyle}>{user.name}</td>
                 <td style={tdStyle}>{field}</td>
                 <td style={tdStyle}>{user.role}</td>
-                <td style={tdStyle}>{user.status ? "Activo" : "Inactivo"}</td>
+                <td style={tdStyle}><button onClick={callback}>Editar</button></td>
               </tr>
             );
           })}

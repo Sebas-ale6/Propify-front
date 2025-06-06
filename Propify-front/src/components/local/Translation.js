@@ -35,6 +35,19 @@ const translations = {
     confirmPassword: "Confirma contraseña",
     topPropertiesTitle: "Top 10 Propiedades",
     topPropertiesCaption: "Una selección de nuestros alojamientos más destacados, ideales para todo tipo de estadías.",
+    name: "Nombre",
+  phone: "Teléfono",
+  email: "Correo electrónico",
+  adults: "Adultos",
+  children: "Niños",
+  guestType: "Tipo de huésped",
+  selectGuestType: "Selecciona un tipo",
+  tourism: "Turismo",
+  work: "Trabajo",
+  family: "Familiar",
+  notes: "Notas",
+  acceptTerms: "Acepto los términos y condiciones",
+  reserve: "Reservar",
 
     properties: [
       {
@@ -124,6 +137,19 @@ const translations = {
     confirmPassword: "Confirm password",
     topPropertiesTitle: "Top 10 Properties",
     topPropertiesCaption: "A selection of our most outstanding accommodations, ideal for all kinds of stays.",
+         name: "Name",
+  phone: "Phone",
+  email: "Email",
+  adults: "Adults",
+  children: "Children",
+  guestType: "Guest type",
+  selectGuestType: "Select a type",
+  tourism: "Tourism",
+  work: "Work",
+  family: "Family",
+  notes: "Notes",
+  acceptTerms: "I accept the terms and conditions",
+  reserve: "Reserve",
 
     properties: [
       {

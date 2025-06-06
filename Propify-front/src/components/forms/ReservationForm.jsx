@@ -5,7 +5,7 @@ import Button from "../buttons/Button";
 import "../../styles/ReservationForm.css";
 
 const ReservationForm = ({ estates = [] }) => {
-  const { t } = useLanguage();
+  const { t, language, setLanguage } = useLanguage();
 
   const [formData, setFormData] = useState({
     name: "",
@@ -15,7 +15,7 @@ const ReservationForm = ({ estates = [] }) => {
     children: 0,
     guestType: "",
     notes: "",
-    termsAccepted: false, // checkbox
+    termsAccepted: false,
   });
 
   const handleChange = (e) => {
@@ -45,8 +45,19 @@ const ReservationForm = ({ estates = [] }) => {
     }
   };
 
+  const handleLanguageToggle = () => {
+    setLanguage(language === "es" ? "en" : "es");
+  };
+
   return (
     <form onSubmit={handleSendData} className="reservation-form">
+      {/* Botón para cambiar idioma */}
+      <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: "1rem" }}>
+        <button type="button" onClick={handleLanguageToggle}>
+          {language === "es" ? "EN" : "ES"}
+        </button>
+      </div>
+
       <div className="form-row">
         <div className="form-group">
           <label>{t("name")}:</label>
@@ -119,7 +130,6 @@ const ReservationForm = ({ estates = [] }) => {
         <label>{t("notes")}:</label>
         <textarea name="notes" value={formData.notes} onChange={handleChange} />
       </div>
-
 
       <div className="form-group terms">
         <input

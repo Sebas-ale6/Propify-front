@@ -1,0 +1,34 @@
+.property-detail {
+  padding: 2rem;
+  background-color: #f5f3eb;
+  color: #2b2b2b;
+}
+
+.property-content {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.property-image {
+  width: 300px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.property-info p,
+.host-info p {
+  margin: 0.5rem 0;
+}
+
+.reserve-button {
+  background-color: #4a3629;
+  color: white;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem;
+}

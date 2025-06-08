@@ -2,55 +2,61 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1.5rem;
-  align-items: center;
-  background-color: #f5f3eb;
-  padding: 1rem 2rem;
-  font-size: 0.95rem;
-  border-bottom: 1px solid #e1e1e1;
+  align-items: flex-end;
+  background-color: #f9f9f9;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .filter-item {
   display: flex;
   flex-direction: column;
   font-size: 0.95rem;
-  min-width: 120px;
+  color: #333;
+  min-width: 150px;
 }
 
 .filter-item label {
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
 }
 
 input[type="number"],
-select {
-  padding: 0.4rem 0.5rem;
+input[type="checkbox"] {
+  padding: 0.4rem;
   font-size: 0.95rem;
   border: 1px solid #ccc;
   border-radius: 4px;
-  width: 100%;
+  transition: border-color 0.3s;
+}
+
+input[type="number"]:focus {
+  border-color: #4a3629;
+  outline: none;
 }
 
 input[type="checkbox"] {
   margin-right: 0.5rem;
-  transform: scale(1.1);
 }
 
-.checkbox-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
+.filters-container input[type="checkbox"] + label {
+  display: inline;
+  font-weight: normal;
 }
 
 button {
-  padding: 0.5rem 1.2rem;
+  padding: 0.6rem 1.4rem;
   font-size: 0.95rem;
+  font-weight: bold;
   background-color: #4a3629;
-  color: white;
+  color: #fff;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #3b2d22;
+  background-color: #36281f;
 }

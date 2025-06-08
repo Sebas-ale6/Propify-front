@@ -25,7 +25,7 @@ const PropertyDetail = () => {
         <h1>{property.type?.toUpperCase()} - {property.city}</h1>
         <div className="property-content">
           <img
-            src="/images/placeholder.png" // Reemplazá por la imagen real si tenés
+            src="/images/placeholder.png" // Reemplazá por la imagen real 
             alt="Foto propiedad"
             className="property-image"
           />
@@ -38,6 +38,9 @@ const PropertyDetail = () => {
             <p><strong>Extras:</strong> Pileta: {property.pool}, Streaming: {property.streammingPlatform}</p>
             <p><strong>Provincia:</strong> {property.province}</p>
           </div>
+          <div className="reserve-side">
+            <button className="reserve-button">Reservar</button>
+          </div>
         </div>
 
         <section className="host-info">
@@ -49,7 +52,6 @@ const PropertyDetail = () => {
           <p><a href="#">Políticas de cancelación y reglas básicas</a></p>
         </section>
 
-        <button className="reserve-button">Reservar</button>
       </main>
 
       <Footer />

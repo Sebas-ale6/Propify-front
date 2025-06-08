@@ -1,34 +1,56 @@
 .filters-container {
   display: flex;
-  gap: 1rem;
+  flex-wrap: wrap;
+  gap: 1.5rem;
   align-items: center;
   background-color: #f5f3eb;
   padding: 1rem 2rem;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
+  border-bottom: 1px solid #e1e1e1;
 }
 
-.filters-container label {
-  margin-right: 0.5rem;
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  font-size: 0.95rem;
+  min-width: 120px;
 }
 
-.filters-container input[type="number"],
-.filters-container select {
-  padding: 0.3rem;
-  font-size: 0.9rem;
+.filter-item label {
+  margin-bottom: 0.25rem;
+}
+
+input[type="number"],
+select {
+  padding: 0.4rem 0.5rem;
+  font-size: 0.95rem;
   border: 1px solid #ccc;
   border-radius: 4px;
+  width: 100%;
 }
 
-.filters-container input[type="checkbox"] {
-  margin-right: 0.3rem;
+input[type="checkbox"] {
+  margin-right: 0.5rem;
+  transform: scale(1.1);
 }
 
-.filters-container button {
-  padding: 0.4rem 1rem;
-  font-size: 0.9rem;
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+button {
+  padding: 0.5rem 1.2rem;
+  font-size: 0.95rem;
   background-color: #4a3629;
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button:hover {
+  background-color: #3b2d22;
 }

@@ -9,8 +9,7 @@ import SysAdmin from "./pages/SysAdmin";
 import MyProperties from "./pages/myProperties";
 import AddProperty from "./pages/addProperty";
 import ReservationPage from "./pages/Reservation";
-
-
+import PropertyDetail from "./pages/PropertyDetail";
 
 const App = () => {
 
@@ -46,9 +45,11 @@ const App = () => {
      {
       element: <ReservationPage/>,
       path: "/reservation",
-    }
-    
-
+    },
+     {
+  element: <PropertyDetail />,
+  path: "/property/:id",
+},
   ]);
   return (
     <div>

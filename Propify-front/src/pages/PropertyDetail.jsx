@@ -3,10 +3,12 @@ import { useEffect, useState } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import "../styles/PropertyDetailStyle.css";
+import { useNavigate } from "react-router-dom";
 
 const PropertyDetail = () => {
   const { id } = useParams();
   const [property, setProperty] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetch(`http://localhost:5021/api/property/${id}`)
@@ -16,6 +18,9 @@ const PropertyDetail = () => {
   }, [id]);
 
   if (!property) return <p>Cargando propiedad...</p>;
+   const handleReserve = () => {
+    navigate(`/reservation/${id}`, { state: property }); // <-- Navegación con datos
+  };
 
   return (
     <div className="property-detail-page">
@@ -39,7 +44,9 @@ const PropertyDetail = () => {
             <p><strong>Provincia:</strong> {property.province}</p>
           </div>
           <div className="reserve-side">
-            <button className="reserve-button">Reservar</button>
+           <button className="reserve-button" onClick={handleReserve}>
+              Reservar
+            </button>
           </div>
         </div>
 

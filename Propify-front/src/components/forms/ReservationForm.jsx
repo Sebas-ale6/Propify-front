@@ -4,7 +4,7 @@ import Button from "../buttons/Button";
 
 import "../../styles/ReservationForm.css";
 
-const ReservationForm = ({ estates = [] }) => {
+const ReservationForm = ({ property }) => {
   const { t, language, setLanguage } = useLanguage();
 
   const [formData, setFormData] = useState({
@@ -39,7 +39,7 @@ const ReservationForm = ({ estates = [] }) => {
       }
 
       console.log("Datos enviados:", formData);
-      // Enviar a backend
+      // Aquí podrías enviar los datos al backend incluyendo info de la propiedad
     } catch (error) {
       alert(error.message);
     }
@@ -57,6 +57,15 @@ const ReservationForm = ({ estates = [] }) => {
           {language === "es" ? "EN" : "ES"}
         </button>
       </div>
+
+      {/* Información de la propiedad */}
+      {property && (
+        <div className="property-summary">
+          <h2>{property.type} en {property.city}</h2>
+          <p><strong>{t("pricePerNight")}:</strong> ${property.pricePerNight}</p>
+          <p><strong>{t("capacity")}:</strong> {property.maxTenants} personas</p>
+        </div>
+      )}
 
       <div className="form-row">
         <div className="form-group">

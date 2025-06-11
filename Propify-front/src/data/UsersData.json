@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "pedri",
+    "surname": "Gasparin",
+    "email": "pedri@gmail.com",
+    "password": "IndependienteSubcampeon",
+    "numberPhone": "34644321despegue",
+    "documentType": 1,
+    "dni": "45831181",
+    "cvu": 1234567,
+    "role": "owner"
+  },
+  {
+    "id": 2,
+    "name": "lucas",
+    "surname": "Fernández",
+    "email": "lucas@gmail.com",
+    "password": "RiverPlateCampeon2023",
+    "numberPhone": "34169874golazo",
+    "documentType": 1,
+    "dni": "43125896",
+    "cvu": 2345678,
+    "role": "owner"
+  },
+  {
+    "id": 3,
+    "name": "valentina",
+    "surname": "Rodriguez",
+    "email": "valen@gmail.com",
+    "password": "ValenContraseña123",
+    "numberPhone": null,
+    "documentType": null,
+    "dni": null,
+    "cvu": null,
+    "role": "Cliente"
+  },
+  {
+    "id": 4,
+    "name": "martin",
+    "surname": "Pérez",
+    "email": "martin.p@gmail.com",
+    "password": "BocaElMasGrande12",
+    "numberPhone": null,
+    "documentType": null,
+    "dni": null,
+    "cvu": null,
+    "role": "Cliente"
+  },
+  {
+    "id": 5,
+    "name": "agustina",
+    "surname": "López",
+    "email": "agustina_lopez@gmail.com",
+    "password": "AgusPass456!",
+    "numberPhone": "26433789turquesa",
+    "documentType": 1,
+    "dni": "42678123",
+    "cvu": 5678901,
+    "role": "owner"
+  },
+  {
+    "id": 6,
+    "name": "bruno",
+    "surname": "Gonzalez",
+    "email": "bruno_g@gmail.com",
+    "password": "Bruno123Seguro",
+    "numberPhone": "35155222drone",
+    "documentType": 1,
+    "dni": "43560987",
+    "cvu": null,
+    "role": "SysAdmin"
+  }
+]

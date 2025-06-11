@@ -1,14 +1,14 @@
 const UsersList = ({ users, role, callback }) => {
   const filteredByRole = users.filter((user) => user.role === role);
 
-  let headerField;
+  {/*let headerField;
   if (role === "Cliente") {
     headerField = "Alquiler";
-  } else if (role === "Propietario") {
+  } else if (role === "owner") {
     headerField = "Propiedad";
   } else {
     headerField = "Fecha de alta";
-  }
+  }*/}
 
   return (
     <div>
@@ -16,26 +16,30 @@ const UsersList = ({ users, role, callback }) => {
         <thead>
           <tr>
             <th style={headerStyle}>Nombre</th>
-            <th style={headerStyle}>{headerField}</th>
+            <th style={headerStyle}>Apellido</th>
+            <th style={headerStyle}>Email</th>
+            {/*<th style={headerStyle}>{headerField}</th>*/}
             <th style={headerStyle}>Rol</th>
             <th style={headerStyle}>Acciones</th>
           </tr>
         </thead>
         <tbody>
           {filteredByRole.map((user) => {
-            let field;
+           {/* let field;
             if (role === "Cliente") {
               field = user.rent;
-            } else if (role === "Propietario") {
+            } else if (role === "owner") {
               field = user.property;
             } else {
               field = user.date;
-            }
+            }*/}
 
             return (
               <tr key={user.id}>
                 <td style={tdStyle}>{user.name}</td>
-                <td style={tdStyle}>{field}</td>
+                <td style={tdStyle}>{user.surname}</td>
+                <td style={tdStyle}>{user.email}</td>
+               { /*<td style={tdStyle}>{field}</td>*/}
                 <td style={tdStyle}>{user.role}</td>
                 <td style={tdStyle}><button onClick={callback}>Editar</button></td>
               </tr>

@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UsersList from "../components/List/UsersList";
-import userData from "../data/UsersData";
+import usersApi from "../Api/userApi";
 import { useLanguage } from "../components/context/LanguageContext";
 import UserForm from "../components/forms/UserForm";
 
@@ -11,13 +11,22 @@ const SysAdmin = () => {
   const { t, language, setLanguage } = useLanguage();
   const [screenState, setScreenState] = useState("table");
   const [typeFormState, setTypeFormState] = useState("create");
+  const [usersDataState, setUsersDataState] = useState([]);
+
+  useEffect(() => {
+    const getUsers = async () => {
+      const data = await usersApi.getAll();
+      setUsersDataState(data);
+    };
+    getUsers();
+  }, []);
 
   const handleInputChange = (e) => {
     setInputState(e.target.value);
   };
 
   const handleSearch = () => {
-    const filtered = userData.filter(
+    const filtered = usersDataState.filter(
       (user) =>
         user.name?.toLowerCase().includes(inputState.toLowerCase()) ||
         user.apellido?.toLowerCase().includes(inputState.toLowerCase()) ||
@@ -58,10 +67,10 @@ const SysAdmin = () => {
             </button>
             <button
               onClick={() => {
-                setRoleState("Propietario");
+                setRoleState("owner");
               }}
             >
-              Propietario
+              Owner
             </button>
             <button
               onClick={() => {
@@ -72,7 +81,7 @@ const SysAdmin = () => {
             </button>
             <button
               onClick={() => {
-                setTypeFormState("create")
+                setTypeFormState("create");
                 setScreenState("form");
               }}
             >
@@ -109,16 +118,24 @@ const SysAdmin = () => {
         </div>
       )}
       {screenState === "table" ? (
-        <UsersList
-          users={
-            userDataFilterState.length === 0 ? userData : userDataFilterState
-          }
-          role={roleState}
-          callback={() => {
-            setTypeFormState("edit");
-            setScreenState("form");
-          }}
-        ></UsersList>
+        <div>
+          {usersDataState.length === 0 ? (
+            <p>Cargando...</p>
+          ) : (
+            <UsersList
+              users={
+                userDataFilterState.length === 0
+                  ? usersDataState
+                  : userDataFilterState
+              }
+              role={roleState}
+              callback={() => {
+                setTypeFormState("edit");
+                setScreenState("form");
+              }}
+            ></UsersList>
+          )}
+        </div>
       ) : (
         <UserForm type={typeFormState} role={roleState}></UserForm>
       )}

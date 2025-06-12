@@ -48,6 +48,12 @@ const translations = {
   notes: "Notas",
   acceptTerms: "Acepto los términos y condiciones",
   reserve: "Reservar",
+   serviceTitle:"Comodidades de nuestro servicio",
+  serviceCaption:"Podemos recibir huéspedes por día o por estadías largas, y podemos acomodar a todo tipo de viajeros: individuales, familias, equipos, etc.",
+   featureKitchen: "Cocina con todo el equipamiento",
+  featureWifi: "Acceso al WiFi con un solo toque",
+  featureSupport: "Atención disponible las 24 horas",
+  featureLateCheckout: "Solicitud de checkout tardío",
 
     properties: [
       {
@@ -150,6 +156,12 @@ const translations = {
   notes: "Notes",
   acceptTerms: "I accept the terms and conditions",
   reserve: "Reserve",
+  serviceTitle: "Our service amenities",
+  serviceCaption:"We can host guests for short or long stays, and accommodate all kinds of travelers: individuals, families, teams, etc.",
+  featureKitchen: "Fully equipped kitchen",
+  featureWifi: "One-touch WiFi access",
+  featureSupport: "24/7 support available",
+  featureLateCheckout: "Late checkout request",
 
     properties: [
       {

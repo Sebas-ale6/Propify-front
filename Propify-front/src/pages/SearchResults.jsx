@@ -33,27 +33,33 @@ const SearchResults = () => {
         const data = await response.json();
 
         const results = data.filter((prop) => {
-          const cityMatch =
-            normalize(prop.city).includes(destino) ||
-            normalize(prop.province).includes(destino);
+          const city = normalize(prop.city);
+          const province = normalize(prop.province);
+          const destinoNormalized = normalize(destino);
+
+          // Coincidencia exacta con ciudad
+          const cityMatch = city === destinoNormalized;
+
+          // Coincidencia con provincia (si no coincide ciudad)
+          const provinceMatch = !cityMatch && province === destinoNormalized;
+
+          const locationMatch = cityMatch || provinceMatch;
+
           const enoughTenants = prop.maxTenants >= viajeros;
 
-          // Pool como string normalizado
           const poolValue = normalize(prop.pool);
           const hasPool = !filters.pool || poolValue === "si";
 
-          // Habitaciones (room) como número
           const roomValue = parseInt(prop.room);
           const matchesRooms =
             !filters.rooms || (!isNaN(roomValue) && roomValue >= parseInt(filters.rooms));
 
-          // Precio como número
           const price = parseInt(prop.pricePerNight);
           const matchesPriceMax =
             !filters.priceMax || (!isNaN(price) && price <= filters.priceMax);
 
           return (
-            cityMatch &&
+            locationMatch &&
             enoughTenants &&
             hasPool &&
             matchesRooms &&

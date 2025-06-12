@@ -10,7 +10,7 @@ const AddProperty = () => {
     type: "",
     squareMeters: "",
     pricePerNight: "",
-    country: "",
+    country: "Argentina",
     province: "",
     city: "",
     street: "",
@@ -70,20 +70,52 @@ const AddProperty = () => {
     <div>
       <h1>Subir nueva propiedad</h1>
       <form onSubmit={handleSubmit}>
-        <input name="type" placeholder="Tipo" value={formData.type} onChange={handleChange} />
-        <input name="squareMeters" placeholder="Metros cuadrados" value={formData.squareMeters} onChange={handleChange} />
-        <input name="pricePerNight" placeholder="Precio por noche" value={formData.pricePerNight} onChange={handleChange} />
-        <input name="country" placeholder="País" value={formData.country} onChange={handleChange} />
-        <input name="province" placeholder="Provincia" value={formData.province} onChange={handleChange} />
-        <input name="city" placeholder="Ciudad" value={formData.city} onChange={handleChange} />
-        <input name="street" placeholder="Calle" value={formData.street} onChange={handleChange} />
-        <input name="maxTenants" placeholder="Máximo de inquilinos" value={formData.maxTenants} onChange={handleChange} />
-        <input name="description" placeholder="Descripción" value={formData.description} onChange={handleChange} />
+        <input name="type" placeholder="Tipo" value={formData.type} onChange={handleChange} required/>
+        <input name="squareMeters" placeholder="Metros cuadrados" value={formData.squareMeters} onChange={handleChange} required/>
+        <input
+          type="number"
+          name="pricePerNight"
+          placeholder="Precio por noche"
+          value={formData.pricePerNight}
+          onChange={(e) => {
+            const val = parseInt(e.target.value);
+            if ((val >= 1000 && val <= 300000) || isNaN(val)) {
+              setFormData((prev) => ({ ...prev, pricePerNight: e.target.value }));
+            }
+          }}
+          min="1000"
+          max="300000"
+          step="1000"
+          required
+        />
+        <input name="country" placeholder="País" value={formData.country} readOnly />
+        <input name="province" placeholder="Provincia" value={formData.province} onChange={handleChange} required/>
+        <input name="city" placeholder="Ciudad" value={formData.city} onChange={handleChange} required />
+        <input name="street" placeholder="Calle" value={formData.street} onChange={handleChange} required/>
+        <input
+          type="number"
+          name="maxTenants"
+          placeholder="Máximo de inquilinos"
+          value={formData.maxTenants}
+          onChange={(e) => {
+            const val = parseInt(e.target.value);
+            if (val >= 1 || isNaN(val)) {
+              setFormData((prev) => ({ ...prev, maxTenants: e.target.value }));
+            }
+          }}
+          min="1"
+          required
+        />
+        <input name="description" placeholder="Descripción" value={formData.description} onChange={handleChange} required/>
         <input name="stateProperty" placeholder="Estado de la propiedad (número)" value={formData.stateProperty} onChange={handleChange} />
-        <input name="bathroom" placeholder="Baños" value={formData.bathroom} onChange={handleChange} />
-        <input name="room" placeholder="Habitaciones" value={formData.room} onChange={handleChange} />
-        <input name="streammingPlatform" placeholder="Plataforma de streaming" value={formData.streammingPlatform} onChange={handleChange} />
-        <input name="pool" placeholder="Pileta (Sí/No)" value={formData.pool} onChange={handleChange} />
+        <input name="bathroom" placeholder="Baños" value={formData.bathroom} onChange={handleChange}required />
+        <input name="room" placeholder="Habitaciones" value={formData.room} onChange={handleChange} required />
+        <input name="streammingPlatform" placeholder="Plataforma de streaming" value={formData.streammingPlatform} onChange={handleChange}  />
+        <select name="pool" value={formData.pool} onChange={handleChange} required>
+          <option value="" disabled>¿Tiene pileta?</option>
+          <option value="Si">Sí</option>
+          <option value="No">No</option>
+        </select>
 
         <button type="submit">Subir propiedad</button>
       </form>

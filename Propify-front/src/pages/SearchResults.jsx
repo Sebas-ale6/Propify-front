@@ -18,7 +18,6 @@ const SearchResults = () => {
     priceMax: 300000,
   });
 
-  // URL params
   const searchParams = new URLSearchParams(location.search);
   const destino = normalize(searchParams.get("destino"));
   const checkin = searchParams.get("checkin");
@@ -32,40 +31,32 @@ const SearchResults = () => {
         if (!response.ok) throw new Error("Error al obtener propiedades");
         const data = await response.json();
 
-        const results = data.filter((prop) => {
-          const city = normalize(prop.city);
-          const province = normalize(prop.province);
-          const destinoNormalized = normalize(destino);
+const results = data.filter((prop) => {
+  const cityMatch =
+    normalize(prop.city).includes(destino) ||
+    normalize(prop.province).includes(destino);
 
-          // Coincidencia exacta con ciudad
-          const cityMatch = city === destinoNormalized;
+  const enoughTenants = prop.maxTenants >= viajeros;
 
-          // Coincidencia con provincia (si no coincide ciudad)
-          const provinceMatch = !cityMatch && province === destinoNormalized;
+  const poolValue = normalize(prop.pool);
+  const hasPool = !filters.pool || poolValue === "si";
 
-          const locationMatch = cityMatch || provinceMatch;
+  const roomValue = parseInt(prop.room);
+  const matchesRooms =
+    !filters.rooms || (!isNaN(roomValue) && roomValue >= parseInt(filters.rooms));
 
-          const enoughTenants = prop.maxTenants >= viajeros;
+  const price = parseInt(prop.pricePerNight);
+  const priceMax = parseInt(filters.priceMax);
+  const matchesPriceMax = isNaN(priceMax) || (!isNaN(price) && price <= priceMax);
 
-          const poolValue = normalize(prop.pool);
-          const hasPool = !filters.pool || poolValue === "si";
-
-          const roomValue = parseInt(prop.room);
-          const matchesRooms =
-            !filters.rooms || (!isNaN(roomValue) && roomValue >= parseInt(filters.rooms));
-
-          const price = parseInt(prop.pricePerNight);
-          const matchesPriceMax =
-            !filters.priceMax || (!isNaN(price) && price <= filters.priceMax);
-
-          return (
-            locationMatch &&
-            enoughTenants &&
-            hasPool &&
-            matchesRooms &&
-            matchesPriceMax
-          );
-        });
+  return (
+    cityMatch &&
+    enoughTenants &&
+    hasPool &&
+    matchesRooms &&
+    matchesPriceMax
+  );
+});
 
         setFiltered(results);
       } catch (error) {

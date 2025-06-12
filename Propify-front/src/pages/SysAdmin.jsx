@@ -3,6 +3,7 @@ import UsersList from "../components/List/UsersList";
 import usersApi from "../Api/userApi";
 import { useLanguage } from "../components/context/LanguageContext";
 import UserForm from "../components/forms/UserForm";
+import Logo from "../components/Logos/Logo";
 
 const SysAdmin = () => {
   const [roleState, setRoleState] = useState("Cliente");
@@ -58,16 +59,8 @@ const SysAdmin = () => {
           alignItems: "center",
         }}
       >
-        <span
-          className="logo"
-          style={{
-            fontSize: "1.5rem",
-            fontWeight: "bold",
-            color: "#336699",
-          }}
-        >
-          {t("logo")}
-        </span>
+        <Logo /> {/* ← Logo que redirige al home */}
+
         <button
           style={{
             padding: "8px 16px",
@@ -128,7 +121,9 @@ const SysAdmin = () => {
                   fontSize: "1rem",
                   transition: "all 0.3s",
                 }}
-                onMouseOver={(e) => (e.target.style.backgroundColor = "#cfe6fc")}
+                onMouseOver={(e) =>
+                  (e.target.style.backgroundColor = "#cfe6fc")
+                }
                 onMouseOut={(e) =>
                   (e.target.style.backgroundColor =
                     roleState === role ? "#99CCFF" : "#FFFFFF")
@@ -151,7 +146,9 @@ const SysAdmin = () => {
                 cursor: "pointer",
                 fontSize: "1rem",
               }}
-              onMouseOver={(e) => (e.target.style.backgroundColor = "#43A047")}
+              onMouseOver={(e) =>
+                (e.target.style.backgroundColor = "#43A047")
+              }
               onMouseOut={(e) => (e.target.style.backgroundColor = "#4CAF50")}
             >
               Añadir usuario

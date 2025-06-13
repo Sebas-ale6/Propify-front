@@ -10,6 +10,7 @@ import MyProperties from "./pages/myProperties";
 import AddProperty from "./pages/addProperty";
 import ReservationPage from "./pages/Reservation";
 import PropertyDetail from "./pages/PropertyDetail";
+import EditProperty from "./pages/editProperty";
 
 const App = () => {
 
@@ -46,10 +47,15 @@ const App = () => {
       element: <ReservationPage/>,
       path: "/reservation/:id",
     },
-     {
-  element: <PropertyDetail />,
-  path: "/property/:id",
-},
+    {
+      element: <PropertyDetail />,
+      path: "/property/:id",
+    },
+    {
+      element: <EditProperty />,
+      path: "/edit-property/:id",
+    },
+
   ]);
   return (
     <div>

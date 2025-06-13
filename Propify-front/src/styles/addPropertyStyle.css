@@ -1,0 +1,78 @@
+.formulario {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  padding: 30px;
+  border-radius: 12px;
+  max-width: 1000px;
+  margin: 40px auto;
+  background: #faf5ee;
+  border: 1px solid #d1c3b0;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+input,
+select {
+  padding: 10px 14px;
+  border: 1px solid #e5d7c0;
+  border-radius: 6px;
+  font-size: 1rem;
+  background-color: #fffefb;
+  transition: border 0.2s ease;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: #4f5b36;
+}
+
+.descripcion {
+  grid-column: span 2;
+}
+
+.form-actions {
+  grid-column: span 2;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+button[type="submit"] {
+  padding: 12px 24px;
+  background-color: #4f5b36;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #373f25;
+}
+
+.form-title {
+  font-size: 2rem;
+  color: #373f25; 
+  margin: 0;
+  font-family: 'Merriweather';
+  text-align: center;
+  transform: translateY(50%);
+}
+

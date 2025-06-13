@@ -14,7 +14,8 @@ const translations = {
     logo: "Propify",
     login: "Iniciar Sesión",
     register: "Registrarse",
-    username: "Usuario",
+    name: "Nombre",
+    surname:"Apellido",
     reservations: "Mis Reservas",
     mainTitle: "Encuentra Tu Próxima Estadía",
     mainParagraph:
@@ -122,7 +123,8 @@ const translations = {
     logo: "Propify",
     login: "Login",
     register: "Register",
-    username: "User",
+    name: "Name",
+    surname:"Surname",
     reservations: "My Reservations",
     mainTitle: "Find Your Next Stay",
     mainParagraph:

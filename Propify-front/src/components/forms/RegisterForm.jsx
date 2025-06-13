@@ -57,10 +57,18 @@ const RegisterForm = () => {
         };
         await Auth.register(ownerPayload);
       } else {
-        // Para cliente, enviá lo que necesites (ejemplo username y email)
-        if (!usernameState) throw new Error("Llena el username");
-        // Aquí pondrías la lógica para registrar cliente
-      }
+         if (!nameState) throw new Error("Falta el nombre");
+         if (!surnameState) throw new Error("Falta el apellido");
+         const clientPayload = {
+         name: nameState,
+         surname: surnameState,
+         email: emailState,
+         password: passwordState,
+        };
+
+        await Auth.register(clientPayload);
+
+         }
 
       navigate("/");
     } catch (error) {
@@ -102,17 +110,25 @@ const RegisterForm = () => {
         </div>
 
         {/* Campos para cliente */}
-        {role === "client" && (
-          <>
-            <input
-              type="text"
-              placeholder={t("username")}
-              value={usernameState}
-              onChange={(e) => setUsernameState(e.target.value)}
-              required
-            />
-          </>
-        )}
+       {role === "client" && (
+  <>
+    <input
+      type="text"
+      placeholder={t("name")}
+      value={nameState}
+      onChange={(e) => setNameState(e.target.value)}
+      required
+    />
+
+    <input
+      type="text"
+      placeholder={t("surname")}
+      value={surnameState}
+      onChange={(e) => setSurnameState(e.target.value)}
+      required
+    />
+  </>
+)}
 
         {/* Datos comunes */}
 

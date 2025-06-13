@@ -6,6 +6,8 @@ import "../../styles/ReservationForm.css";
 
 const ReservationForm = ({ property }) => {
   const { t, language, setLanguage } = useLanguage();
+  const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState(false);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -40,8 +42,11 @@ const ReservationForm = ({ property }) => {
 
       console.log("Datos enviados:", formData);
       // Aquí podrías enviar los datos al backend incluyendo info de la propiedad
+      setMessage("¡Reserva enviada con éxito!");
+      setIsError(false);
     } catch (error) {
-      alert(error.message);
+      setMessage(error.message);
+      setIsError(true);
     }
   };
 
@@ -149,6 +154,12 @@ const ReservationForm = ({ property }) => {
         />
         <label>{t("acceptTerms")}</label>
       </div>
+
+      {message && (
+    <div className={`form-message ${isError ? "error" : "success"}`}>
+      {message}
+    </div>
+  )}
 
       <Button text={t("reserve")} action={handleSendData} className="submit-button" />
     </form>

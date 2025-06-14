@@ -9,7 +9,7 @@ const RegisterForm = () => {
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
-  const [usernameState, setUsernameState] = useState("");
+  //const [usernameState, setUsernameState] = useState("");
   const [role, setRole] = useState("client");
 
   // Nuevos estados para el rol "owner"
@@ -55,20 +55,19 @@ const RegisterForm = () => {
           dni: dniState,
           cvu: parseInt(cbuState),
         };
-        await Auth.register(ownerPayload);
+        await Auth.register(ownerPayload, "owner");
       } else {
-         if (!nameState) throw new Error("Falta el nombre");
-         if (!surnameState) throw new Error("Falta el apellido");
-         const clientPayload = {
-         name: nameState,
-         surname: surnameState,
-         email: emailState,
-         password: passwordState,
+        if (!nameState) throw new Error("Falta el nombre");
+        if (!surnameState) throw new Error("Falta el apellido");
+        const clientPayload = {
+          name: nameState,
+          surname: surnameState,
+          email: emailState,
+          password: passwordState,
         };
 
-        await Auth.register(clientPayload);
-
-         }
+        await Auth.register(clientPayload, "client");
+      }
 
       navigate("/");
     } catch (error) {
@@ -110,25 +109,25 @@ const RegisterForm = () => {
         </div>
 
         {/* Campos para cliente */}
-       {role === "client" && (
-  <>
-    <input
-      type="text"
-      placeholder={t("name")}
-      value={nameState}
-      onChange={(e) => setNameState(e.target.value)}
-      required
-    />
+        {role === "client" && (
+          <>
+            <input
+              type="text"
+              placeholder={t("name")}
+              value={nameState}
+              onChange={(e) => setNameState(e.target.value)}
+              required
+            />
 
-    <input
-      type="text"
-      placeholder={t("surname")}
-      value={surnameState}
-      onChange={(e) => setSurnameState(e.target.value)}
-      required
-    />
-  </>
-)}
+            <input
+              type="text"
+              placeholder={t("surname")}
+              value={surnameState}
+              onChange={(e) => setSurnameState(e.target.value)}
+              required
+            />
+          </>
+        )}
 
         {/* Datos comunes */}
 

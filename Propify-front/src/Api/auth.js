@@ -32,8 +32,9 @@ export default Auth;*/
 //Conexión con el back:
 
 const Auth = {
-  login: async (body) => {
-    const res = await fetch("http://localhost:5021/api/owner/login", {
+  login: async (body, role) => {
+    const endpoint = role === "owner" ? "owner" : "client";
+    const res = await fetch(`http://localhost:5021/api/${endpoint}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -45,12 +46,13 @@ const Auth = {
       throw new Error("Usuario o contraseña incorrectos");
     }
 
-    const token = await res.text(); 
+    const token = await res.text();
     return token;
   },
 
-  register: async (body) => {
-    const res = await fetch("http://localhost:5021/api/owner", {
+  register: async (body, role) => {
+    const endpoint = role === "owner" ? "owner" : "client";
+    const res = await fetch(`http://localhost:5021/api/${endpoint}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

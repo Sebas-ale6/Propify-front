@@ -19,24 +19,14 @@ const UserForm = ({ type, role }) => {
         {type === "create" ? "Crear usuario" : "Editar usuario"}
       </h2>
 
-      <input
-        placeholder="Nombre"
-        type="text"
-        name="name"
-        style={inputStyle}
-      />
+      <input placeholder="Nombre" type="text" name="name" style={inputStyle} />
       <input
         placeholder="Apellido"
         type="text"
         name="surname"
         style={inputStyle}
       />
-      <input
-        placeholder="Email"
-        type="email"
-        name="email"
-        style={inputStyle}
-      />
+      <input placeholder="Email" type="email" name="email" style={inputStyle} />
       <input
         placeholder="Contraseña"
         type="password"

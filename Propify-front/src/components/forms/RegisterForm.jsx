@@ -60,10 +60,13 @@ const RegisterForm = () => {
         if (!nameState) throw new Error("Falta el nombre");
         if (!surnameState) throw new Error("Falta el apellido");
         const clientPayload = {
-          name: nameState,
-          surname: surnameState,
-          email: emailState,
-          password: passwordState,
+         name: nameState,
+  surname: surnameState,
+  email: emailState,
+  password: passwordState,
+  numberPhone: phoneState,
+  documentType: docTypeState,
+  dni: dniState,
         };
 
         await Auth.register(clientPayload, "client");
@@ -109,25 +112,51 @@ const RegisterForm = () => {
         </div>
 
         {/* Campos para cliente */}
-        {role === "client" && (
-          <>
-            <input
-              type="text"
-              placeholder={t("name")}
-              value={nameState}
-              onChange={(e) => setNameState(e.target.value)}
-              required
-            />
+       {role === "client" && (
+  <>
+    <input
+      type="text"
+      placeholder="Nombre"
+      value={nameState}
+      onChange={(e) => setNameState(e.target.value)}
+      required
+    />
 
-            <input
-              type="text"
-              placeholder={t("surname")}
-              value={surnameState}
-              onChange={(e) => setSurnameState(e.target.value)}
-              required
-            />
-          </>
-        )}
+    <input
+      type="text"
+      placeholder="Apellido"
+      value={surnameState}
+      onChange={(e) => setSurnameState(e.target.value)}
+      required
+    />
+
+    <input
+      type="text"
+      placeholder="Teléfono"
+      value={phoneState}
+      onChange={(e) => setPhoneState(e.target.value)}
+      required
+    />
+
+    <select
+      value={docTypeState}
+      onChange={(e) => setDocTypeState(parseInt(e.target.value))}
+      required
+    >
+      <option value={1}>DNI</option>
+      <option value={2}>Passport</option>
+      <option value={3}>License</option>
+    </select>
+
+    <input
+      type="text"
+      placeholder="Número de documento"
+      value={dniState}
+      onChange={(e) => setDniState(e.target.value)}
+      required
+    />
+  </>
+)}
 
         {/* Datos comunes */}
 

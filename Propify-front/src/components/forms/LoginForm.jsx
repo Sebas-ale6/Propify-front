@@ -90,7 +90,7 @@ const LoginForm = () => {
 
         <h1 style={{ color: "black" }}>{t("login")}</h1>
 
-        {/* Selector de rol */}
+        {/* Selector de rol **/}
         <div>
           <label style={{ color: "black", marginRight: "1rem" }}>
             <input

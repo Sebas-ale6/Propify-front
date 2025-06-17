@@ -15,10 +15,11 @@
     font-weight: 500;
 }
 
-.logo {
-    font-family: 'Merriweather', serif;
-    font-size: 1.5rem;
-    color: white;
+.logo-img {
+  height: 150px;
+  width: auto;
+  object-fit: contain;
+  margin-top: 10px;
 }
 
 .nav-links {
@@ -31,13 +32,16 @@
 
 .nav-links a {
     text-decoration: none;
-    font-size: 16px;
+    font-size: 17px;
     color: white;
     transition: color 0.3s ease;
 }
 
 .nav-links a:hover {
     color: #ccc;
+}
+.nav-links li:not(.language) {
+  padding-top: 10px; 
 }
 
 /* --------------- SECTION - 1 --------------- */
@@ -300,7 +304,6 @@
 }
 
 .feature-box p {
-  font-family: 'Open Sans', sans-serif;
   font-size: 0.95rem;
   color: #333;
 }

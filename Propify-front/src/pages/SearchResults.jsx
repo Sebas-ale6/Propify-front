@@ -31,32 +31,32 @@ const SearchResults = () => {
         if (!response.ok) throw new Error("Error al obtener propiedades");
         const data = await response.json();
 
-const results = data.filter((prop) => {
-  const cityMatch =
-    normalize(prop.city).includes(destino) ||
-    normalize(prop.province).includes(destino);
+        const results = data.filter((prop) => {
+          const cityMatch =
+            normalize(prop.city).includes(destino) ||
+            normalize(prop.province).includes(destino);
 
-  const enoughTenants = prop.maxTenants >= viajeros;
+          const enoughTenants = prop.maxTenants >= viajeros;
 
-  const poolValue = normalize(prop.pool);
-  const hasPool = !filters.pool || poolValue === "si";
+          const poolValue = normalize(prop.pool);
+          const hasPool = !filters.pool || poolValue === "si";
 
-  const roomValue = parseInt(prop.room);
-  const matchesRooms =
-    !filters.rooms || (!isNaN(roomValue) && roomValue >= parseInt(filters.rooms));
+          const roomValue = parseInt(prop.room);
+          const matchesRooms =
+            !filters.rooms || (!isNaN(roomValue) && roomValue >= parseInt(filters.rooms));
 
-  const price = parseInt(prop.pricePerNight);
-  const priceMax = parseInt(filters.priceMax);
-  const matchesPriceMax = isNaN(priceMax) || (!isNaN(price) && price <= priceMax);
+          const price = parseInt(prop.pricePerNight);
+          const priceMax = parseInt(filters.priceMax);
+          const matchesPriceMax = isNaN(priceMax) || (!isNaN(price) && price <= priceMax);
 
-  return (
-    cityMatch &&
-    enoughTenants &&
-    hasPool &&
-    matchesRooms &&
-    matchesPriceMax
-  );
-});
+          return (
+            cityMatch &&
+            enoughTenants &&
+            hasPool &&
+            matchesRooms &&
+            matchesPriceMax
+          );
+        });
 
         setFiltered(results);
       } catch (error) {
@@ -74,7 +74,7 @@ const results = data.filter((prop) => {
 
       <main className="search-results-content">
         <div className="results-summary">
-          <h2>Resultados de búsqueda</h2>
+          <h2>Resultados de tu búsqueda</h2>
           <p>
             <strong>Destino:</strong> {destino} |{" "}
             <strong>Check-in:</strong> {checkin} |{" "}
@@ -89,19 +89,37 @@ const results = data.filter((prop) => {
           <div className="property-list">
             {filtered.map((prop) => (
               <div key={prop.id} className="property-card">
-                <h3>
-                  {prop.type} - {prop.city}
-                </h3>
-                <p>{prop.description}</p>
-                <p>Precio por noche: ${prop.pricePerNight}</p>
-                <p>Capacidad: {prop.maxTenants} personas</p>
+                <img
+                  src="/images/placeholder.png"
+                  alt={`Imagen de ${prop.type}`}
+                  className="property-image-side"
+                />
+                <div className="property-info">
+                <h3>{prop.type}</h3>
+                <p className="property-location">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="location-icon"
+                    viewBox="0 0 384 512"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M168 0C75.1 0 0 75.1 0 168c0 87.3 126.2 229.3 160.4 265.1a24 24 0 0 0 35.2 0C213.8 397.3 340 255.3 340 168 340 75.1 264.9 0 168 0zm0 224a56 56 0 1 1 0-112 56 56 0 0 1 0 112z"
+                    />
+                  </svg>
+                  {prop.city}
+                </p>
+                <p>
+                  Precio por noche: <span className="precio-valor">${prop.pricePerNight}</span>
+                </p>
+                <p> Capacidad: {prop.maxTenants} personas</p>
                 <button
                   className="reserve-button"
                   onClick={() => navigate(`/property/${prop.id}`)}
                 >
-                  Reservar
+                  Ver más
                 </button>
-
+                </div>
               </div>
             ))}
           </div>

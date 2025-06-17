@@ -1,15 +1,12 @@
 .footer {
-  background-color: #4a3b30; /* color tierra oscuro */
+  background-color: #4a3b30; 
   color: white;
-  padding: 1.2rem 1rem; /* más finito */
-  font-family: 'Open Sans', sans-serif;
-  font-size: 0.85rem;
+  padding: 0.6rem 1rem; 
+  font-size: 0.9rem;
   width: 100%;
   box-sizing: border-box;
 }
-.footer h2{
-    font-family: 'Merriweather', serif;
-}
+
 .footer-container {
   max-width: 1200px;
   margin:0 auto;
@@ -41,6 +38,23 @@
 }
 
 .footer-column p:hover {
-  color: #fffae6; /* más claro */
+  color: #fffae6; 
   text-decoration: underline;
+}
+.logo-footer {
+  height: 85px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+  margin-bottom: 0.3rem;
+  cursor: pointer;
+}
+.footer-email {
+  margin: 0;
+  font-size: 0.85rem;
+  color: white;
+}
+.footer-column:first-child {
+  align-items: center;
+  text-align: center;
 }

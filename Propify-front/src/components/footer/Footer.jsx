@@ -1,13 +1,16 @@
 import "./Footer.css";
-
+import logo from "../../assets/logo.png";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-column">
-          <h2>Propify</h2>
-          <h5>emailayuda@propify.com.ar</h5>
+          <Link to="/">
+            <img src={logo} alt="Propify Logo" className="logo-footer" />
+          </Link>
+          <p className="footer-email">emailayuda@propify.com.ar</p>
         </div>
 
         <div className="footer-column">

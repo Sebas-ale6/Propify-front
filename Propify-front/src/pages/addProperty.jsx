@@ -43,19 +43,19 @@ const AddProperty = () => {
       stateProperty: Number(formData.stateProperty),
       ownerEmail: currentUser?.email || "",
     };
-
+console.log(body)
     try {
       const res = await fetch("http://localhost:5021/api/property", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
         },
         body: JSON.stringify(body),
       });
 
       if (!res.ok) {
-        const errorData = await res.json();
+        const errorData = await res.text();
         console.error("Error al crear propiedad:", errorData);
         throw new Error(errorData.message || "Error al subir propiedad");
       }

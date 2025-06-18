@@ -46,7 +46,7 @@ const App = () => {
     },
      {
       element: <ReservationPage/>,
-      path: "/reservation/:id",
+      path: "/reservation/",
     },
     {
       element: <PropertyDetail />,

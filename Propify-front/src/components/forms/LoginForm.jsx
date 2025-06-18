@@ -3,11 +3,13 @@ import Button from "../buttons/Button";
 import { useLanguage } from "../context/LanguageContext";
 import Auth from "../../Api/auth";
 import { useNavigate } from "react-router-dom";
+import SysAdmin from "../../pages/SysAdmin";
+import { jwtDecode } from "jwt-decode";
+
 
 const LoginForm = () => {
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
-  const [role, setRole] = useState("client"); // Estado para el rol
   const { t, language, setLanguage } = useLanguage();
   const navigate = useNavigate();
 
@@ -19,9 +21,6 @@ const LoginForm = () => {
     setPasswordState(event.target.value);
   };
 
-  const handleRoleChange = (event) => {
-    setRole(event.target.value);
-  };
 
   const handleLanguageToggle = () => {
     setLanguage(language === "es" ? "en" : "es");
@@ -45,18 +44,23 @@ const LoginForm = () => {
       const token = await Auth.login(body);
 
       localStorage.setItem("token", token);
-      localStorage.setItem("role", role);
+      const decodetoken = jwtDecode(token)
+      const userRole = decodetoken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+      localStorage.setItem("role", userRole);
 
       // Obtener datos del usuario según rol, usando token
-      const res = await fetch(`http://localhost:5021/api/${role}`, {
+      const res = await fetch(`http://localhost:5021/api/${userRole}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
+
+
       if (!res.ok) throw new Error("No se pudieron obtener los datos del usuario");
 
       const users = await res.json();
+      console.log(users)
 
       const currentUser = users.find((u) => u.email === emailState);
 
@@ -64,16 +68,26 @@ const LoginForm = () => {
 
       localStorage.setItem("currentUser", JSON.stringify(currentUser));
 
+      if (userRole==="sysadmin"){
+          navigate("/sysadmin")
+        }
+      
+
       // Redirigir según si hay búsqueda pendiente
       const pendingSearch = localStorage.getItem("pendingSearch");
+      
 
       if (pendingSearch) {
         const params = new URLSearchParams(JSON.parse(pendingSearch)).toString();
         localStorage.removeItem("pendingSearch");
         navigate(`/search?${params}`);
       } else {
+        console.log(role)
+        
         navigate("/");
+
       }
+      
     } catch (error) {
       alert(error.message);
     }
@@ -90,30 +104,7 @@ const LoginForm = () => {
 
         <h1 style={{ color: "black" }}>{t("login")}</h1>
 
-        {/* Selector de rol **/}
-        <div>
-          <label style={{ color: "black", marginRight: "1rem" }}>
-            <input
-              type="radio"
-              name="role"
-              value="client"
-              checked={role === "client"}
-              onChange={handleRoleChange}
-            />
-            Cliente
-          </label>
-
-          <label style={{ color: "black" }}>
-            <input
-              type="radio"
-              name="role"
-              value="owner"
-              checked={role === "owner"}
-              onChange={handleRoleChange}
-            />
-            Owner
-          </label>
-        </div>
+    
 
         <input
           type="text"

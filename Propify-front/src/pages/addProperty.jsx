@@ -57,7 +57,7 @@ console.log(body)
       if (!res.ok) {
         const errorData = await res.text();
         console.error("Error al crear propiedad:", errorData);
-        throw new Error(errorData.message || "Error al subir propiedad");
+       // throw new Error(errorData.message || "Error al subir propiedad");
       }
 
       alert("Propiedad cargada con éxito");

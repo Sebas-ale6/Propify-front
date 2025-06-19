@@ -11,7 +11,12 @@ const PropertyDetail = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch(`http://localhost:5021/api/property/${id}`)
+    const token = localStorage.getItem("token");
+    fetch(`http://localhost:5021/api/property/${id}` , {
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        })
       .then((res) => res.json())
       .then((data) => setProperty(data))
       .catch((err) => console.error("Error:", err));

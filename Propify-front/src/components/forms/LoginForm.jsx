@@ -29,7 +29,7 @@ const LoginForm = () => {
   const handleSendData = async (event) => {
     event.preventDefault();
 
-    try {
+   try {
       if (!emailState.includes("@")) throw new Error("No es un mail");
       if (!passwordState) throw new Error("Llena el password");
 
@@ -93,7 +93,7 @@ const LoginForm = () => {
         localStorage.removeItem("pendingSearch");
         navigate(`/search?${params}`);
       } else {
-        console.log(role)
+        
         
         navigate("/");
 

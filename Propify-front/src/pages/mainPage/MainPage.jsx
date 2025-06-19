@@ -21,6 +21,7 @@ import Features from './Features';
 const MainPage = () => {
   const [tokenState, setTokenState] = useState(null);
   const [isOwner, setIsOwner] = useState(false);
+  const [isClient, setIsClient] = useState(false);
   const { t, language, setLanguage } = useLanguage();
   const [selectedPlace, setSelectedPlace] = useState("");
   const [checkIn, setCheckIn] = useState("");
@@ -89,8 +90,21 @@ const MainPage = () => {
     window.localStorage.removeItem("token")
     console.log("sesion cerrada")
     setTokenState(null)
-    setIsOwner(false);
+    setIsOwner(false)
+    setIsClient(false);
   }
+
+  useEffect(() => {
+    let token = window.localStorage.getItem("token")
+    const role = localStorage.getItem("role");
+    console.log(token);
+    if (token) {
+      setTokenState(token)
+      setIsClient(role === "client");
+    } else {
+      console.log("usuario no logueado")
+    }
+  }, [])
 
   useEffect(() => {
     let token = window.localStorage.getItem("token")
@@ -129,13 +143,18 @@ const MainPage = () => {
             {isOwner && (
               <li className="my-properties">
                 <Link to="/my-properties">Mis Propiedades</Link>
-              </li>
+              </li>   
+            )}
+             {isOwner && (
+              <li className="my-reservations">
+              <a href="#reservations">{t("reservations")}</a>
+            </li>
             )}
 
 
-            <li className="my-reservations">
+            {isClient &&(<li className="my-reservations">
               <a href="#reservations">{t("reservations")}</a>
-            </li>
+            </li>)}
           </ul>
         </nav>
 

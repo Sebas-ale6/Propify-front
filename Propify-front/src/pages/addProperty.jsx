@@ -4,7 +4,7 @@ import "../styles/addPropertyStyle.css"
 
 const AddProperty = () => {
   const navigate = useNavigate();
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"));;
   const token = localStorage.getItem("token");
 
   const [formData, setFormData] = useState({

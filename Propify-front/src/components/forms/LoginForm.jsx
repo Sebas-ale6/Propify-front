@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "../buttons/Button";
 import { useLanguage } from "../context/LanguageContext";
-import Auth from "../../Api/auth"; // ✅ IMPORTANTE
+import Auth from "../../Api/auth";
 import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
@@ -22,6 +22,12 @@ const LoginForm = () => {
     setLanguage(language === "es" ? "en" : "es");
   };
 
+  // 🔥 función para decodificar el token y leer su payload
+  const parseJwt = (token) => {
+    if (!token) return null;
+    return JSON.parse(atob(token.split(".")[1]));
+  };
+
   const handleSendData = async (event) => {
     try {
       event.preventDefault();
@@ -40,29 +46,47 @@ const LoginForm = () => {
       };
 
       const token = await Auth.login(body);
-
       localStorage.setItem("token", token);
 
-      //traemos todos los owners
-      const res = await fetch("http://localhost:5021/api/owner", {
+      const tokenData = parseJwt(token);
+      const roleClaim =
+        tokenData[
+          "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+        ];
+
+      if (!roleClaim) {
+        throw new Error("El token no contiene el rol");
+      }
+
+      let url = "";
+      if (roleClaim === "owner") {
+        url = "http://localhost:5021/api/owner";
+      } else if (roleClaim === "client") {
+        url = "http://localhost:5021/api/client";
+      } else if (roleClaim === "sysAdmin") {
+        url = "http://localhost:5021/api/sysAdmin";
+      } else {
+        throw new Error("Rol no reconocido");
+      }
+
+      const res = await fetch(url, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
 
-      if (!res.ok) throw new Error("No se pudieron obtener los owners");
+      if (!res.ok) throw new Error("No se pudieron obtener los usuarios");
 
-      const owners = await res.json();
+      const users = await res.json();
 
-      // buscamos el owner con el mismo email
-      const currentUser = owners.find((owner) => owner.email === emailState);
+      const currentUser = users.find((u) => u.email === emailState);
 
       if (!currentUser) {
-        throw new Error("No se encontró un owner con ese email");
+        throw new Error(`No se encontró un ${roleClaim} con ese email`);
       }
 
       localStorage.setItem("currentUser", JSON.stringify(currentUser));
-      localStorage.setItem("role", "owner");
+      localStorage.setItem("role", roleClaim);
 
       // Redirigir según si hay búsqueda pendiente
       const pendingSearch = localStorage.getItem("pendingSearch");
@@ -72,12 +96,13 @@ const LoginForm = () => {
         localStorage.removeItem("pendingSearch");
         navigate(`/search?${params}`);
       } else {
-        navigate("/");
+        navigate("/"); // o a home, dashboard, etc.
       }
     } catch (error) {
       alert(error.message);
     }
   };
+
   return (
     <div className="login">
       <form>

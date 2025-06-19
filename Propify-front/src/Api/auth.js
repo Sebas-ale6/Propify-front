@@ -32,9 +32,8 @@ export default Auth;*/
 //Conexión con el back:
 
 const Auth = {
-  login: async (body, role) => {
-    const endpoint = role === "owner" ? "owner" : "client";
-    const res = await fetch(`http://localhost:5021/api/${endpoint}`, {
+  login: async (body) => {
+    const res = await fetch("http://localhost:5021/api/authenticate/authenticate", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,6 +42,8 @@ const Auth = {
     });
 
     if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Error login API:", errorText);
       throw new Error("Usuario o contraseña incorrectos");
     }
 
@@ -61,6 +62,8 @@ const Auth = {
     });
 
     if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Error registro API:", errorText);
       throw new Error("No se pudo registrar el usuario");
     }
 

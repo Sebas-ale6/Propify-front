@@ -2,13 +2,14 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 
-import Auth from "../../Api/auth";
+import Auth from "../../Api/authreg";
 import Button from "../buttons/Button";
 
 const RegisterForm = () => {
   const [emailState, setEmailState] = useState("");
   const [passwordState, setPasswordState] = useState("");
   const [confirmPasswordState, setConfirmPasswordState] = useState("");
+  
   //const [usernameState, setUsernameState] = useState("");
   const [role, setRole] = useState("client");
 
@@ -64,6 +65,9 @@ const RegisterForm = () => {
           surname: surnameState,
           email: emailState,
           password: passwordState,
+          numberPhone: phoneState,
+          documentType: docTypeState, // asegurate que sea número
+          dni: dniState,
         };
 
         await Auth.register(clientPayload, "client");
@@ -126,7 +130,34 @@ const RegisterForm = () => {
               onChange={(e) => setSurnameState(e.target.value)}
               required
             />
+              <input
+              type="text"
+              placeholder="Teléfono"
+              value={phoneState}
+              onChange={(e) => setPhoneState(e.target.value)}
+              required
+            />
+
+            <select
+              value={docTypeState}
+              onChange={(e) => setDocTypeState(parseInt(e.target.value, 10))}
+              required
+            >
+              <option value={1}>DNI</option>
+              <option value={2}>Passport</option>
+              <option value={3}>License</option>
+            </select>
+
+            <input
+              type="text"
+              placeholder="Número de documento"
+              value={dniState}
+              onChange={(e) => setDniState(e.target.value)}
+              required
+            />
+          
           </>
+          
         )}
 
         {/* Datos comunes */}

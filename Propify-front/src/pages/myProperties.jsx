@@ -32,8 +32,9 @@ const MyProperties = () => {
         return res.json();
       })
       .then((data) => {
+        console.log(data)
         const myProps = data.filter(
-          (property) => property.ownerId === currentUser.id
+          (property) => property.ownerId == currentUser.id
         );
         setProperties(myProps);
       })

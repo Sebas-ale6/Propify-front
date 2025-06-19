@@ -42,7 +42,9 @@ const AddProperty = () => {
       maxTenants: Number(formData.maxTenants),
       stateProperty: Number(formData.stateProperty),
       ownerEmail: currentUser?.email || "",
+  
     };
+    console.log(currentUser)
 console.log(body)
     try {
       const res = await fetch("http://localhost:5021/api/property", {
@@ -57,7 +59,7 @@ console.log(body)
       if (!res.ok) {
         const errorData = await res.text();
         console.error("Error al crear propiedad:", errorData);
-       // throw new Error(errorData.message || "Error al subir propiedad");
+        throw new Error(errorData.message);
       }
 
       alert("Propiedad cargada con éxito");

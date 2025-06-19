@@ -45,8 +45,19 @@ const LoginForm = () => {
 
       localStorage.setItem("token", token);
       const decodetoken = jwtDecode(token)
+      console.log(decodetoken)
       const userRole = decodetoken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
       localStorage.setItem("role", userRole);
+
+      if(userRole==="owner"){
+        const currentUser={
+          email:emailState,id:decodetoken.sub
+
+        }
+        localStorage.setItem("currentUser", JSON.stringify(currentUser));
+        navigate("/");
+        return;
+      }
 
       // Obtener datos del usuario según rol, usando token
       const res = await fetch(`http://localhost:5021/api/${userRole}`, {

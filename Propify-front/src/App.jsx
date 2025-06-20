@@ -11,6 +11,7 @@ import AddProperty from "./pages/addProperty";
 import ReservationPage from "./pages/Reservation";
 import PropertyDetail from "./pages/PropertyDetail";
 import EditProperty from "./pages/editProperty";
+import PaymentPage from "./pages/PaymentPage";
 
 const App = () => {
 
@@ -55,6 +56,8 @@ const App = () => {
       element: <EditProperty />,
       path: "/edit-property/:id",
     },
+    { element: <PaymentPage/>, 
+      path: "/payment", }
 
   ]);
   return (

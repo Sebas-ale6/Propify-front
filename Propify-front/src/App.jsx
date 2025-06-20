@@ -9,8 +9,8 @@ import SysAdmin from "./pages/SysAdmin";
 import MyProperties from "./pages/myProperties";
 import AddProperty from "./pages/addProperty";
 import ReservationPage from "./pages/Reservation";
-import PaymentPage from "./pages/PaymentPage";
-
+import PropertyDetail from "./pages/PropertyDetail";
+import EditProperty from "./pages/editProperty";
 
 
 
@@ -56,9 +56,7 @@ const App = () => {
     {
       element: <EditProperty />,
       path: "/edit-property/:id",
-    },
-    { element: <PaymentPage/>,
-      path: "/payment", }
+    }
 
 
   ]);

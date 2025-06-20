@@ -11,7 +11,7 @@ import AddProperty from "./pages/addProperty";
 import ReservationPage from "./pages/Reservation";
 import PropertyDetail from "./pages/PropertyDetail";
 import EditProperty from "./pages/editProperty";
-//import PaymentPage from "./pages/PaymentPage";
+import PaymentPage from "./pages/PaymentPage";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -55,8 +55,7 @@ const App = () => {
       element: <EditProperty />,
       path: "/edit-property/:id",
     },
-    /* { element: <PaymentPage/>, 
-      path: "/payment", } */
+    { element: <PaymentPage />, path: "/payment" },
   ]);
   return (
     <div>

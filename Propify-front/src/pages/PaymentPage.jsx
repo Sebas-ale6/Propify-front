@@ -59,7 +59,7 @@ const PaymentPage = () => {
                   className="mb-2"
                 />
                 <div className="text-muted ms-4 mb-3">
-                  Pago seguro en línea. Se necesita una tarjeta de crédito.
+                  Pago seguro en línea.Se necesita una tarjeta de crédito.
                   <a href="">Pagar</a>
                 </div>
 

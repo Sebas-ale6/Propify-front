@@ -44,23 +44,28 @@ const PaymentPage = () => {
               <Form>
                 <Form.Check
                   type="radio"
-                  id="paypal"
-                  label="Paypal"
+                  id="efectivo"
+                  label="Efectivo"
+                  name="paymentMethod"
+                  className="mb-2"
+                />
+
+
+                <Form.Check
+                  type="radio"
+                  id="nercadipago"
+                  label="Mercado pago"
                   name="paymentMethod"
                   className="mb-2"
                 />
                 <div className="text-muted ms-4 mb-3">
                   Pago seguro en línea. Se necesita una tarjeta de crédito.
+                  <a href="">Pagar</a>
                 </div>
 
-                <Form.Check
-                  type="radio"
-                  id="creditCard"
-                  label="Tarjeta de crédito"
-                  name="paymentMethod"
-                  className="mb-2"
-                />
                 <div className="text-muted ms-4 mb-3">
+                  Tarjeta/credito  -PROXIMAMENTE-
+                  <br />
                   Transferencia segura de dinero usando tu cuenta bancaria.
                 </div>
 

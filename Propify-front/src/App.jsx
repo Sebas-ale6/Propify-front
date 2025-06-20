@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import './App.css'
+import "./App.css";
 import LoginPage from "./pages/Login";
 import RegisterPage from "./pages/Register";
 import MainPage from "./pages/mainPage/MainPage";
@@ -11,10 +11,9 @@ import AddProperty from "./pages/addProperty";
 import ReservationPage from "./pages/Reservation";
 import PropertyDetail from "./pages/PropertyDetail";
 import EditProperty from "./pages/editProperty";
-import PaymentPage from "./pages/PaymentPage";
+//import PaymentPage from "./pages/PaymentPage";
 
 const App = () => {
-
   const router = createBrowserRouter([
     {
       element: <MainPage />,
@@ -44,8 +43,8 @@ const App = () => {
       element: <AddProperty />,
       path: "/add-properties",
     },
-     {
-      element: <ReservationPage/>,
+    {
+      element: <ReservationPage />,
       path: "/reservation/:id",
     },
     {
@@ -56,15 +55,12 @@ const App = () => {
       element: <EditProperty />,
       path: "/edit-property/:id",
     },
-    { element: <PaymentPage/>, 
-      path: "/payment", }
-
+    /* { element: <PaymentPage/>, 
+      path: "/payment", } */
   ]);
   return (
     <div>
-     
-        <RouterProvider router={router} />
-      
+      <RouterProvider router={router} />
     </div>
   );
 };

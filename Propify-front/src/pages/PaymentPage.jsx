@@ -1,8 +1,60 @@
 import React from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import "../styles/PaymentPage.css";
 
 const PaymentPage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { property, checkin, checkout, travelers } = location.state || {};
+  const [total, setTotal] = useState(0);
+
+  useEffect(() => {
+    if (!property || !checkin || !checkout) {
+      navigate("/"); // si no hay datos, redirigir
+      return;
+    }
+
+    const start = new Date(checkin);
+    const end = new Date(checkout);
+    const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+    const price = property.pricePerNight * nights;
+    const taxes = Math.floor(price * 0.1); // 10% impuestos
+    setTotal(price + taxes);
+  }, [property, checkin, checkout]);
+
+  const handleFinalizarReserva = async () => {
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await fetch("http://localhost:5021/api/booking", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          propertyId: property.id,
+          checkInDate: checkin,
+          checkOutDate: checkout,
+          numbersOfTenants: travelers,
+          paymentMethod: "Transferencia", // o el que elija el usuario
+        }),
+      });
+
+      if (!response.ok) throw new Error("Error al crear la reserva");
+
+      const data = await response.json();
+      console.log("Reserva creada:", data);
+
+      // Podés redirigir a una página de confirmación
+      navigate("/reservation-confirmation", { state: data });
+    } catch (error) {
+      console.error("Error al finalizar reserva:", error);
+      alert("Hubo un problema al finalizar la reserva.");
+    }
+  };
   return (
     <div className="payment-page">
       {/* Header */}
@@ -50,7 +102,6 @@ const PaymentPage = () => {
                   className="mb-2"
                 />
 
-
                 <Form.Check
                   type="radio"
                   id="nercadipago"
@@ -64,7 +115,7 @@ const PaymentPage = () => {
                 </div>
 
                 <div className="text-muted ms-4 mb-3">
-                  Tarjeta/credito  -PROXIMAMENTE-
+                  Tarjeta/credito -PROXIMAMENTE-
                   <br />
                   Transferencia segura de dinero usando tu cuenta bancaria.
                 </div>
@@ -102,25 +153,24 @@ const PaymentPage = () => {
           <Col md={5}>
             <h3>Resumen</h3>
             <div className="text-muted mb-3">
-              *Datos de la habitación, duración del viaje, destino, etc...*
+              {property?.type} en {property?.province} ({property?.city}) <br />
+              Desde <strong>{checkin}</strong> hasta <strong>{checkout}</strong>
+              <br />
+              {travelers} viajero/s
             </div>
             <Card className="p-3 mb-3">
               <div className="d-flex justify-content-between">
                 <span>Transacción:</span>
-                <span>$0</span>
+                <span>${property?.pricePerNight}</span>
               </div>
               <div className="d-flex justify-content-between">
-                <span>Descuento por puntos:</span>
-                <span>$0.00</span>
-              </div>
-              <div className="d-flex justify-content-between mb-2">
-                <span>Descuento por tarjeta de regalo:</span>
-                <span>$0.00</span>
+                <span>Impuestos (10%):</span>
+                <span>${Math.floor(total * 0.1)}</span>
               </div>
               <hr />
               <div className="d-flex justify-content-between fw-bold text-success">
                 <span>Total:</span>
-                <span>$0</span>
+                <span>${total}</span>
               </div>
             </Card>
             <Card className="p-2 mb-3 bg-light">
@@ -131,7 +181,11 @@ const PaymentPage = () => {
               </small>
             </Card>
 
-            <Button variant="success" className="w-100">
+            <Button
+              variant="success"
+              className="w-100"
+              onClick={handleFinalizarReserva}
+            >
               Finalizar
             </Button>
           </Col>

@@ -6,7 +6,11 @@ import SearchFilters from "../components/filter/SearchFilters";
 import "../styles/SearchResultsStyle.css";
 
 const normalize = (str) =>
-  str?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+  str
+    ?.toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .trim();
 
 const SearchResults = () => {
   const location = useLocation();
@@ -19,44 +23,38 @@ const SearchResults = () => {
   });
 
   const searchParams = new URLSearchParams(location.search);
-  const destino = normalize(searchParams.get("destino"));
+  const province = searchParams.get("province");
   const checkin = searchParams.get("checkin");
   const checkout = searchParams.get("checkout");
-  const viajeros = parseInt(searchParams.get("viajeros"));
+  const guests = parseInt(searchParams.get("guests"));
 
   useEffect(() => {
-    const fetchAndFilter = async () => {
+    const fetchAvailableProperties = async () => {
       try {
-        const response = await fetch("http://localhost:5021/api/property");
+        const url = `http://localhost:5021/api/property/available?province=${encodeURIComponent(
+          province
+        )}&checkin=${checkin}&checkout=${checkout}&guests=${guests}`;
+        const response = await fetch(url);
         if (!response.ok) throw new Error("Error al obtener propiedades");
+
         const data = await response.json();
 
-const results = data.filter((prop) => {
-  const cityMatch =
-    normalize(prop.city).includes(destino) ||
-    normalize(prop.province).includes(destino);
+        const results = data.filter((prop) => {
+          const poolValue = normalize(prop.pool);
+          const hasPool = !filters.pool || poolValue === "si";
 
-  const enoughTenants = prop.maxTenants >= viajeros;
+          const roomValue = parseInt(prop.room);
+          const matchesRooms =
+            !filters.rooms ||
+            (!isNaN(roomValue) && roomValue >= parseInt(filters.rooms));
 
-  const poolValue = normalize(prop.pool);
-  const hasPool = !filters.pool || poolValue === "si";
+          const price = parseInt(prop.pricePerNight);
+          const priceMax = parseInt(filters.priceMax);
+          const matchesPriceMax =
+            isNaN(priceMax) || (!isNaN(price) && price <= priceMax);
 
-  const roomValue = parseInt(prop.room);
-  const matchesRooms =
-    !filters.rooms || (!isNaN(roomValue) && roomValue >= parseInt(filters.rooms));
-
-  const price = parseInt(prop.pricePerNight);
-  const priceMax = parseInt(filters.priceMax);
-  const matchesPriceMax = isNaN(priceMax) || (!isNaN(price) && price <= priceMax);
-
-  return (
-    cityMatch &&
-    enoughTenants &&
-    hasPool &&
-    matchesRooms &&
-    matchesPriceMax
-  );
-});
+          return hasPool && matchesRooms && matchesPriceMax;
+        });
 
         setFiltered(results);
       } catch (error) {
@@ -65,8 +63,8 @@ const results = data.filter((prop) => {
       }
     };
 
-    fetchAndFilter();
-  }, [destino, checkin, checkout, viajeros, filters]);
+    fetchAvailableProperties();
+  }, [province, checkin, checkout, guests, filters]);
 
   return (
     <div className="search-results-page">
@@ -76,10 +74,9 @@ const results = data.filter((prop) => {
         <div className="results-summary">
           <h2>Resultados de búsqueda</h2>
           <p>
-            <strong>Destino:</strong> {destino} |{" "}
-            <strong>Check-in:</strong> {checkin} |{" "}
-            <strong>Check-out:</strong> {checkout} |{" "}
-            <strong>Viajeros:</strong> {viajeros}
+            <strong>Destino:</strong> {province} | <strong>Check-in:</strong>{" "}
+            {checkin} | <strong>Check-out:</strong> {checkout} |{" "}
+            <strong>Viajeros:</strong> {guests}
           </p>
         </div>
 
@@ -97,11 +94,19 @@ const results = data.filter((prop) => {
                 <p>Capacidad: {prop.maxTenants} personas</p>
                 <button
                   className="reserve-button"
-                  onClick={() => navigate(`/property/${prop.id}`)}
+                  onClick={() =>
+                    navigate("/payment", {
+                      state: {
+                        property: prop,
+                        checkin,
+                        checkout,
+                        travelers: guests,
+                      },
+                    })
+                  }
                 >
                   Reservar
                 </button>
-
               </div>
             ))}
           </div>
@@ -116,5 +121,4 @@ const results = data.filter((prop) => {
     </div>
   );
 };
-
 export default SearchResults;

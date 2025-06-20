@@ -12,8 +12,6 @@ import ReservationPage from "./pages/Reservation";
 import PropertyDetail from "./pages/PropertyDetail";
 import EditProperty from "./pages/editProperty";
 
-
-
 const App = () => {
 
   const router = createBrowserRouter([

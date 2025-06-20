@@ -1,0 +1,75 @@
+*{
+    width: 100%;
+}
+.payment-page {
+  background-color: #f8f1e7;
+
+}
+
+/* Header */
+.custom-header {
+  background-color: #2b3319;
+  color: white;
+  padding: 0.5rem 0;
+}
+
+.logo {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.lang-button {
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  font-weight: bold;
+  border: 1px solid white;
+}
+
+.username-button {
+  background-color: #7b6357;
+  border: none;
+  border-radius: 10px;
+}
+
+/* Banner */
+.banner {
+  background-image: url("imagen.png");
+  background-size: cover;
+  background-position: center;
+  text-align: center;
+  padding: 4rem 1rem;
+  color: white;
+}
+
+.banner h2 {
+  background-color: rgba(0, 0, 0, 0.5);
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+}
+
+.banner p {
+  background-color: rgba(0, 0, 0, 0.4);
+  display: inline-block;
+  padding: 0.3rem 0.8rem;
+  border-radius: 5px;
+  margin-top: 0.5rem;
+}
+
+/* Footer */
+.footer {
+  background-color: #2b3319;
+  color: white;
+  padding: 1rem 0;
+  margin-top: 2rem;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li {
+  margin-bottom: 0.5rem;
+}

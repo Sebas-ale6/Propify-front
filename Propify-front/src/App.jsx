@@ -9,7 +9,7 @@ import SysAdmin from "./pages/SysAdmin";
 import MyProperties from "./pages/myProperties";
 import AddProperty from "./pages/addProperty";
 import ReservationPage from "./pages/Reservation";
-import PaymentPage from "./pages/PaymentPage";
+
 
 
 
@@ -48,10 +48,7 @@ const App = () => {
       element: <ReservationPage/>,
       path: "/reservation",
     },
-    {
-      element: <PaymentPage/>,
-      path: "/payment",
-    }
+
 
   ]);
   return (

@@ -54,7 +54,7 @@ const App = () => {
     {
       element: <EditProperty />,
       path: "/edit-property/:id",
-    }
+    },
   ]);
 
   return (

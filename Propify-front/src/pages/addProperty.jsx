@@ -1,6 +1,32 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "../styles/addPropertyStyle.css"
+import "../styles/addPropertyStyle.css";
+
+const PROVINCES = [
+  "Buenos Aires",
+  "Catamarca",
+  "Chaco",
+  "Chubut",
+  "Córdoba",
+  "Corrientes",
+  "Entre Ríos",
+  "Formosa",
+  "Jujuy",
+  "La Pampa",
+  "La Rioja",
+  "Mendoza",
+  "Misiones",
+  "Neuquén",
+  "Río Negro",
+  "Salta",
+  "San Juan",
+  "San Luis",
+  "Santa Cruz",
+  "Santa Fe",
+  "Santiago del Estero",
+  "Tierra del Fuego",
+  "Tucumán",
+];
 
 const AddProperty = () => {
   const navigate = useNavigate();
@@ -24,6 +50,12 @@ const AddProperty = () => {
     pool: "",
   });
 
+  /*const [images, setImages] = useState([]);
+
+  const handleImageChange = (e) => {
+    setImages([...e.target.files]);
+  };*/
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -42,16 +74,17 @@ const AddProperty = () => {
       maxTenants: Number(formData.maxTenants),
       stateProperty: Number(formData.stateProperty),
       ownerEmail: currentUser?.email || "",
-  
     };
-    console.log(currentUser)
-console.log(body)
+
+    console.log(currentUser);
+    console.log(body);
+
     try {
       const res = await fetch("http://localhost:5021/api/property", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(body),
       });
@@ -110,7 +143,18 @@ console.log(body)
 
         <div className="form-group">
           <label htmlFor="province">Provincia</label>
-          <input id="province" name="province" value={formData.province} onChange={handleChange} required />
+          <select
+            id="province"
+            name="province"
+            value={formData.province}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled>Seleccioná provincia</option>
+            {PROVINCES.map((p) => (
+              <option key={p} value={p}>{p}</option>
+            ))}
+          </select>
         </div>
 
         <div className="form-group">
@@ -175,6 +219,11 @@ console.log(body)
           </select>
         </div>
 
+        {/* IMÁGENES */}
+        <div className="form-group">
+          <label htmlFor="images">Imágenes</label>
+        </div>
+
         <div className="form-actions">
           <button type="submit">Subir propiedad</button>
         </div>
@@ -184,5 +233,6 @@ console.log(body)
 };
 
 export default AddProperty;
+
 
 

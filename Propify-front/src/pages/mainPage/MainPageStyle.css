@@ -30,6 +30,22 @@
     padding: 0;
 }
 
+.nav-log-out {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+  margin: 0;
+  padding: 0;
+  font-size: 17px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 150;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.1em 0.8em;
+  cursor: pointer;
+  transform: translateY(-5%);
+}
+
 .nav-links a {
     text-decoration: none;
     font-size: 17px;
@@ -252,7 +268,7 @@
 
 .swiper-pagination {
   bottom: -3px !important;
-}
+} */
 
 /* --------------- SECTION - 3 --------------- */
 
@@ -360,4 +376,19 @@
 .search-item select:focus {
   border-color:  #8b7763;
   box-shadow: 0 0 0 2px rgba(139, 119, 99, 0.3); /* efecto foco */
+}
+
+
+
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.property-image {
+  width: 100%; 
+  height : 250px; 
+  object-fit: cover;
+  border-radius: 10px;
 }

@@ -11,7 +11,6 @@ import AddProperty from "./pages/addProperty";
 import ReservationPage from "./pages/Reservation";
 import PropertyDetail from "./pages/PropertyDetail";
 import EditProperty from "./pages/editProperty";
-import NotFound from "./pages/NotFound"; 
 
 const App = () => {
 
@@ -46,7 +45,7 @@ const App = () => {
     },
      {
       element: <ReservationPage/>,
-      path:  "/reservation/:id",
+      path: "/reservation/:id",
     },
     {
       element: <PropertyDetail />,
@@ -56,10 +55,7 @@ const App = () => {
       element: <EditProperty />,
       path: "/edit-property/:id",
     },
-    {
-      element: <NotFound />,
-      path: "*",
-    },
+
   ]);
   return (
     <div>

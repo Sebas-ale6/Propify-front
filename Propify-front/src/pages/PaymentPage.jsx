@@ -2,7 +2,7 @@ import React from "react";
 import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import "../styles/PaymentPage.css";
+//import "../styles/PaymentPage.css";
 
 const PaymentPage = () => {
   const location = useLocation();
@@ -27,6 +27,23 @@ const PaymentPage = () => {
   const handleFinalizarReserva = async () => {
     try {
       const token = localStorage.getItem("token");
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+      if (!token || !currentUser?.email) {
+        alert("Debes estar logueado para realizar una reserva.");
+        navigate("/login");
+        return;
+      }
+
+      const body = {
+        propertyId: property.id,
+        clientName: currentUser.email, // ✅ este campo es requerido
+        checkInDate: checkin,
+        checkOutDate: checkout,
+        numbersOfTenants: travelers,
+        state: 2, // Confirmada, según tu lógica
+        paymentMethod: "Transferencia",
+      };
 
       const response = await fetch("http://localhost:5021/api/booking", {
         method: "POST",
@@ -34,24 +51,22 @@ const PaymentPage = () => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          propertyId: property.id,
-          checkInDate: checkin,
-          checkOutDate: checkout,
-          numbersOfTenants: travelers,
-          paymentMethod: "Transferencia", // o el que elija el usuario
-        }),
+        body: JSON.stringify(body),
       });
 
-      if (!response.ok) throw new Error("Error al crear la reserva");
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || "Error al crear la reserva");
+      }
 
       const data = await response.json();
       console.log("Reserva creada:", data);
 
-      // Podés redirigir a una página de confirmación
-      navigate("/reservation-confirmation", { state: data });
+      alert("¡Reserva creada exitosamente!");
+
+      navigate("/my-reservations");
     } catch (error) {
-      console.error("Error al finalizar reserva:", error);
+      console.error("Error al finalizar reserva:", error.message);
       alert("Hubo un problema al finalizar la reserva.");
     }
   };

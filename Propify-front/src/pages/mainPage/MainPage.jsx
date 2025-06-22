@@ -126,7 +126,7 @@ const MainPage = () => {
             )}
             {(isOwner || isClient) && (
               <li className="my-reservations">
-                <a href="#reservations">{t("reservations")}</a>
+                <Link to="/my-reservations">{t("reservations")}</Link>
               </li>
             )}
           </ul>

@@ -15,7 +15,6 @@ const MyProperties = () => {
     navigate("/add-properties");
   };
 
-
   useEffect(() => {
     const currentUser = JSON.parse(localStorage.getItem("currentUser"));
     const token = localStorage.getItem("token");
@@ -41,40 +40,41 @@ const MyProperties = () => {
   }, []);
 
   const handleDelete = async (id) => {
-  const confirmacion = window.confirm("¿Seguro que querés borrar la propiedad?");
-  if (!confirmacion) return;
+    const confirmacion = window.confirm(
+      "¿Seguro que querés borrar la propiedad?"
+    );
+    if (!confirmacion) return;
 
-  const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
-  try {
-    const res = await fetch(`http://localhost:5021/api/property/${id}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    try {
+      const res = await fetch(`http://localhost:5021/api/property/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-    if (!res.ok) throw new Error("Error al eliminar la propiedad");
+      if (!res.ok) throw new Error("Error al eliminar la propiedad");
 
-    // actualiza la lista 
-    setProperties((prev) => prev.filter((prop) => prop.id !== id));
-    alert("Propiedad eliminada correctamente");
-  } catch (error) {
-    console.error(error);
-    alert("Hubo un error al eliminar la propiedad");
-  }
-};
-
+      // actualiza la lista
+      setProperties((prev) => prev.filter((prop) => prop.id !== id));
+      alert("Propiedad eliminada correctamente");
+    } catch (error) {
+      console.error(error);
+      alert("Hubo un error al eliminar la propiedad");
+    }
+  };
 
   return (
-      <div>
-        <Header/>
-        <div className="encabezado-propiedades">
-          <h1 className="titulo-propiedades">Mis Propiedades</h1>
-          <button className="boton-propiedades" onClick={handleNewProperty}>
-            + Subir nueva propiedad
-          </button>
-        </div>
+    <div>
+      <Header />
+      <div className="encabezado-propiedades">
+        <h1 className="titulo-propiedades">Mis Propiedades</h1>
+        <button className="boton-propiedades" onClick={handleNewProperty}>
+          + Subir nueva propiedad
+        </button>
+      </div>
       {properties.length === 0 ? (
         <p>No tenés propiedades cargadas todavía.</p>
       ) : (
@@ -88,11 +88,22 @@ const MyProperties = () => {
 
                 <div className="info-principal">
                   <h2 className="titulo-informacion">{prop.type}</h2>
-                  <p><strong>Superficie:</strong> {prop.squareMeters} m²</p>
-                  <p><strong>Precio por noche:</strong> ${prop.pricePerNight}</p>
-                  <p><strong>Máx. huéspedes:</strong> {prop.maxTenants}</p>
-                  <p><strong>Descripción:</strong> {prop.description}</p>
-                  <p><strong>Estado de la propiedad:</strong> {prop.stateProperty}</p>
+                  <p>
+                    <strong>Superficie:</strong> {prop.squareMeters} m²
+                  </p>
+                  <p>
+                    <strong>Precio por noche:</strong> ${prop.pricePerNight}
+                  </p>
+                  <p>
+                    <strong>Máx. huéspedes:</strong> {prop.maxTenants}
+                  </p>
+                  <p>
+                    <strong>Descripción:</strong> {prop.description}
+                  </p>
+                  <p>
+                    <strong>Estado de la propiedad:</strong>{" "}
+                    {prop.stateProperty}
+                  </p>
 
                   <div className="botones-acciones">
                     <button
@@ -102,11 +113,19 @@ const MyProperties = () => {
                       Editar
                     </button>
                     <button
-                    className="btn-borrar"
-                    onClick={() => handleDelete(prop.id)}
-                  >
-                    Borrar
-                  </button>
+                      className="btn-borrar"
+                      onClick={() => handleDelete(prop.id)}
+                    >
+                      Borrar
+                    </button>
+                    <button
+                      className="btn-reservas"
+                      onClick={() =>
+                        navigate(`/reservations-for-property/${prop.id}`)
+                      }
+                    >
+                      Reservas
+                    </button>
                   </div>
                 </div>
               </div>
@@ -114,37 +133,61 @@ const MyProperties = () => {
               <div className="bloque-horizontal">
                 <div className="seccion-informacion">
                   <h3 className="titulo-ubicacion">Ubicación</h3>
-                  <p><strong>País:</strong> {prop.country}</p>
-                  <p><strong>Provincia:</strong> {prop.province}</p>
-                  <p><strong>Ciudad:</strong> {prop.city}</p>
-                  <p><strong>Calle:</strong> {prop.street}</p>
+                  <p>
+                    <strong>País:</strong> {prop.country}
+                  </p>
+                  <p>
+                    <strong>Provincia:</strong> {prop.province}
+                  </p>
+                  <p>
+                    <strong>Ciudad:</strong> {prop.city}
+                  </p>
+                  <p>
+                    <strong>Calle:</strong> {prop.street}
+                  </p>
                 </div>
 
                 <div className="seccion-informacion">
                   <h3 className="titulo-detalles">Detalles</h3>
-                  <p><strong>Habitación:</strong> {prop.room}</p>
-                  <p><strong>Baño:</strong> {prop.bathroom}</p>
-                  <p><strong>Pileta:</strong> {prop.pool}</p>
-                  <p><strong>Plataformas de streaming:</strong> {prop.streammingPlatform}</p>
+                  <p>
+                    <strong>Habitación:</strong> {prop.room}
+                  </p>
+                  <p>
+                    <strong>Baño:</strong> {prop.bathroom}
+                  </p>
+                  <p>
+                    <strong>Pileta:</strong> {prop.pool}
+                  </p>
+                  <p>
+                    <strong>Plataformas de streaming:</strong>{" "}
+                    {prop.streammingPlatform}
+                  </p>
                 </div>
 
                 <div className="seccion-informacion">
                   <h3 className="titulo-dueño">Información del dueño</h3>
-                  <p><strong>Nombre:</strong> {prop.owner.name} {prop.owner.surname}</p>
-                  <p><strong>Email:</strong> {prop.owner.email}</p>
-                  <p><strong>Teléfono:</strong> {prop.owner.numberPhone}</p>
-                  <p><strong>CVU:</strong> {prop.owner.cvu}</p>
+                  <p>
+                    <strong>Nombre:</strong> {prop.owner.name}{" "}
+                    {prop.owner.surname}
+                  </p>
+                  <p>
+                    <strong>Email:</strong> {prop.owner.email}
+                  </p>
+                  <p>
+                    <strong>Teléfono:</strong> {prop.owner.numberPhone}
+                  </p>
+                  <p>
+                    <strong>CVU:</strong> {prop.owner.cvu}
+                  </p>
                 </div>
               </div>
             </div>
-
           ))}
         </div>
       )}
-      <Footer/>
+      <Footer />
     </div>
   );
 };
 
 export default MyProperties;
-

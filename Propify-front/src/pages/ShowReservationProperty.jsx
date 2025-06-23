@@ -47,11 +47,7 @@ const ReservationsForProperty = () => {
             <div key={reserva.id} className="reservation-card">
               <h3>Reserva #{reserva.id}</h3>
               <p>
-                <strong>Cliente:</strong> {reserva.clientName?.name}{" "}
-                {reserva.clientName?.surname}
-              </p>
-              <p>
-                <strong>Email:</strong> {reserva.clientName?.email}
+                <strong>Email del cliente:</strong> {reserva.clientName}
               </p>
               <p>
                 <strong>Ingreso:</strong> {reserva.checkInDate?.split("T")[0]}

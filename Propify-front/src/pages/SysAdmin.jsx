@@ -4,6 +4,7 @@ import usersApi from "../Api/userApi";
 import { useLanguage } from "../components/context/LanguageContext";
 import UserForm from "../components/forms/UserForm";
 import Logo from "../components/Logos/Logo";
+import handleRole from "../utils/handleRole";
 
 const SysAdmin = () => {
   const [roleState, setRoleState] = useState("Cliente");
@@ -19,6 +20,7 @@ const SysAdmin = () => {
       const data = await usersApi.getAll();
       setUsersDataState(data);
     };
+    handleRole ("sysAdmin")
     getUsers();
   }, []);
 

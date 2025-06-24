@@ -22,7 +22,7 @@ const LoginForm = () => {
     setLanguage(language === "es" ? "en" : "es");
   };
 
-  // 🔥 función para decodificar el token y leer su payload
+  //  función para decodificar el token y leer su payload
   const parseJwt = (token) => {
     if (!token) return null;
     return JSON.parse(atob(token.split(".")[1]));

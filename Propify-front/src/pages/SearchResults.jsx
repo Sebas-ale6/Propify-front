@@ -39,6 +39,8 @@ const SearchResults = () => {
 
         const data = await response.json();
 
+        console.log(data)
+
         const results = data.filter((prop) => {
           const poolValue = normalize(prop.pool);
           const hasPool = !filters.pool || poolValue === "si";

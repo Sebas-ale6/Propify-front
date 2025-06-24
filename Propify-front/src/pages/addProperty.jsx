@@ -108,8 +108,26 @@ const AddProperty = () => {
 
         <div className="form-group">
           <label htmlFor="province">Provincia</label>
-          <input id="province" name="province" value={formData.province} onChange={handleChange} required />
+         {/* <input id="province" name="province" value={formData.province} onChange={handleChange} required />*/}
         </div>
+            <select name="province" id="province" value={formData.province} onChange={handleChange} required>{[
+                "Bariloche",
+                "Córdoba",
+                "Buenos Aires",
+                "Mar del Plata",
+                "CABA",
+                "Carlos Paz",
+                "Rosario",
+                "El Bolsón",
+                "El Calafate",
+                "Mendoza",
+                "Tierra del Fuego",
+              ].map((city) => (
+                <option key={city}  value={city.toLowerCase()}>
+                  {city}
+                </option>
+              ))}
+              </select>
 
         <div className="form-group">
           <label htmlFor="city">Ciudad</label>

@@ -3,7 +3,8 @@ import UsersList from "../components/List/UsersList";
 import usersApi from "../Api/userApi";
 import { useLanguage } from "../components/context/LanguageContext";
 import UserForm from "../components/forms/UserForm";
-import Logo from "../components/Logos/Logo";
+import logo from "../assets/logo.png";
+import { Link } from "react-router-dom";
 
 const SysAdmin = () => {
   const [roleState, setRoleState] = useState("Cliente");
@@ -59,7 +60,9 @@ const SysAdmin = () => {
           alignItems: "center",
         }}
       >
-        <Logo /> {/* ← Logo que redirige al home */}
+        <Link to="/">
+          <img src={logo} alt="Propify Logo" className="logo-img" />
+        </Link>
 
         <button
           style={{
@@ -125,8 +128,8 @@ const SysAdmin = () => {
                   (e.target.style.backgroundColor = "#cfe6fc")
                 }
                 onMouseOut={(e) =>
-                  (e.target.style.backgroundColor =
-                    roleState === role ? "#99CCFF" : "#FFFFFF")
+                (e.target.style.backgroundColor =
+                  roleState === role ? "#99CCFF" : "#FFFFFF")
                 }
               >
                 {role}

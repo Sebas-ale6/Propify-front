@@ -1,4 +1,37 @@
+import Auth from "../../Api/auth.js";
+import { useState } from "react";
+
 const UserForm = ({ type, role }) => {
+  const [formData, setFormData] = useState({
+    name: "",
+    surname: "",
+    email: "",
+    password: "",
+    numberPhone: "",
+    documentType: 1,
+    dni: "",
+    cvu: "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "documentType" ? Number(value) : value,
+    }));
+  };
+
+  const registerUser = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+    try {
+      await Auth.register(formData, role);
+    } catch (error) {
+      alert("Error al cargar el usuario");
+    }
+    window.location.reload();
+  };
+
   return (
     <form
       style={{
@@ -14,24 +47,77 @@ const UserForm = ({ type, role }) => {
         flexDirection: "column",
         gap: "15px",
       }}
+      onSubmit={registerUser}
     >
       <h2 style={{ textAlign: "center", color: "#1A3C34" }}>
         {type === "create" ? "Crear usuario" : "Editar usuario"}
       </h2>
 
-      <input placeholder="Nombre" type="text" name="name" style={inputStyle} />
       <input
+        value={formData.name}
+        placeholder="Nombre"
+        type="text"
+        name="name"
+        style={inputStyle}
+        onChange={handleChange}
+        required
+      />
+      <input
+        value={formData.surname}
         placeholder="Apellido"
         type="text"
         name="surname"
         style={inputStyle}
+        onChange={handleChange}
+        required
       />
-      <input placeholder="Email" type="email" name="email" style={inputStyle} />
       <input
+        value={formData.email}
+        placeholder="Email"
+        type="email"
+        name="email"
+        style={inputStyle}
+        onChange={handleChange}
+        required
+      />
+      <input
+        value={formData.password}
         placeholder="Contraseña"
         type="password"
         name="password"
         style={inputStyle}
+        onChange={handleChange}
+        required
+      />
+
+      <input
+        value={formData.numberPhone}
+        placeholder="Telefono"
+        type="number"
+        name="numberPhone"
+        style={inputStyle}
+        onChange={handleChange}
+        required
+      />
+
+      <select
+        value={formData.documentType}
+        style={selectStyle}
+        type="number"
+        onChange={handleChange}
+        name="documentType"
+      >
+        <option value={1}>DNI</option>
+        <option value={2}>Pasaporte</option>
+      </select>
+      <input
+        value={formData.dni}
+        placeholder="Número de documento"
+        type="text"
+        name="dni"
+        style={inputStyle}
+        onChange={handleChange}
+        required
       />
 
       {type === "create" ? (
@@ -40,23 +126,21 @@ const UserForm = ({ type, role }) => {
         </select>
       ) : (
         <select name="role" defaultValue={role} style={selectStyle}>
-          <option value="cliente">Cliente</option>
-          <option value="propietario">Propietario</option>
-          <option value="SysAdmin">SysAdmin</option>
+          <option value="client">Cliente</option>
+          <option value="owner">Propietario</option>
+          <option value="sysAdmin">SysAdmin</option>
         </select>
       )}
 
-      {role === "Cliente" ? null : (
+      {role === "client" ? null : (
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-          <input placeholder="CBU" type="number" style={inputStyle} />
-          <select style={selectStyle}>
-            <option value="dni">DNI</option>
-            <option value="pasaporte">Pasaporte</option>
-          </select>
           <input
-            placeholder="Número de documento"
-            type="text"
+            value={formData.cvu}
+            placeholder="CBU"
+            name="cvu"
+            type="number"
             style={inputStyle}
+            onChange={handleChange}
           />
         </div>
       )}
@@ -74,7 +158,9 @@ const UserForm = ({ type, role }) => {
             Eliminar
           </button>
         )}
-        <button style={buttonStyle}>Guardar</button>
+        <button type="submit" style={buttonStyle}>
+          Guardar
+        </button>
       </div>
     </form>
   );

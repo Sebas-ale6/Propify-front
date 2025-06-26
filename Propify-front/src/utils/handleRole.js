@@ -27,6 +27,11 @@ const handleRole = (requiredRole) => {
   if (!userLevel || userLevel < requiredLevel) {
     window.location.href = env.frontUrl + "/";
   }
+  if(userLevel >= requiredLevel){
+    return true;
+  }else{
+    return false;
+  }
 };
 
 export default handleRole;

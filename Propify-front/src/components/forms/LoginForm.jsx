@@ -3,6 +3,8 @@ import Button from "../buttons/Button";
 import { useLanguage } from "../context/LanguageContext";
 import Auth from "../../Api/auth";
 import { useNavigate } from "react-router-dom";
+import handleRole from "../../utils/handleRole";
+import SysAdmin from "../../pages/SysAdmin";
 
 const LoginForm = () => {
   const [emailState, setEmailState] = useState("");
@@ -90,13 +92,17 @@ const LoginForm = () => {
 
       // Redirigir según si hay búsqueda pendiente
       const pendingSearch = localStorage.getItem("pendingSearch");
+      
 
       if (pendingSearch) {
         const params = new URLSearchParams(JSON.parse(pendingSearch)).toString();
         localStorage.removeItem("pendingSearch");
         navigate(`/search?${params}`);
       } else {
-        navigate("/"); // o a home, dashboard, etc.
+         if(handleRole("sysAdmin")){
+        navigate("/SysAdmin")
+      }else{
+        navigate("/")} // o a home, dashboard, etc.
       }
     } catch (error) {
       alert(error.message);

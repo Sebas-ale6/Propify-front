@@ -5,9 +5,10 @@ import { useLanguage } from "../components/context/LanguageContext";
 import UserForm from "../components/forms/UserForm";
 import Logo from "../components/Logos/Logo";
 import handleRole from "../utils/handleRole";
+import env from "../utils/enviroments";
 
 const SysAdmin = () => {
-  const [roleState, setRoleState] = useState("Cliente");
+  const [roleState, setRoleState] = useState("client");
   const [inputState, setInputState] = useState("");
   const [userDataFilterState, setUserDataFilterState] = useState([]);
   const { t, language, setLanguage } = useLanguage();
@@ -17,12 +18,12 @@ const SysAdmin = () => {
 
   useEffect(() => {
     const getUsers = async () => {
-      const data = await usersApi.getAll();
+      const data = await usersApi.getAll(roleState);
       setUsersDataState(data);
     };
     handleRole ("sysAdmin")
     getUsers();
-  }, []);
+  }, [roleState]);
 
   const handleInputChange = (e) => {
     setInputState(e.target.value);
@@ -32,12 +33,15 @@ const SysAdmin = () => {
     const filtered = usersDataState.filter(
       (user) =>
         user.name?.toLowerCase().includes(inputState.toLowerCase()) ||
-        user.apellido?.toLowerCase().includes(inputState.toLowerCase()) ||
-        user.property?.toLowerCase().includes(inputState.toLowerCase()) ||
-        user.rent?.toLowerCase().includes(inputState.toLowerCase()) ||
-        user.date?.toLowerCase().includes(inputState.toLowerCase())
+        user.surname?.toLowerCase().includes(inputState.toLowerCase()) ||
+        user.email?.toLowerCase().includes(inputState.toLowerCase())
     );
     setUserDataFilterState(filtered);
+  };
+
+  const LogOut = () => {
+    window.localStorage.removeItem("token");
+    window.location.href = env.frontUrl;
   };
 
   return (
@@ -75,7 +79,8 @@ const SysAdmin = () => {
           }}
           onMouseOver={(e) => (e.target.style.backgroundColor = "#d35656")}
           onMouseOut={(e) => (e.target.style.backgroundColor = "#E57373")}
-        >
+          onClick={LogOut}
+          >
           Cerrar sesión
         </button>
       </header>
@@ -108,7 +113,7 @@ const SysAdmin = () => {
               flexWrap: "wrap",
             }}
           >
-            {["Cliente", "owner", "SysAdmin"].map((role) => (
+            {["client", "owner", "sysAdmin"].map((role) => (
               <button
                 key={role}
                 onClick={() => setRoleState(role)}

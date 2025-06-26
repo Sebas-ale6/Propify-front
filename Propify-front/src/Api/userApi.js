@@ -1,24 +1,26 @@
-const API_URL = "src/data/UsersData.json";
+const API_URL = `http://localhost:5021/api`;
 
 const usersApi = {
-  getAll: async () => {
-    const response = await fetch(API_URL);
+  getAll: async (role) => {
+    const response = await fetch(`${API_URL}/${role}`);
     if (!response.ok) throw new Error("Error al obtener los usuarios");
-    return await response.json();
+    const data = await response.json();
+    console.log(data);
+    return data;
   },
 
   getById: async (id) => {
     const users = await usersApi.getAll();
-    return users.find(user => user.id === id) || null;
+    return users.find((user) => user.id === id) || null;
   },
 
   create: async (newUser) => {
     return await fetch(API_URL, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(newUser)
+      body: JSON.stringify(newUser),
     });
   },
 
@@ -26,17 +28,24 @@ const usersApi = {
     return await fetch(`${API_URL}/${id}`, {
       method: "PUT",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
       },
-      body: JSON.stringify(updatedFields)
+      body: JSON.stringify(updatedFields),
     });
   },
 
-  delete: async (id) => {
-    return await fetch(`${API_URL}/${id}`, {
-      method: "DELETE"
-    });
-  }
+  delete: async (id, role, token) => {
+    try {
+      return await fetch(`${API_URL}/${role}/${id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  },
 };
 
 export default usersApi;

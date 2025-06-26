@@ -9,8 +9,8 @@ const usersApi = {
     return data;
   },
 
-  getById: async (id) => {
-    const users = await usersApi.getAll();
+  getById: async (id, role) => {
+    const users = await usersApi.getAll(role);
     return users.find((user) => user.id === id) || null;
   },
 
@@ -24,14 +24,8 @@ const usersApi = {
     });
   },
 
-  update: async (id, updatedFields) => {
-    return await fetch(`${API_URL}/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedFields),
-    });
+  update: async (id, body, token) => {
+    
   },
 
   delete: async (id, role, token) => {

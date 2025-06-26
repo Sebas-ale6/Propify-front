@@ -33,13 +33,16 @@ export default Auth;*/
 
 const Auth = {
   login: async (body) => {
-    const res = await fetch("http://localhost:5021/api/authenticate/authenticate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
+    const res = await fetch(
+      "http://localhost:5021/api/authenticate/authenticate",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+      }
+    );
 
     if (!res.ok) {
       const errorText = await res.text();
@@ -51,12 +54,12 @@ const Auth = {
     return token;
   },
 
-  register: async (body, role) => {
-    const endpoint = role === "owner" ? "owner" : "client";
-    const res = await fetch(`http://localhost:5021/api/${endpoint}`, {
+  register: async (body, role, token = "") => {
+    const res = await fetch(`http://localhost:5021/api/${role}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify(body),
     });

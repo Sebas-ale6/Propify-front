@@ -1,6 +1,10 @@
 import usersApi from "../../Api/userApi";
 
 const UsersList = ({ users, role, callback }) => {
+  const saveUser = async (id) => {
+    window.localStorage.setItem("userToEdit", id)
+    callback()
+  }
   const deleteUser = async (id) => {
     const token = window.localStorage.getItem("token");
     await usersApi.delete(id, role, token);
@@ -39,7 +43,7 @@ const UsersList = ({ users, role, callback }) => {
                 <td style={tdStyle}>{user.email}</td>
                 {/*<td style={tdStyle}>{field}</td>*/}
                 <td style={tdStyle}>
-                  <button onClick={callback}>Editar</button>
+                  <button onClick={() => {saveUser(user.id)}}>Editar</button>
                   <button
                     onClick={() => deleteUser(user.id)}
                     style={deleteButtonStyle}

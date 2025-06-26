@@ -1,7 +1,9 @@
 import Auth from "../../Api/auth.js";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import usersApi from "../../Api/userApi.js";
 
 const UserForm = ({ type, role }) => {
+
   const [formData, setFormData] = useState({
     name: "",
     surname: "",
@@ -11,7 +13,23 @@ const UserForm = ({ type, role }) => {
     documentType: 1,
     dni: "",
     cvu: "",
+    role: role
   });
+
+  useEffect(() => {
+    const getUserData = async() => {
+    const idUserEdited = parseInt(window.localStorage.getItem("userToEdit"))
+    console.log(idUserEdited, type)
+    if(idUserEdited && type === "edit"){
+      const user = await usersApi.getById(idUserEdited, role)
+      console.log(user)
+      setFormData(user)
+    }else{
+      null
+    }}
+    getUserData()
+  },[])
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,12 +43,27 @@ const UserForm = ({ type, role }) => {
     e.preventDefault();
     console.log(formData);
     try {
-      await Auth.register(formData, role);
+      const token = window.localStorage.getItem("token");
+      await Auth.register(formData, role, token);
     } catch (error) {
       alert("Error al cargar el usuario");
     }
     window.location.reload();
   };
+
+  const editUser = async (e) => {
+    e.preventDefault();
+     try {
+      const token = window.localStorage.getItem("token");
+      const idUserEdited = parseInt(window.localStorage.getItem("userToEdit"))
+      await usersApi.delete(idUserEdited, role, token);
+      await Auth.register(formData, role, token);
+      window.localStorage.removeItem("userToEdit")
+    } catch (error) {
+      alert("Error al cargar el usuario");
+    }
+    window.location.href="/SysAdmin"
+  }
 
   return (
     <form
@@ -47,7 +80,7 @@ const UserForm = ({ type, role }) => {
         flexDirection: "column",
         gap: "15px",
       }}
-      onSubmit={registerUser}
+      onSubmit={type === "create" ? registerUser : editUser }
     >
       <h2 style={{ textAlign: "center", color: "#1A3C34" }}>
         {type === "create" ? "Crear usuario" : "Editar usuario"}
@@ -79,6 +112,7 @@ const UserForm = ({ type, role }) => {
         style={inputStyle}
         onChange={handleChange}
         required
+        disabled = {type === "create" ? false : true}
       />
       <input
         value={formData.password}
@@ -121,11 +155,11 @@ const UserForm = ({ type, role }) => {
       />
 
       {type === "create" ? (
-        <select name="role" defaultValue={role} style={selectStyle}>
+        <select name="role" value={formData.role} defaultValue={role} style={selectStyle}>
           <option value={role}>{role}</option>
         </select>
       ) : (
-        <select name="role" defaultValue={role} style={selectStyle}>
+        <select onChange={handleChange} name="role" defaultValue={role} style={selectStyle}>
           <option value="client">Cliente</option>
           <option value="owner">Propietario</option>
           <option value="sysAdmin">SysAdmin</option>
@@ -152,12 +186,8 @@ const UserForm = ({ type, role }) => {
           marginTop: "20px",
         }}
       >
-        <button style={buttonStyle}>Atrás</button>
-        {type === "create" ? null : (
-          <button style={{ ...buttonStyle, backgroundColor: "#FF6B6B" }}>
-            Eliminar
-          </button>
-        )}
+        <button style={buttonStyle} onClick={() => {window.location.href="/SysAdmin"}}>Atrás</button>
+
         <button type="submit" style={buttonStyle}>
           Guardar
         </button>

@@ -107,6 +107,8 @@ const LoginForm = () => {
     } catch (error) {
       alert(error.message);
     }
+
+  
   };
 
   return (
@@ -132,9 +134,17 @@ const LoginForm = () => {
         />
         <Button text={t("accept")} action={handleSendData} />
         <a href="/register">{t("goRegister")}</a>
+         <a href="/recover-password"> olvidaste tu contraseña</a>
       </form>
+
+     
+
     </div>
   );
+
+
 };
 
 export default LoginForm;
+
+

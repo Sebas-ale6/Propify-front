@@ -13,6 +13,10 @@ const usersApi = {
     const users = await usersApi.getAll(role);
     return users.find((user) => user.id === id) || null;
   },
+  getByEmail: async (email, role) => {
+    const users = await usersApi.getAll(role);
+    return users.find((user) => user.email === email) || null;
+  },
 
   create: async (newUser) => {
     return await fetch(API_URL, {

@@ -14,7 +14,8 @@ import EditProperty from "./pages/editProperty";
 import PaymentPage from "./pages/PaymentPage";
 import MyReservations from "./pages/MyReservations";
 import ShowReservationProperty from "./pages/ShowReservationProperty";
-
+import IntroducirMail from "./pages/cambioclave/IntroducirMail";
+import ChangePassword from "./pages/cambioclave/ChangePassword";
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -64,6 +65,15 @@ const App = () => {
       element: <ShowReservationProperty />,
       path: "/reservations-for-property/:propertyId",
     },
+    {
+      element: <IntroducirMail/>,
+     path: "/recover-password",
+    },
+    {
+      element: <ChangePassword/>,
+     path: "/Recover-Password/Confirm",
+    },
+
   ]);
   return (
     <div>

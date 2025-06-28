@@ -1,0 +1,232 @@
+.loginLayout {
+  background: linear-gradient(to bottom right,#002b17,#DBCCC2);
+  min-height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.formEmail {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 2rem;
+  background-color:#eeeae8;
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  box-shadow: 
+  0 4px 10px rgba(0, 0, 0, 0.1),      
+  0 8px 30px rgba(0, 0, 0, 0.15);  
+  transition: box-shadow 0.3s ease;   
+}
+.formEmail:hover {
+  box-shadow:
+    0 6px 14px rgba(0, 0, 0, 0.12),
+    0 12px 40px rgba(0, 0, 0, 0.2);
+}
+.titleClave {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+  color: #1f1f1f;
+}
+
+.subtitleRole {
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: normal;
+  color: #333;
+}
+
+.roleButtons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 1rem;
+  justify-content: center;
+}
+.roleButton {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #a08263; 
+  color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.roleButton:hover {
+  background-color: #005e17;
+}
+
+.roleButton.active {
+  background-color: #002b17;
+  
+}
+
+
+.roleText {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.labelEmail {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.inputEmail {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.submitButtonEmail {
+  background-color: #002b17 !important;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+  margin-top: 16px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.submitButtonEmail:hover {
+  background-color: #005e17 !important;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  transform: translateY(-2px);
+}
+.loginLayout {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 60px;
+  padding: 40px;
+}
+
+.logoBox {
+  flex-shrink: 0;
+}
+
+.logoFixed {
+  position: fixed;
+  top: 20px;
+  left: 30px;
+  width: 100px;
+  height: auto;
+  z-index: 999;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+.mensajeExito, .mensajeError {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.mensajeExito {
+  background-color: #e6f4ea;
+  color: #276749;
+  border: 1px solid #b7e0c0;
+}
+
+.mensajeError {
+  background-color: #fdecea;
+  color: #c53030;
+  border: 1px solid #f5c6cb;
+}
+
+.mensajeExito::before {
+  content: "✅";
+  font-size: 1.1rem;
+}
+
+.mensajeError::before {
+  content: "❌";
+  font-size: 1.1rem;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.toastMessage {
+  animation: fadeSlideIn 0.4s ease-out;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.particleBackground {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.particleBackground span {
+  position: absolute;
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  animation: floatUp 20s linear infinite, colorShift 15s ease-in-out infinite;
+  top: 100%;
+  left: calc(100% * var(--i) / 20);
+}
+
+.particleBackground span:nth-child(n) {
+  left: calc(5% * var(--i));
+  animation-duration: calc(8s + var(--i) * 0.5s);
+  animation-delay: calc(-1s * var(--i));
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(-120vh) scale(1.5);
+    opacity: 0;
+  }
+}
+
+
+@keyframes colorShift {
+  0% { background-color: #b3a089; }
+  25% { background-color: #a0c1a3; }
+  50% { background-color: #fff7e6; }
+  75% { background-color: #a08263; }
+  100% { background-color: #b3a089; }
+}

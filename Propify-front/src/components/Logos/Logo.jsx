@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import logo from '../../assets/Logo-Prop-color.jpeg'; // Ajusta la ruta según donde esté tu imagen
+import logo from '../../assets/logo.png'; // Ajusta la ruta según donde esté tu imagen
 
 const Logo = () => {
   return (

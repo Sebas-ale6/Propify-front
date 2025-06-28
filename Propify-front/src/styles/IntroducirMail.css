@@ -64,7 +64,6 @@
   
 }
 
-
 .roleText {
   margin-bottom: 1rem;
   font-size: 0.9rem;
@@ -95,7 +94,8 @@
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
-  margin-top: 16px;
+  display: block;
+  margin: 16px auto 0 auto; 
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 

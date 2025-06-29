@@ -67,7 +67,7 @@ const MyProperties = () => {
   };
 
   return (
-    <div>
+    <div className="page-container">
       <Header />
       <div className="encabezado-propiedades">
         <h1 className="titulo-propiedades">Mis Propiedades</h1>

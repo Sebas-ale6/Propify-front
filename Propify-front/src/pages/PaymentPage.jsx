@@ -1,18 +1,20 @@
-import React from "react";
-import { Container, Row, Col, Form, Button, Card } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-//import "../styles/PaymentPage.css";
+
+import Header from "../components/header/Header.jsx";
+import Footer from "../components/footer/Footer";
+import "../styles/PaymentPage.css";
 
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { property, checkin, checkout, travelers } = location.state || {};
   const [total, setTotal] = useState(0);
+  const [paymentMethod, setPaymentMethod] = useState("Efectivo");
 
   useEffect(() => {
     if (!property || !checkin || !checkout) {
-      navigate("/"); // si no hay datos, redirigir
+      navigate("/");
       return;
     }
 
@@ -20,7 +22,7 @@ const PaymentPage = () => {
     const end = new Date(checkout);
     const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
     const price = property.pricePerNight * nights;
-    const taxes = Math.floor(price * 0.1); // 10% impuestos
+    const taxes = Math.floor(price * 0.1);
     setTotal(price + taxes);
   }, [property, checkin, checkout]);
 
@@ -37,12 +39,12 @@ const PaymentPage = () => {
 
       const body = {
         propertyId: property.id,
-        clientName: currentUser.email, // ✅ este campo es requerido
+        clientName: currentUser.email,
         checkInDate: checkin,
         checkOutDate: checkout,
         numbersOfTenants: travelers,
-        state: 2, // Confirmada, según tu lógica
-        paymentMethod: "Transferencia",
+        state: 2,
+        paymentMethod, 
       };
 
       const response = await fetch("http://localhost:5021/api/booking", {
@@ -59,181 +61,126 @@ const PaymentPage = () => {
         throw new Error(errorText || "Error al crear la reserva");
       }
 
-      const data = await response.json();
-      console.log("Reserva creada:", data);
-
       alert("¡Reserva creada exitosamente!");
-
       navigate("/my-reservations");
     } catch (error) {
       console.error("Error al finalizar reserva:", error.message);
       alert("Hubo un problema al finalizar la reserva.");
     }
   };
-  return (
-    <div className="payment-page">
-      {/* Header */}
-      <div className="custom-header">
-        <Container fluid>
-          <Row className="align-items-center">
-            <Col md={4}>
-              <span className="logo">Logo - Nombre</span>
-            </Col>
-            <Col md={4} className="text-center">
-              <Button variant="outline-light" className="lang-button">
-                ES
-              </Button>
-            </Col>
-            <Col md={4} className="text-end">
-              <Button variant="secondary" className="username-button">
-                nombre de usuario
-              </Button>
-            </Col>
-          </Row>
-        </Container>
 
-        {/* Banner */}
-        <div className="banner">
-          <h2>Reserva Nuestra Habitación</h2>
-          <p>
-            Dejá que empiece el viaje, un mundo de aventuras, relajación y
-            recuerdos te espera.
-          </p>
+  return (
+    <div className="payment-container">
+      <Header />
+
+      {/* BANNER */}
+      <div className="payment-banner">
+        <h2>Reserva Nuestra Habitación</h2>
+        <p>
+          Dejá que empiece el viaje, un mundo de aventuras, relajación y recuerdos te espera.
+        </p>
+      </div>
+
+      {/* MAIN CONTENT */}
+      <div className="payment-content">
+        {/* Izquierda - formulario */}
+        <div className="payment-left">
+          <h3 className="section-title">Método de pago</h3>
+
+          <div className="payment-card">
+            <div className="payment-methods">
+              <label>
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="Efectivo"
+                  checked={paymentMethod === "Efectivo"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                />
+                Efectivo
+              </label>
+              <label>
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  value="Mercado Pago"
+                  checked={paymentMethod === "Mercado Pago"}
+                  onChange={(e) => setPaymentMethod(e.target.value)}
+                />
+                Mercado Pago
+              </label>
+            </div>
+
+            <div className="payment-details">
+              <label>Número de tarjeta</label>
+              <input className="input" type="text" placeholder="XXXX XXXX XXXX XXXX" />
+
+              <div className="row">
+                <div style={{ flex: 1 }}>
+                  <label>Código de seguridad</label>
+                  <input className="input" type="text" placeholder="123" />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label>Fecha de vencimiento</label>
+                  <input className="input" type="text" placeholder="MM/AA" />
+                </div>
+              </div>
+
+              <label>Nombre en la tarjeta</label>
+              <input className="input" type="text" placeholder="Nombre Apellido" />
+            </div>
+          </div>
+
+          <button className="btn-back" onClick={() => navigate(-1)}>
+            Volver
+          </button>
+        </div>
+
+        {/* Derecha - resumen */}
+        <div className="payment-right">
+          <h3 className="section-title">Resumen</h3>
+
+          <div className="summary-info">
+            {property?.type} en {property?.province} ({property?.city})<br />
+            Desde <strong>{checkin}</strong> hasta <strong>{checkout}</strong><br />
+            {travelers} viajero/s
+          </div>
+
+          <div className="summary-card">
+            <div className="summary-row">
+              <span>Transacción:</span>
+              <span>${property?.pricePerNight}</span>
+            </div>
+            <div className="summary-row">
+              <span>Impuestos (10%):</span>
+              <span>${Math.floor(total * 0.1)}</span>
+            </div>
+            <hr />
+            <div className="summary-row total">
+              <strong>Total:</strong>
+              <strong>${total}</strong>
+            </div>
+          </div>
+
+          <div className="support-box">
+            <small>
+              ¿Dudas o ayuda? Nuestro equipo de soporte está disponible para asistirte —{" "}
+              <a href="#">Contacto</a>
+            </small>
+          </div>
+
+          <button className="btn-confirm" onClick={handleFinalizarReserva}>
+            Finalizar
+          </button>
         </div>
       </div>
 
-      {/* Formulario de pago y resumen */}
-      <Container className="mt-4">
-        <Row>
-          <Col md={7}>
-            <h3>Elegí tu método de pago</h3>
-            <Card className="p-3 mb-3">
-              <Form>
-                <Form.Check
-                  type="radio"
-                  id="efectivo"
-                  label="Efectivo"
-                  name="paymentMethod"
-                  className="mb-2"
-                />
-
-                <Form.Check
-                  type="radio"
-                  id="nercadipago"
-                  label="Mercado pago"
-                  name="paymentMethod"
-                  className="mb-2"
-                />
-                <div className="text-muted ms-4 mb-3">
-                  Pago seguro en línea.Se necesita una tarjeta de crédito.
-                  <a href="">Pagar</a>
-                </div>
-
-                <div className="text-muted ms-4 mb-3">
-                  Tarjeta/credito -PROXIMAMENTE-
-                  <br />
-                  Transferencia segura de dinero usando tu cuenta bancaria.
-                </div>
-
-                <Form.Group controlId="cardNumber" className="mb-3">
-                  <Form.Label>Número de tarjeta de crédito</Form.Label>
-                  <Form.Control type="text" placeholder="XXXX XXXX XXXX XXXX" />
-                </Form.Group>
-
-                <Row>
-                  <Col>
-                    <Form.Group controlId="securityCode" className="mb-3">
-                      <Form.Label>Código de seguridad</Form.Label>
-                      <Form.Control type="text" placeholder="123" />
-                    </Form.Group>
-                  </Col>
-                  <Col>
-                    <Form.Group controlId="expiryDate" className="mb-3">
-                      <Form.Label>Fecha de vencimiento</Form.Label>
-                      <Form.Control type="text" placeholder="MM/AA" />
-                    </Form.Group>
-                  </Col>
-                </Row>
-
-                <Form.Group controlId="cardName" className="mb-3">
-                  <Form.Label>Nombre en la tarjeta</Form.Label>
-                  <Form.Control type="text" placeholder="Nombre Apellido" />
-                </Form.Group>
-              </Form>
-            </Card>
-
-            <Button variant="secondary">Volver</Button>
-          </Col>
-
-          <Col md={5}>
-            <h3>Resumen</h3>
-            <div className="text-muted mb-3">
-              {property?.type} en {property?.province} ({property?.city}) <br />
-              Desde <strong>{checkin}</strong> hasta <strong>{checkout}</strong>
-              <br />
-              {travelers} viajero/s
-            </div>
-            <Card className="p-3 mb-3">
-              <div className="d-flex justify-content-between">
-                <span>Transacción:</span>
-                <span>${property?.pricePerNight}</span>
-              </div>
-              <div className="d-flex justify-content-between">
-                <span>Impuestos (10%):</span>
-                <span>${Math.floor(total * 0.1)}</span>
-              </div>
-              <hr />
-              <div className="d-flex justify-content-between fw-bold text-success">
-                <span>Total:</span>
-                <span>${total}</span>
-              </div>
-            </Card>
-            <Card className="p-2 mb-3 bg-light">
-              <small>
-                Si tenés alguna duda o necesitas ayuda, nuestro equipo de
-                soporte está disponible para asistirte ---&gt;{" "}
-                <a href="#">Contacto</a>
-              </small>
-            </Card>
-
-            <Button
-              variant="success"
-              className="w-100"
-              onClick={handleFinalizarReserva}
-            >
-              Finalizar
-            </Button>
-          </Col>
-        </Row>
-      </Container>
-
-      {/* Footer */}
-      <footer className="footer">
-        <Container>
-          <Row>
-            <Col md={4}>
-              <p>Logo - Nombre</p>
-            </Col>
-            <Col md={4}>
-              <ul className="footer-links">
-                <li>Sobre nosotros</li>
-                <li>Servicios</li>
-                <li>Reseñas</li>
-                <li>Contacto</li>
-              </ul>
-            </Col>
-            <Col md={4}>
-              <p>Nuestras redes</p>
-              <Form.Select size="sm" className="w-auto">
-                <option>Español</option>
-                <option>English</option>
-              </Form.Select>
-            </Col>
-          </Row>
-        </Container>
-      </footer>
+      <Footer />
     </div>
   );
 };
 
 export default PaymentPage;
+
+
+

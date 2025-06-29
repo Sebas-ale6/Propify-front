@@ -1,75 +1,184 @@
-*{
-    width: 100%;
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f7f7fb;
 }
-.payment-page {
-  background-color: #f8f1e7;
 
+.payment-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* ✅ asegura que cubre toda la pantalla */
+  background-color: #f7f7fb;
+  color: #333;
+  padding: 0; /* ❌ SACAR padding general porque afecta header/footer */
 }
+
 
 /* Header */
-.custom-header {
-  background-color: #2b3319;
-  color: white;
-  padding: 0.5rem 0;
+.payment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  font-weight: bold;
 }
 
 .logo {
   font-size: 1.2rem;
-  font-weight: bold;
 }
 
-.lang-button {
-  border-radius: 50%;
-  width: 45px;
-  height: 45px;
-  font-weight: bold;
-  border: 1px solid white;
-}
-
-.username-button {
-  background-color: #7b6357;
-  border: none;
-  border-radius: 10px;
+.language,
+.username {
+  font-size: 0.95rem;
 }
 
 /* Banner */
-.banner {
-  background-image: url("imagen.png");
-  background-size: cover;
-  background-position: center;
+.payment-banner {
   text-align: center;
-  padding: 4rem 1rem;
-  color: white;
+  margin-bottom: 2.5rem;
 }
 
-.banner h2 {
-  background-color: rgba(0, 0, 0, 0.5);
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-}
-
-.banner p {
-  background-color: rgba(0, 0, 0, 0.4);
-  display: inline-block;
-  padding: 0.3rem 0.8rem;
-  border-radius: 5px;
-  margin-top: 0.5rem;
-}
-
-/* Footer */
-.footer {
-  background-color: #2b3319;
-  color: white;
-  padding: 1rem 0;
-  margin-top: 2rem;
-}
-
-.footer-links {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-links li {
+.payment-banner h2 {
+  font-size: 2rem;
   margin-bottom: 0.5rem;
+  color: #373f25;
 }
+
+.payment-banner p {
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Contenido principal */
+.payment-content {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+/* Columna izquierda */
+.payment-left {
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
+}
+
+.section-title {
+  font-size: 1.3rem;
+  margin-bottom: 1rem;
+}
+
+/* Card de método de pago */
+.payment-card {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin-bottom: 1.5rem;
+}
+
+.payment-methods label {
+  display: inline-block;
+  margin-right: 1.2rem;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.payment-details {
+  margin-top: 1rem;
+}
+
+.input {
+  width: 100%;
+  padding: 10px 14px;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  font-size: 1rem;
+}
+
+.row {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Botón volver */
+.btn-back {
+  background-color: #ccc;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transform: translateY(-40%);
+  
+}
+
+/* Columna derecha */
+.payment-right {
+  flex: 1;
+  min-width: 300px;
+  max-width: 400px;
+}
+
+/* Resumen */
+.summary-info {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.summary-card {
+  background-color: #fff;
+  padding: 1.2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.6rem;
+}
+
+.total {
+  font-weight: bold;
+  color: #2e7d32;
+}
+
+/* Mensaje de soporte */
+.support-box {
+  background-color: #f1f1f1;
+  padding: 1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.support-box a {
+  text-decoration: underline;
+  color: #333;
+}
+
+/* Botón Finalizar */
+.btn-confirm {
+  background-color: #4f5b36;
+  color: white;
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-confirm:hover {
+  background-color: #373f25;
+}
+
+

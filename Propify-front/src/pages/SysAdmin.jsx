@@ -1,9 +1,10 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import UsersList from "../components/List/UsersList";
 import usersApi from "../Api/userApi";
 import { useLanguage } from "../components/context/LanguageContext";
 import UserForm from "../components/forms/UserForm";
-import Logo from "../components/Logos/Logo";
+import logo from "../assets/logo.png";
 import handleRole from "../utils/handleRole";
 import env from "../utils/enviroments";
 
@@ -21,7 +22,7 @@ const SysAdmin = () => {
       const data = await usersApi.getAll(roleState);
       setUsersDataState(data);
     };
-    handleRole ("sysAdmin")
+    handleRole("sysAdmin");
     getUsers();
   }, [roleState]);
 
@@ -59,14 +60,15 @@ const SysAdmin = () => {
           width: "100vw",
           display: "flex",
           justifyContent: "space-between",
-          padding: "10px 20px",
+          padding: "3px",
           backgroundColor: "#DCEAEF",
           boxShadow: "0 2px 6px rgba(0, 0, 0, 0.1)",
           alignItems: "center",
         }}
       >
-        <Logo /> {/* ← Logo que redirige al home */}
-
+        <Link to="/">
+          <img src={logo} alt="Propify Logo" className="logo-img" />
+        </Link>
         <button
           style={{
             padding: "8px 16px",
@@ -80,7 +82,7 @@ const SysAdmin = () => {
           onMouseOver={(e) => (e.target.style.backgroundColor = "#d35656")}
           onMouseOut={(e) => (e.target.style.backgroundColor = "#E57373")}
           onClick={LogOut}
-          >
+        >
           Cerrar sesión
         </button>
       </header>
@@ -119,8 +121,7 @@ const SysAdmin = () => {
                 onClick={() => setRoleState(role)}
                 style={{
                   padding: "10px 20px",
-                  backgroundColor:
-                    roleState === role ? "#99CCFF" : "#FFFFFF",
+                  backgroundColor: roleState === role ? "#99CCFF" : "#FFFFFF",
                   color: roleState === role ? "#003366" : "#333",
                   border: "1px solid #99CCFF",
                   borderRadius: "5px",
@@ -153,9 +154,7 @@ const SysAdmin = () => {
                 cursor: "pointer",
                 fontSize: "1rem",
               }}
-              onMouseOver={(e) =>
-                (e.target.style.backgroundColor = "#43A047")
-              }
+              onMouseOver={(e) => (e.target.style.backgroundColor = "#43A047")}
               onMouseOut={(e) => (e.target.style.backgroundColor = "#4CAF50")}
             >
               Añadir usuario
@@ -197,12 +196,8 @@ const SysAdmin = () => {
                 cursor: "pointer",
                 fontSize: "1rem",
               }}
-              onMouseOver={(e) =>
-                (e.target.style.backgroundColor = "#285580")
-              }
-              onMouseOut={(e) =>
-                (e.target.style.backgroundColor = "#336699")
-              }
+              onMouseOver={(e) => (e.target.style.backgroundColor = "#285580")}
+              onMouseOut={(e) => (e.target.style.backgroundColor = "#336699")}
             >
               🔍
             </button>

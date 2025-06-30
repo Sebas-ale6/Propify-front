@@ -15,7 +15,7 @@ const Header = () => {
     <header className="header">
       <div className="header-left">
         <Link to="/">
-          <img src={logo} alt="Propify Logo" className="logo" />
+          <img src={logo} alt="Propify Logo" className="logo-img" />
         </Link>
       </div>
       <div className="header-right">

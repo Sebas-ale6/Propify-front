@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import "../styles/MyReservations.css";
+import Header from "../components/header/Header";
+import Footer from "../components/footer/Footer";
 
 const MyReservations = () => {
   const [reservations, setReservations] = useState([]);
@@ -74,6 +76,8 @@ const MyReservations = () => {
           const total = subtotal + taxes;
 
           return {
+
+            
             ...reserva,
             nights,
             totalPrice: total,
@@ -94,6 +98,7 @@ const MyReservations = () => {
 
   return (
     <div className="reservation-form">
+      < Header/>
       <h2 style={{ textAlign: "center" }}>Mis Reservas</h2>
 
       {loading ? (
@@ -144,6 +149,7 @@ const MyReservations = () => {
           </div>
         ))
       )}
+      <Footer />
     </div>
   );
 };

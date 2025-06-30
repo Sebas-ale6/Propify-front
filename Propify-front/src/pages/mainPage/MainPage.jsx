@@ -9,13 +9,12 @@ import Footer from "../../components/footer/Footer";
 
 // Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Pagination } from "swiper/modules";
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import { useEffect, useState } from "react";
 
 // Swiper styles
 import "swiper/css";
 import "swiper/css/navigation";
-import "swiper/css/pagination";
 
 import Features from "./Features";
 
@@ -263,28 +262,36 @@ const MainPage = () => {
         </div>
       </section>
 
-      <section className="section-2">
+            <section className="section-2">
         <h2 className="section-title">{t("topPropertiesTitle")}</h2>
         <h3 className="caption">{t("topPropertiesCaption")}</h3>
         <Swiper
-          modules={[Navigation, Pagination]}
+          modules={[Navigation, Pagination, Autoplay]}
           spaceBetween={20}
-          slidesPerView={3}
+          slidesPerView={5}
+          autoplay={{
+            delay: 2500,
+            disableOnInteraction: false,
+          }}
           navigation
-          pagination={{ clickable: true }}
+          /*pagination={{ clickable: true }}*/
+          loop={true}
           className="swiper-container"
         >
           {translatedProperties.map((prop, index) => (
             <SwiperSlide key={index} className="swiper-slide">
               <img src={prop.img} alt={prop.name} className="property-image" />
-              <div className="property-info">
+              {/* <div className="property-info">
                 <h4>{prop.name}</h4>
                 <p className="location">{prop.location}</p>
                 <p className="description">{prop.description}</p>
-              </div>
+              </div> */}
             </SwiperSlide>
           ))}
         </Swiper>
+
+
+
       </section>
 
       <section className="section-3">

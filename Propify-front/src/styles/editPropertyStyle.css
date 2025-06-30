@@ -6,9 +6,9 @@
 
 .form-title {
   font-size: 2rem;
-  color: #373f25; 
+  color: #373f25;
   margin: 0;
-  font-family: 'Merriweather';
+  font-family: "Merriweather";
   text-align: center;
   margin-top: 2rem;
 }
@@ -78,4 +78,18 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
   background-color: #373f25;
+}
+
+.imagen-galeria {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.imagen-miniatura {
+  width: 150px;
+  border-radius: 8px;
+  object-fit: cover;
 }

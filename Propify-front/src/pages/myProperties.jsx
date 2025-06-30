@@ -11,6 +11,16 @@ const MyProperties = () => {
 
   const navigate = useNavigate();
 
+  const [selectedImage, setSelectedImage] = useState(null);
+
+  const openImage = (imageUrl) => {
+    setSelectedImage(imageUrl);
+  };
+
+  const closeImage = () => {
+    setSelectedImage(null);
+  };
+
   const handleNewProperty = () => {
     navigate("/add-properties");
   };
@@ -67,7 +77,7 @@ const MyProperties = () => {
   };
 
   return (
-    <div className="page-container">
+    <div>
       <Header />
       <div className="encabezado-propiedades">
         <h1 className="titulo-propiedades">Mis Propiedades</h1>
@@ -83,7 +93,21 @@ const MyProperties = () => {
             <div key={prop.id} className="propiedades-card">
               <div className="card-encabezado">
                 <div className="imagen-placeholder">
-                  {/* esto para despues cuando tengamos las imagenes */}
+                  {prop.imageNames && prop.imageNames.length > 0 ? (
+                    <img
+                      src={`http://localhost:5021/api/image/${prop.imageNames[0]}`}
+                      alt="Imagen de propiedad"
+                      className="img-propiedad"
+                      onClick={() =>
+                        openImage(
+                          `http://localhost:5021/api/image/${prop.imageNames[0]}`
+                        )
+                      }
+                      style={{ cursor: "pointer" }}
+                    />
+                  ) : (
+                    <p>Sin imagen</p>
+                  )}
                 </div>
 
                 <div className="info-principal">
@@ -185,6 +209,18 @@ const MyProperties = () => {
           ))}
         </div>
       )}
+
+      {selectedImage && (
+        <div className="modal-overlay" onClick={closeImage}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <img src={selectedImage} alt="Imagen ampliada" />
+            <button className="modal-close" onClick={closeImage}>
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
       <Footer />
     </div>
   );

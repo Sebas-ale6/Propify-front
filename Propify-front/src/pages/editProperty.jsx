@@ -5,7 +5,6 @@ import "../styles/editPropertyStyle.css";
 import Header from "../components/header/Header.jsx";
 import Footer from "../components/footer/Footer";
 
-
 const EditProperty = () => {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -29,20 +28,21 @@ const EditProperty = () => {
   });
 
   const [loading, setLoading] = useState(true);
+  const [selectedFiles, setSelectedFiles] = useState([]);
+  const [imageNames, setImageNames] = useState([]);
 
   useEffect(() => {
     const fetchProperty = async () => {
       try {
         const res = await fetch(`http://localhost:5021/api/property/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
 
         if (!res.ok) {
           const errorData = await res.json();
-          console.error("Error al editar propiedad:", errorData);
-          throw new Error(errorData.message || "No se pudo editar la propiedad");
+          throw new Error(
+            errorData.message || "No se pudo editar la propiedad"
+          );
         }
 
         const data = await res.json();
@@ -64,6 +64,7 @@ const EditProperty = () => {
           pool: data.pool || "",
         });
 
+        setImageNames(data.imageNames || []);
         setLoading(false);
       } catch (error) {
         alert("Error al cargar la propiedad: " + error.message);
@@ -107,6 +108,42 @@ const EditProperty = () => {
 
       if (!res.ok) throw new Error("No se pudo editar la propiedad");
 
+      if (selectedFiles.length > 0) {
+        for (const file of selectedFiles) {
+          const formDataImage = new FormData();
+          formDataImage.append("file", file);
+
+          const imageRes = await fetch(
+            "http://localhost:5021/api/image/upload-image",
+            {
+              method: "POST",
+              headers: { Authorization: `Bearer ${token}` },
+              body: formDataImage,
+            }
+          );
+
+          if (!imageRes.ok) {
+            console.error("Error al subir imagen");
+            continue;
+          }
+
+          const imageData = await imageRes.json();
+
+          await fetch("http://localhost:5021/api/image", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+              name: imageData.name,
+              createdDate: new Date().toISOString(),
+              uuidProperty: Number(id),
+            }),
+          });
+        }
+      }
+
       alert("Propiedad actualizada correctamente");
       navigate("/my-properties");
     } catch (error) {
@@ -120,96 +157,73 @@ const EditProperty = () => {
     <div className="form-container">
       <Header />
       <h1 className="form-title">Editar Propiedad</h1>
+
+      <div className="imagen-galeria">
+        {imageNames.map((name, idx) => (
+          <img
+            key={idx}
+            src={`http://localhost:5021/api/image/${name}`}
+            alt={`Imagen ${idx + 1}`}
+            className="imagen-miniatura"
+          />
+        ))}
+      </div>
+
       <form onSubmit={handleSubmit} className="formulario">
-
-        <div className="form-group">
-          <label>Tipo</label>
-          <input name="type" value={formData.type} onChange={handleChange} required />
-        </div>
-
-        <div className="form-group">
-          <label>Metros cuadrados</label>
-          <input name="squareMeters" value={formData.squareMeters} onChange={handleChange} required />
-        </div>
-
-        <div className="form-group">
-          <label>Precio por noche</label>
-          <input
-            type="number"
-            name="pricePerNight"
-            value={formData.pricePerNight}
-            onChange={handleChange}
-            min="1000"
-            max="300000"
-            step="1000"
-            required
-          />
-        </div>
-
-        <div className="form-group">
-          <label>País</label>
-          <input name="country" value={formData.country} readOnly />
-        </div>
-
-        <div className="form-group">
-          <label>Provincia</label>
-          <input name="province" value={formData.province} onChange={handleChange} required />
-        </div>
-
-        <div className="form-group">
-          <label>Ciudad</label>
-          <input name="city" value={formData.city} onChange={handleChange} required />
-        </div>
-
-        <div className="form-group">
-          <label>Calle</label>
-          <input name="street" value={formData.street} onChange={handleChange} required />
-        </div>
-
-        <div className="form-group">
-          <label>Máximo de inquilinos</label>
-          <input
-            type="number"
-            name="maxTenants"
-            value={formData.maxTenants}
-            onChange={handleChange}
-            min="1"
-            required
-          />
-        </div>
-
-        <div className="form-group descripcion">
-          <label>Descripción</label>
-          <input name="description" value={formData.description} onChange={handleChange} required />
-        </div>
-
-        <div className="form-group">
-          <label>Estado de la propiedad</label>
-          <input name="stateProperty" value={formData.stateProperty} onChange={handleChange} />
-        </div>
-
-        <div className="form-group">
-          <label>Baños</label>
-          <input name="bathroom" value={formData.bathroom} onChange={handleChange} required />
-        </div>
-
-        <div className="form-group">
-          <label>Habitaciones</label>
-          <input name="room" value={formData.room} onChange={handleChange} required />
-        </div>
-
-        <div className="form-group">
-          <label>Plataforma de streaming</label>
-          <input name="streammingPlatform" value={formData.streammingPlatform} onChange={handleChange} />
-        </div>
+        {[
+          ["type", "Tipo"],
+          ["squareMeters", "Metros cuadrados"],
+          ["pricePerNight", "Precio por noche", "number"],
+          ["country", "País", "text", true],
+          ["province", "Provincia"],
+          ["city", "Ciudad"],
+          ["street", "Calle"],
+          ["maxTenants", "Máximo de inquilinos", "number"],
+          ["description", "Descripción", "text", false, "descripcion"],
+          ["stateProperty", "Estado de la propiedad"],
+          ["bathroom", "Baños"],
+          ["room", "Habitaciones"],
+          ["streammingPlatform", "Plataforma de streaming"],
+        ].map(
+          ([name, label, type = "text", readOnly = false, className = ""]) => (
+            <div className={`form-group ${className}`} key={name}>
+              <label>{label}</label>
+              <input
+                name={name}
+                type={type}
+                value={formData[name]}
+                onChange={handleChange}
+                readOnly={readOnly}
+                required={!readOnly}
+              />
+            </div>
+          )
+        )}
 
         <div className="form-group">
           <label>¿Tiene pileta?</label>
-          <select name="pool" value={formData.pool} onChange={handleChange} required>
-            <option value="" disabled>Seleccioná una opción</option>
+          <select
+            name="pool"
+            value={formData.pool}
+            onChange={handleChange}
+            required
+          >
+            <option value="" disabled>
+              Seleccioná una opción
+            </option>
             <option value="Si">Sí</option>
             <option value="No">No</option>
           </select>
+        </div>
+
+        <div className="form-group" style={{ gridColumn: "span 2" }}>
+          <label>Subir nuevas imágenes</label>
+          <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={(e) => setSelectedFiles([...e.target.files])}
+          />
         </div>
 
         <div className="form-actions">
@@ -222,6 +236,3 @@ const EditProperty = () => {
 };
 
 export default EditProperty;
-
-
-

@@ -1,53 +1,30 @@
 .header {
   background-color: #4a3b30;
   color: white;
-  padding: 0.5rem 2rem;
+  padding: 0.8rem 2rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   box-sizing: border-box;
-  height: 80px;
 }
 
 .logo {
-  height: 100px;
-  width: auto;
+  height: 40px;
   object-fit: contain;
 }
 
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-.header-link {
-  font-size: 1rem;
-  color: white;
-  text-decoration: none;
-  padding: 0.4rem 0.6rem;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
-
-.header-link:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: white;
-}
-
-.logout-button {
+.user-button {
   background-color: #6d5a4d;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
   border-radius: 8px;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
-.logout-button:hover {
+.user-button:hover {
   background-color: #846d5b;
 }
-

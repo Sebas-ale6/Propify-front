@@ -4,6 +4,7 @@ import { useLanguage } from "../../components/context/LanguageContext";
 
 import "./MainPageStyle.css";
 import section1Image from "../../assets/cabin.png";
+import logo from "../../assets/logo.png";
 import Footer from "../../components/footer/Footer";
 
 // Swiper React components
@@ -98,7 +99,9 @@ const MainPage = () => {
       <section className="section-1">
         <img src={section1Image} alt="cabin" className="image-cabin" />
         <nav className="navigation-menu">
-          <h4 className="logo">{t("logo")}</h4>
+          <Link to="/">
+            <img src={logo} alt="Propify Logo" className="logo-img" />
+          </Link>
           <ul className="nav-links">
             <li className="language">
               <button onClick={handleLanguageToggle}>

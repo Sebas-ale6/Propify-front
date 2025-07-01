@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import handleRole from "../utils/handleRole.js"
 
 import Header from "../components/header/Header.jsx";
 import Footer from "../components/footer/Footer";
@@ -7,6 +8,7 @@ import Footer from "../components/footer/Footer";
 import "../styles/myPropertiesStyle.css";
 
 const MyProperties = () => {
+  const [roleState, setRoleState] = useState("client");
   const [properties, setProperties] = useState([]);
 
   const navigate = useNavigate();
@@ -49,6 +51,8 @@ const MyProperties = () => {
       .catch((err) => console.error(err));
   }, []);
 
+  useEffect( () =>{ handleRole("owner") }, [ roleState] )
+
   const handleDelete = async (id) => {
     const confirmacion = window.confirm(
       "¿Seguro que querés borrar la propiedad?"
@@ -77,7 +81,7 @@ const MyProperties = () => {
   };
 
   return (
-    <div>
+    <div className="page-container">
       <Header />
       <div className="encabezado-propiedades">
         <h1 className="titulo-propiedades">Mis Propiedades</h1>

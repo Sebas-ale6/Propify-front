@@ -115,6 +115,7 @@ const AddProperty = () => {
 
   return (
     <div className="form-container">
+      <Header />
       <h1 className="form-title">Subir nueva propiedad</h1>
       <form onSubmit={handleSubmit} className="formulario">
         <div className="form-group">
@@ -311,6 +312,7 @@ const AddProperty = () => {
           <button type="submit">Subir propiedad</button>
         </div>
       </form>
+      <Footer />
     </div>
   );
 };

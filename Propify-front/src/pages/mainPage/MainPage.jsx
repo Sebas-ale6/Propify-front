@@ -109,7 +109,7 @@ const MainPage = () => {
             </li>
             {tokenState ? (
               <li className="Log-out">
-                <button onClick={LogOut}>{t("cerrar sesion")}</button>
+                 <button className="nav-log-out" onClick={LogOut}>{t("Cerrar Sesión")}</button>
               </li>
             ) : (
               <>
@@ -262,7 +262,7 @@ const MainPage = () => {
         </div>
       </section>
 
-            <section className="section-2">
+      <section className="section-2">
         <h2 className="section-title">{t("topPropertiesTitle")}</h2>
         <h3 className="caption">{t("topPropertiesCaption")}</h3>
         <Swiper

@@ -186,7 +186,7 @@
   
 .section-title {
     font-family: 'Merriweather', serif;
-    font-size: 2.5rem;
+    font-size: 2.5rem !important;
     color: #292E1E;
 }
   
@@ -268,7 +268,7 @@
 
 .swiper-pagination {
   bottom: -3px !important;
-} */
+} 
 
 /* --------------- SECTION - 3 --------------- */
 
@@ -391,4 +391,9 @@
   height : 250px; 
   object-fit: cover;
   border-radius: 10px;
+}
+
+.language {
+  transform: translateY(8%);
+ 
 }

@@ -16,15 +16,14 @@ const SearchFilters = ({ onApplyFilters }) => {
 
   return (
     <div className="filters-container">
-      <div className="filter-item">
-        <label>
+      <div className="filter-item checkbox-item">
         <input
           type="checkbox"
           checked={pool}
           onChange={(e) => setPool(e.target.checked)}
           id="pool-checkbox"
         />
-        Pileta</label>
+        <label htmlFor="pool-checkbox">Pileta</label>
       </div>
 
       <div className="filter-item">
@@ -46,7 +45,7 @@ const SearchFilters = ({ onApplyFilters }) => {
             }
           }}
         />
-        
+
       </div>
 
       <div className="filter-item">

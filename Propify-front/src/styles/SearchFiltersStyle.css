@@ -1,62 +1,95 @@
 .filters-container {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
   align-items: flex-end;
-  background-color: #f9f9f9;
+  gap: 1rem;
+  background-color: #fff;
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid #ddd;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  margin: 1rem auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e0e0e0;
+  max-width: 800px;
+  width: fit-content;
+  flex-wrap: wrap;
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 0.2rem;
+  font-size: 0.95rem;
+  min-width: 120px;
 }
 
 .filter-item {
   display: flex;
   flex-direction: column;
   font-size: 0.95rem;
-  color: #333;
-  min-width: 150px;
+  color: #444;
+  min-width: 140px;
 }
 
 .filter-item label {
   margin-bottom: 0.4rem;
-  font-weight: 500;
+  font-weight: 600;
+  color: #333;
 }
 
-input[type="number"],
-input[type="checkbox"] {
-  padding: 0.4rem;
+input[type="number"] {
+  padding: 0.5rem 0.8rem;
   font-size: 0.95rem;
   border: 1px solid #ccc;
-  border-radius: 4px;
-  transition: border-color 0.3s;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: all 0.2s ease;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
 }
 
 input[type="number"]:focus {
-  border-color: #4a3629;
+  border-color: #8d6834;
+  background-color: #fff;
   outline: none;
+  box-shadow: 0 0 0 2px rgba(141, 104, 52, 0.2);
 }
 
-input[type="checkbox"] {
-  margin-right: 0.5rem;
+.checkbox-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  min-width: 80px;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
-.filters-container input[type="checkbox"] + label {
-  display: inline;
-  font-weight: normal;
+.checkbox-item input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  margin-bottom: 0.3rem;
+  accent-color: #8d6834;
+  cursor: pointer;
+}
+
+.checkbox-item label {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
 }
 
 button {
-  padding: 0.6rem 1.4rem;
+  padding: 0.6rem 1.2rem;
   font-size: 0.95rem;
-  font-weight: bold;
-  background-color: #8d6834;
+  font-weight: 600;
+  background-color: #6d4917;
   color: #fff;
   border: none;
   border-radius: 6px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
 button:hover {
-  background-color: #36281f;
+  background-color: #8d6834;
+  transform: translateY(-1px);
 }

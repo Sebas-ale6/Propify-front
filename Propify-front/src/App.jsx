@@ -16,6 +16,7 @@ import MyReservations from "./pages/MyReservations";
 import ShowReservationProperty from "./pages/ShowReservationProperty";
 import IntroducirMail from "./pages/cambioclave/IntroducirMail";
 import ChangePassword from "./pages/cambioclave/ChangePassword";
+import NotFound from "./pages/NotFound"; 
 const App = () => {
   const router = createBrowserRouter([
     {
@@ -72,6 +73,10 @@ const App = () => {
     {
       element: <ChangePassword/>,
      path: "/Recover-Password/Confirm",
+    },
+    {
+      element: <NotFound />,
+      path: "*",
     },
 
   ]);

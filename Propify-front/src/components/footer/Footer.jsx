@@ -9,9 +9,9 @@ const Footer = () => {
    
         <div className="footer-column">
           <Link to="/">
-            <img src={logo} alt="Propify Logo" className="logo-img" />
+            <img src={logo} alt="Propify Logo" className="logo-footer" />
           </Link>
-          <p>emailayuda@propify.com.ar</p>
+          <p className="footer-email">ppropify@gmail.com</p>
         </div>
 
         <div className="footer-column">

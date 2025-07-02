@@ -88,27 +88,40 @@ const SearchResults = () => {
           <div className="property-list">
             {filtered.map((prop) => (
               <div key={prop.id} className="property-card">
-                <h3>
-                  {prop.type} - {prop.city}
-                </h3>
-                <p>{prop.description}</p>
-                <p>Precio por noche: ${prop.pricePerNight}</p>
-                <p>Capacidad: {prop.maxTenants} personas</p>
-                <button
-                  className="reserve-button"
-                  onClick={() =>
-                    navigate("/payment", {
-                      state: {
-                        property: prop,
-                        checkin,
-                        checkout,
-                        travelers: guests,
-                      },
-                    })
-                  }
-                >
-                  Reservar
-                </button>
+                <div className="property-header">
+                  <h3>{prop.type} - {prop.city}</h3>
+                </div>
+
+                {prop.imageNames && prop.imageNames.length > 0 ? (
+                  <img
+                    src={`http://localhost:5021/api/image/${prop.imageNames[0]}`}
+                    alt="Imagen de propiedad"
+                    className="property-image"
+                  />
+                ) : (
+                  <div className="property-image property-placeholder">Sin imagen</div>
+                )}
+
+                <div className="property-info">
+                  <p>{prop.description}</p>
+                  <p>Precio por noche: ${prop.pricePerNight}</p>
+                  <p>Capacidad: {prop.maxTenants} personas</p>
+                  <button
+                    className="reserve-button"
+                    onClick={() =>
+                      navigate("/payment", {
+                        state: {
+                          property: prop,
+                          checkin,
+                          checkout,
+                          travelers: guests,
+                        },
+                      })
+                    }
+                  >
+                    Reservar
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -121,6 +134,7 @@ const SearchResults = () => {
 
       <Footer />
     </div>
+
   );
 };
 export default SearchResults;

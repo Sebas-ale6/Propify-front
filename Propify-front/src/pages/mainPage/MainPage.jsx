@@ -109,7 +109,7 @@ const MainPage = () => {
             </li>
             {tokenState ? (
               <li className="Log-out">
-                 <button className="nav-log-out" onClick={LogOut}>{t("Cerrar Sesión")}</button>
+                <button className="nav-log-out" onClick={LogOut}>{t("Cerrar Sesión")}</button>
               </li>
             ) : (
               <>
@@ -156,13 +156,36 @@ const MainPage = () => {
               </option>
               {[
                 "Bariloche",
-                "Córdoba",
-                "Mar del Plata",
                 "CABA",
                 "Carlos Paz",
-                "Rosario",
                 "El Bolsón",
                 "El Calafate",
+                "Esquel",
+                "Gualeguaychú",
+                "Guaymallén",
+                "La Plata",
+                "Las Heras",
+                "Mar del Plata",
+                "Merlo",
+                "Miramar",
+                "Necochea",
+                "Paraná",
+                "Pinamar",
+                "Posadas",
+                "Puerto Iguazú",
+                "Puerto Madryn",
+                "Rosario",
+                "San Rafael",
+                "San Salvador de Jujuy",
+                "Santa Rosa",
+                "Tafí Viejo",
+                "Termas de Río Hondo",
+                "Tigre",
+                "Trelew",
+                "Ushuaia",
+                "Villa Gesell",
+                "Villa la Angostura",
+                "Villa María",
               ].map((city) => (
                 <option key={city} value={city.toLowerCase()}>
                   {city}

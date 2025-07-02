@@ -165,10 +165,7 @@ const MyProperties = () => {
                     <strong>País:</strong> {prop.country}
                   </p>
                   <p>
-                    <strong>Provincia:</strong> {prop.province}
-                  </p>
-                  <p>
-                    <strong>Ciudad:</strong> {prop.city}
+                    <strong>Ciudad:</strong> {prop.province}
                   </p>
                   <p>
                     <strong>Calle:</strong> {prop.street}

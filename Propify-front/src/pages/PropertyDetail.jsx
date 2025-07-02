@@ -20,8 +20,9 @@ const PropertyDetail = () => {
       fetch(`http://localhost:5021/api/property/${id}`)
         .then((res) => res.json())
         .then((data) => setProperty(data))
-        .catch((err) => console.error("Error:", err));}
-    }, [id, property]);
+        .catch((err) => console.error("Error:", err));
+    }
+  }, [id, property]);
 
   if (!property) return <p>Cargando propiedad...</p>;
   const handleReserve = () => {
@@ -42,13 +43,18 @@ const PropertyDetail = () => {
       <main className="property-detail">
         <h1>{property.type?.toUpperCase()} - {property.city}</h1>
         <div className="property-content">
-          <img
-            src="/images/placeholder.png" // Reemplazá por la imagen real 
-            alt="Foto propiedad"
-            className="property-image"
-          />
+          {property.imageNames && property.imageNames.length > 0 ? (
+            <img
+              src={`http://localhost:5021/api/image/${property.imageNames[0]}`}
+              alt="Foto propiedad"
+              className="property-image"
+            />
+          ) : (
+            <div className="property-image property-placeholder">Sin imagen</div>
+          )}
+
           <div className="property-info">
-            <p>{property.description}</p>
+            <div className="description-highlight">{property.description}</div>
             <p><strong>Precio por noche:</strong> ${property.pricePerNight}</p>
             <p><strong>Capacidad:</strong> {property.maxTenants} personas</p>
             <p><strong>Habitaciones:</strong> {property.room}</p>

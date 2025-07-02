@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/addPropertyStyle.css";
+import { useLanguage } from "../components/context/LanguageContext";
 
 import Header from "../components/header/Header.jsx";
 import Footer from "../components/footer/Footer";
@@ -9,6 +10,7 @@ const AddProperty = () => {
   const navigate = useNavigate();
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const token = localStorage.getItem("token");
+  const { t, language, setLanguage } = useLanguage();
 
   const [imageFile, setImageFile] = useState(null);
 
@@ -60,7 +62,7 @@ const AddProperty = () => {
         body: JSON.stringify(body),
       });
 
-      if (!res.ok) {
+      if (!res.ok && res.status < 500) {
         const errorData = await res.json();
         console.error("Error al crear propiedad:", errorData);
         throw new Error(errorData.message || "Error al subir propiedad");
@@ -173,7 +175,7 @@ const AddProperty = () => {
           />
         </div>
 
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="province">Provincia</label>
           <input
             id="province"
@@ -193,6 +195,34 @@ const AddProperty = () => {
             onChange={handleChange}
             required
           />
+        </div>*/}
+
+        <div>
+          <select
+            id="province"
+            value={formData.province}
+            onChange={handleChange}
+            name="province"
+            required
+          >
+            <option value="" disabled hidden>
+              {t("Lugar")}
+            </option>
+            {[
+              "Bariloche",
+              "Córdoba",
+              "Mar del Plata",
+              "CABA",
+              "Carlos Paz",
+              "Rosario",
+              "El Bolsón",
+              "El Calafate",
+            ].map((city) => (
+              <option key={city} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="form-group">

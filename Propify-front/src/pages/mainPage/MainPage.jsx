@@ -152,20 +152,17 @@ const MainPage = () => {
               }}
             >
               <option value="" disabled hidden>
-                {t("selectPlace")}
+                {t("Lugar")}
               </option>
               {[
                 "Bariloche",
                 "Córdoba",
-                "Buenos Aires",
                 "Mar del Plata",
                 "CABA",
                 "Carlos Paz",
                 "Rosario",
                 "El Bolsón",
                 "El Calafate",
-                "Mendoza",
-                "Tierra del Fuego",
               ].map((city) => (
                 <option key={city} value={city.toLowerCase()}>
                   {city}

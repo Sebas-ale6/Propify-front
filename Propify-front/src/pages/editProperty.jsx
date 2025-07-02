@@ -16,7 +16,6 @@ const EditProperty = () => {
     pricePerNight: "",
     country: "Argentina",
     province: "",
-    city: "",
     street: "",
     maxTenants: "",
     description: "",
@@ -67,6 +66,7 @@ const EditProperty = () => {
         setImageNames(data.imageNames || []);
         setLoading(false);
       } catch (error) {
+        console.log(error);
         alert("Error al cargar la propiedad: " + error.message);
         setLoading(false);
       }
@@ -105,8 +105,8 @@ const EditProperty = () => {
         },
         body: JSON.stringify(updatedData),
       });
-
-      if (!res.ok) throw new Error("No se pudo editar la propiedad");
+      console.log(res);
+      if (!res.ok && res.status < 500) throw new Error("No se pudo editar la propiedad");
 
       if (selectedFiles.length > 0) {
         for (const file of selectedFiles) {
@@ -175,8 +175,6 @@ const EditProperty = () => {
           ["squareMeters", "Metros cuadrados"],
           ["pricePerNight", "Precio por noche", "number"],
           ["country", "País", "text", true],
-          ["province", "Provincia"],
-          ["city", "Ciudad"],
           ["street", "Calle"],
           ["maxTenants", "Máximo de inquilinos", "number"],
           ["description", "Descripción", "text", false, "descripcion"],
@@ -199,6 +197,34 @@ const EditProperty = () => {
             </div>
           )
         )}
+        <div className="form-group">
+          <label>Provincia</label>
+          <select
+            id="province"
+            value={formData.province}
+            onChange={handleChange}
+            name="province"
+            required
+          >
+            <option value="" disabled hidden>
+              Seleccioná una provincia
+            </option>
+            {[
+              "Bariloche",
+              "Córdoba",
+              "Mar del Plata",
+              "CABA",
+              "Carlos Paz",
+              "Rosario",
+              "El Bolsón",
+              "El Calafate",
+            ].map((city) => (
+              <option key={city} value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
+        </div>
 
         <div className="form-group">
           <label>¿Tiene pileta?</label>

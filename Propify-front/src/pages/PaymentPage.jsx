@@ -46,6 +46,7 @@ const PaymentPage = () => {
         state: 2,
         paymentMethod, 
       };
+      console.log(body)
 
       const response = await fetch("http://localhost:5021/api/booking", {
         method: "POST",
@@ -55,7 +56,7 @@ const PaymentPage = () => {
         },
         body: JSON.stringify(body),
       });
-
+      console.log(response)
       if (!response.ok) {
         const errorText = await response.text();
         throw new Error(errorText || "Error al crear la reserva");
@@ -113,16 +114,16 @@ const PaymentPage = () => {
 
             <div className="payment-details">
               <label>Número de tarjeta</label>
-              <input className="input" type="text" placeholder="XXXX XXXX XXXX XXXX" />
+              <input className="input" type="tel" placeholder="XXXX XXXX XXXX XXXX" />
 
               <div className="row">
                 <div style={{ flex: 1 }}>
                   <label>Código de seguridad</label>
-                  <input className="input" type="text" placeholder="123" />
+                  <input className="input" type="number" placeholder="123" />
                 </div>
                 <div style={{ flex: 1 }}>
                   <label>Fecha de vencimiento</label>
-                  <input className="input" type="text" placeholder="MM/AA" />
+                  <input className="input" type="date" placeholder="MM/AA" />
                 </div>
               </div>
 
@@ -141,7 +142,7 @@ const PaymentPage = () => {
           <h3 className="section-title">Resumen</h3>
 
           <div className="summary-info">
-            {property?.type} en {property?.province} ({property?.city})<br />
+            {property?.type} en {property?.province}<br />
             Desde <strong>{checkin}</strong> hasta <strong>{checkout}</strong><br />
             {travelers} viajero/s
           </div>

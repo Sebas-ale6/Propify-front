@@ -2,13 +2,20 @@ import usersApi from "../../Api/userApi";
 
 const UsersList = ({ users, role, callback }) => {
   const saveUser = async (id) => {
-    window.localStorage.setItem("userToEdit", id)
-    callback()
-  }
+    window.localStorage.setItem("userToEdit", id);
+    callback();
+  };
   const deleteUser = async (id) => {
     const token = window.localStorage.getItem("token");
-    await usersApi.delete(id, role, token);
-    window.location.reload();
+    const userConfirm = confirm(
+      `Seguro que deseas eliminar al usuario de id:${id}?`
+    );
+    if (userConfirm) {
+      await usersApi.delete(id, role, token);
+      window.location.reload();
+    } else {
+      alert("Eliminacion cancelada");
+    }
   };
 
   return (
@@ -19,6 +26,7 @@ const UsersList = ({ users, role, callback }) => {
             <th style={headerStyle}>Nombre</th>
             <th style={headerStyle}>Apellido</th>
             <th style={headerStyle}>Email</th>
+            <th style={headerStyle}>ID</th>
             {/*<th style={headerStyle}>{headerField}</th>*/}
             <th style={headerStyle}>Acciones</th>
           </tr>
@@ -41,9 +49,16 @@ const UsersList = ({ users, role, callback }) => {
                 <td style={tdStyle}>{user.name}</td>
                 <td style={tdStyle}>{user.surname}</td>
                 <td style={tdStyle}>{user.email}</td>
+                <td style={tdStyle}>{user.id}</td>
                 {/*<td style={tdStyle}>{field}</td>*/}
                 <td style={tdStyle}>
-                  <button onClick={() => {saveUser(user.id)}}>Editar</button>
+                  <button
+                    onClick={() => {
+                      saveUser(user.id);
+                    }}
+                  >
+                    Editar
+                  </button>
                   <button
                     onClick={() => deleteUser(user.id)}
                     style={deleteButtonStyle}
@@ -80,8 +95,8 @@ const deleteButtonStyle = {
   padding: "8px 12px",
   cursor: "pointer",
   marginLeft: "8px",
-  ':hover': {
-    backgroundColor: '#CC0000',
+  ":hover": {
+    backgroundColor: "#CC0000",
   },
 };
 

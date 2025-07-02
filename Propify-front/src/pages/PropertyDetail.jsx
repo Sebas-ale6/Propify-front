@@ -1,27 +1,40 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 import "../styles/PropertyDetailStyle.css";
-import { useNavigate } from "react-router-dom";
+
 
 const PropertyDetail = () => {
   const { id } = useParams();
-  const [property, setProperty] = useState(null);
+  const location = useLocation();
   const navigate = useNavigate();
+  const state = location.state;
+  const [property, setProperty] = useState(state?.property || null);
+  const checkin = state?.checkin;
+  const checkout = state?.checkout;
+  const travelers = state?.travelers;
 
   useEffect(() => {
-    fetch(`http://localhost:5021/api/property/${id}`)
-      .then((res) => res.json())
-      .then((data) => setProperty(data))
-      .catch((err) => console.error("Error:", err));
-  }, [id]);
+    if (!property) {
+      fetch(`http://localhost:5021/api/property/${id}`)
+        .then((res) => res.json())
+        .then((data) => setProperty(data))
+        .catch((err) => console.error("Error:", err));}
+    }, [id, property]);
 
   if (!property) return <p>Cargando propiedad...</p>;
-   const handleReserve = () => {
-    navigate(`/reservation/${id}`, { state: property }); // <-- Navegación con datos
+  const handleReserve = () => {
+    navigate("/payment", {
+      state: {
+        property,
+        checkin,
+        checkout,
+        travelers,
+      },
+    });
   };
-
+  if (!property) return <p>Cargando propiedad...</p>;
   return (
     <div className="property-detail-page">
       <Header />
@@ -44,7 +57,7 @@ const PropertyDetail = () => {
             <p><strong>Provincia:</strong> {property.province}</p>
           </div>
           <div className="reserve-side">
-           <button className="reserve-button" onClick={handleReserve}>
+            <button className="reserve-button" onClick={handleReserve}>
               Reservar
             </button>
           </div>

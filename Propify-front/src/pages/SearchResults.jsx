@@ -109,7 +109,7 @@ const SearchResults = () => {
                   <button
                     className="reserve-button"
                     onClick={() =>
-                      navigate("/payment", {
+                      navigate(`/property/${prop.id}`, {
                         state: {
                           property: prop,
                           checkin,
@@ -121,6 +121,7 @@ const SearchResults = () => {
                   >
                     Reservar
                   </button>
+
                 </div>
               </div>
             ))}

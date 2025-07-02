@@ -119,7 +119,7 @@ const SearchResults = () => {
                       })
                     }
                   >
-                    Reservar
+                    Ver más
                   </button>
 
                 </div>

@@ -19,10 +19,10 @@
 
 .property-detail h1 {
   font-size: 2.2rem;
-  color: #4a3629;
+  color: #292e1e;
   margin-bottom: 2rem;
   text-transform: uppercase;
-  border-bottom: 2px solid #e0e0e0;
+  border-bottom: 2px solid #ede3d6;
   padding-bottom: 0.5rem;
 }
 
@@ -60,12 +60,12 @@
 
 
 .property-info p strong {
-  color: #4a3629;
+  color: #292e1e;
 }
 
 .host-info {
-  background-color: #f2f2f2;
-  border-left: 6px solid #4a3629;
+  background-color: #ede3d6;
+  border-left: 6px solid #065511;
   padding: 1.2rem 2rem;
   margin-top: 2rem;
   border-radius: 6px;
@@ -76,7 +76,7 @@
 .extras {
   margin-top: 2rem;
   padding: 1rem 1.5rem;
-  background-color: #fdf6f1;
+  background-color: #ede3d6;
   border: 1px dashed #4a3629;
   border-radius: 8px;
   font-size: 0.95rem;
@@ -112,7 +112,7 @@
 }
 
 .description-highlight {
-  background-color: #fef7e5;
+  background-color: #ede3d6;
   border-left: 5px solid #065511;
   padding: 1rem 1.5rem;
   border-radius: 6px;

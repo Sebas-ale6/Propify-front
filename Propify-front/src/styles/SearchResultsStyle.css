@@ -66,7 +66,7 @@
 .reserve-button {
   margin-top: 1rem;
   background-color: #146314;
-  color: white;
+  color: ede3d6;
   border: none;
   padding: 0.5rem 1.2rem;
   border-radius: 6px;
@@ -101,30 +101,30 @@
 .results-summary {
   text-align: center;
   padding: 2rem;
-  background-color: #f5f3eb;
-  border-bottom: 1px solid #ddd;
+  background-color: #ede3d6;
+  border-bottom: 1px solid #c7c0b6;
 }
 
 .results-summary h2 {
   font-size: 2rem;
   margin-bottom: 0.5rem;
-  color: #4a3629;
+  color: #292e1e;
 }
 
 .results-summary p {
   font-size: 1rem;
-  color: #333;
+  color: #292e1e;
 }
 .property-price {
   font-size: 1rem;
-  color: #333;
+  color: #292e1e;
   margin: 0.5rem 0;
 }
 
 .price-highlight {
   font-weight: bold;
-  color: #8d6834;
-  background-color: #fff4e0;
+  color: #0e4a0e;
+  background-color: #ede3d6;
   padding: 0.2rem 0.5rem;
   border-radius: 6px;
   font-size: 1.1rem;

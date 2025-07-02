@@ -59,7 +59,7 @@
 .property-info p {
   font-size: 0.95rem;
   color: #444;
-  margin: 0.5rem 0;
+  margin: 0.2rem 0; 
   text-align: left;
 }
 
@@ -114,4 +114,18 @@
 .results-summary p {
   font-size: 1rem;
   color: #333;
+}
+.property-price {
+  font-size: 1rem;
+  color: #333;
+  margin: 0.5rem 0;
+}
+
+.price-highlight {
+  font-weight: bold;
+  color: #8d6834;
+  background-color: #fff4e0;
+  padding: 0.2rem 0.5rem;
+  border-radius: 6px;
+  font-size: 1.1rem;
 }

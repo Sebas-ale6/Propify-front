@@ -103,8 +103,8 @@ const SearchResults = () => {
                 )}
 
                 <div className="property-info">
-                  <p>{prop.description}</p>
-                  <p>Precio por noche: ${prop.pricePerNight}</p>
+                  <p className="property-price"> Precio por noche: <span className="price-highlight">${prop.pricePerNight}</span>
+                  </p>
                   <p>Capacidad: {prop.maxTenants} personas</p>
                   <button
                     className="reserve-button"

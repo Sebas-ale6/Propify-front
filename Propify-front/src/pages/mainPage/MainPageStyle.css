@@ -185,13 +185,13 @@
 }
   
 .section-title {
-    font-family: 'Merriweather', serif;
+    
     font-size: 2.5rem !important;
     color: #292E1E;
 }
   
 .caption {
-    font-family: 'Open Sans', sans-serif;
+   
     font-size: 1.1rem;
     color: #555;
     font-weight: 300;
@@ -279,13 +279,11 @@
 
 
 .section-3-title {
-  font-family: 'Merriweather', serif;
   font-size: 2.5rem;
   color: #292E1E;
 }
 
 .section-3-caption {
-  font-family: 'Open Sans', sans-serif;
   font-size: 1.1rem;
   color: #555;
   font-weight: 300;

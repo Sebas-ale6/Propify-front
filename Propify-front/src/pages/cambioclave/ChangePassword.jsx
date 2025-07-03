@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import usersApi from '../../Api/userApi';
+import usersApi from '../../api/userApi';
 import "../../styles/ChangePassword.css";
 import logo from '../../assets/logo.png';
 import { Link } from "react-router-dom";

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import emailjs from "@emailjs/browser";
 import env from "../../utils/enviroments";
-import usersApi from "../../Api/userApi";
+import usersApi from "../../api/userApi";
 import "../../styles/IntroducirMail.css";
 import logo from '../../assets/logo.png';
 import { Link } from "react-router-dom";

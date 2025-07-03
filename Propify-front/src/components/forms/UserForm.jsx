@@ -1,6 +1,6 @@
-import Auth from "../../Api/auth.js";
+import Auth from "../../api/auth.js";
 import { useEffect, useState } from "react";
-import usersApi from "../../Api/userApi.js";
+import usersApi from "../../api/userApi.js";
 
 const UserForm = ({ type, role }) => {
 

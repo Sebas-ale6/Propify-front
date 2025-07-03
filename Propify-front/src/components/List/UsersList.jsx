@@ -1,4 +1,4 @@
-import usersApi from "../../Api/userApi";
+import usersApi from "../../api/userApi";
 
 const UsersList = ({ users, role, callback }) => {
   const saveUser = async (id) => {

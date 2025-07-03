@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "../buttons/Button";
 import { useLanguage } from "../context/LanguageContext";
-import Auth from "../../Api/auth";
+import Auth from "../../api/auth";
 import { useNavigate } from "react-router-dom";
 import handleRole from "../../utils/handleRole";
 import SysAdmin from "../../pages/SysAdmin";

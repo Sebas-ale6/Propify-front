@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
-import UsersList from "../components/List/UsersList";
-import usersApi from "../Api/userApi";
+import UsersList from "../components/list/UsersList";
+import usersApi from "../api/userApi";
 import { useLanguage } from "../components/context/LanguageContext";
 import UserForm from "../components/forms/UserForm";
 import logo from "../assets/logo.png";

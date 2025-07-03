@@ -28,8 +28,21 @@ const usersApi = {
     });
   },
 
-  update: async (id, body, token) => {
-    
+  update: async (id, body, token, role) => {
+    try {
+      const response = await fetch(`${API_URL}/${role}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(body),
+      });
+      if (!response.ok) throw new Error("Error al actualizar el usuario");
+    } catch (error) {
+      console.log(error);
+      alert("Error al actualizar el usuario")
+    }
   },
 
   delete: async (id, role, token) => {

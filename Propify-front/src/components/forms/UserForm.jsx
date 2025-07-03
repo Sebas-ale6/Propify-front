@@ -56,9 +56,7 @@ const UserForm = ({ type, role }) => {
      try {
       const token = window.localStorage.getItem("token");
       const idUserEdited = parseInt(window.localStorage.getItem("userToEdit"))
-      await usersApi.delete(idUserEdited, role, token);
-      await Auth.register(formData, role, token);
-      window.localStorage.removeItem("userToEdit")
+      await usersApi.update(idUserEdited,formData, token, role);
     } catch (error) {
       alert("Error al cargar el usuario");
     }
@@ -159,11 +157,7 @@ const UserForm = ({ type, role }) => {
           <option value={role}>{role}</option>
         </select>
       ) : (
-        <select onChange={handleChange} name="role" defaultValue={role} style={selectStyle}>
-          <option value="client">Cliente</option>
-          <option value="owner">Propietario</option>
-          <option value="sysAdmin">SysAdmin</option>
-        </select>
+        null
       )}
 
       {role === "client" ? null : (

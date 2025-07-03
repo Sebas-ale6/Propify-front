@@ -118,7 +118,10 @@ const SysAdmin = () => {
             {["client", "owner", "sysAdmin"].map((role) => (
               <button
                 key={role}
-                onClick={() => setRoleState(role)}
+                onClick={() => {
+                  setUserDataFilterState([]);
+                  setRoleState(role);
+                }}
                 style={{
                   padding: "10px 20px",
                   backgroundColor: roleState === role ? "#99CCFF" : "#FFFFFF",

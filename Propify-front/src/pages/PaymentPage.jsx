@@ -57,7 +57,7 @@ const PaymentPage = () => {
         body: JSON.stringify(body),
       });
       console.log(response)
-      if (!response.ok) {
+      if (!response.ok && response.status < 500) {
         const errorText = await response.text();
         throw new Error(errorText || "Error al crear la reserva");
       }

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "../styles/MyReservations.css";
+import "../styles/MyReservations.css"; // Asegurate de tener este archivo de estilos
 import Header from "../components/header/Header";
 import Footer from "../components/footer/Footer";
 
@@ -66,34 +66,20 @@ const MyReservations = () => {
         const data = await res.json();
         console.log("Reservas recibidas:", data);
 
-        const reservasDetalladas = await Promise.all(
-          data.map(async (reserva) => {
-            const resProp = await fetch(
-              `http://localhost:5021/api/property/${reserva.propertyId}`,
-              {
-                headers: {
-                  Authorization: `Bearer ${token}`,
-                },
-              }
-            );
+        const reservasDetalladas = data.map((reserva) => {
+          const start = new Date(reserva.checkInDate);
+          const end = new Date(reserva.checkOutDate);
+          const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+          const subtotal = reserva.property.pricePerNight * nights;
+          const taxes = Math.floor(subtotal * 0.1);
+          const total = subtotal + taxes;
 
-            const property = await resProp.json();
-
-            const start = new Date(reserva.checkInDate);
-            const end = new Date(reserva.checkOutDate);
-            const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-            const subtotal = property.pricePerNight * nights;
-            const taxes = Math.floor(subtotal * 0.1);
-            const total = subtotal + taxes;
-
-            return {
-              ...reserva,
-              property,
-              nights,
-              totalPrice: total,
-            };
-          })
-        );
+          return {
+            ...reserva,
+            nights,
+            totalPrice: total,
+          };
+        });
 
         setReservations(reservasDetalladas);
       } catch (error) {
@@ -111,6 +97,7 @@ const MyReservations = () => {
     <div className="page-container">
       <Header />
       <h2 className="titulo-reservas">Mis Reservas</h2>
+
       {loading ? (
         <p className="form-message">Cargando tus reservas...</p>
       ) : reservations.length === 0 ? (
@@ -120,18 +107,6 @@ const MyReservations = () => {
           {reservations.map((reserva) => (
             <div key={reserva.id} className="reserva-card">
               <div className="card-reserva-encabezado">
-                <div className="img-reserva-placeholder">
-                  {reserva.property.imageNames?.length > 0 ? (
-                    <img
-                      src={`http://localhost:5021/api/image/${encodeURIComponent(reserva.property.imageNames[0])}`}
-                      alt="Imagen de propiedad"
-                      className="img-reserva"
-                      onError={() => console.log("Error al cargar imagen")}
-                    />
-                  ) : (
-                    <p>Sin imagen</p>
-                  )}
-                </div>
                 <div className="info-reserva">
                   <h3>{reserva.property.type}</h3>
                   <p>
@@ -180,4 +155,3 @@ const MyReservations = () => {
 };
 
 export default MyReservations;
-

@@ -57,11 +57,12 @@ select:focus {
   grid-column: span 2;
 }
 
-.form-actions {
+.form-actions1 {
   grid-column: span 2;
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
+  transform: translate(-10%, -100%);
 }
 
 button[type="submit"] {
@@ -88,7 +89,9 @@ button[type="submit"]:hover {
 }
 
 .imagen-miniatura {
-  width: 150px;
+  width: 200px;
   border-radius: 8px;
   object-fit: cover;
+  transform:translateY(-50%);
 }
+

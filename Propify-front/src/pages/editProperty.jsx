@@ -158,17 +158,6 @@ const EditProperty = () => {
       <Header />
       <h1 className="form-title">Editar Propiedad</h1>
 
-      <div className="imagen-galeria">
-        {imageNames.map((name, idx) => (
-          <img
-            key={idx}
-            src={`http://localhost:5021/api/image/${name}`}
-            alt={`Imagen ${idx + 1}`}
-            className="imagen-miniatura"
-          />
-        ))}
-      </div>
-
       <form onSubmit={handleSubmit} className="formulario">
         {[
           ["type", "Tipo"],
@@ -198,7 +187,7 @@ const EditProperty = () => {
           )
         )}
         <div className="form-group">
-          <label>Provincia</label>
+          <label>Lugar</label>
           <select
             id="province"
             value={formData.province}
@@ -274,10 +263,21 @@ const EditProperty = () => {
             onChange={(e) => setSelectedFiles([...e.target.files])}
           />
         </div>
+        <div className="imagen-galeria">
+        {imageNames.map((name, idx) => (
+          <img
+            key={idx}
+            src={`http://localhost:5021/api/image/${name}`}
+            alt={`Imagen ${idx + 1}`}
+            className="imagen-miniatura"
+          />
+        ))}
+      </div>
 
-        <div className="form-actions">
+        <div className="form-actions1">
           <button type="submit">Guardar cambios</button>
         </div>
+
       </form>
       <Footer />
     </div>

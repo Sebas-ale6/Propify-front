@@ -45,11 +45,12 @@ select:focus {
   grid-column: span 2;
 }
 
-.form-actions {
+.form-actions2 {
   grid-column: span 2;
   display: flex;
   justify-content: flex-end;
   margin-top: 10px;
+  transform: translate(-10%, -10%);
 }
 
 button[type="submit"] {
@@ -79,4 +80,8 @@ button[type="submit"]:hover {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+}
+
+.lugar {
+  transform: translate(25%, 65%);
 }

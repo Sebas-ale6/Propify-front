@@ -198,7 +198,7 @@ const AddProperty = () => {
         </div>*/}
 
         <div>
-          <select
+          <select className="lugar"
             id="province"
             value={formData.province}
             onChange={handleChange}
@@ -361,7 +361,7 @@ const AddProperty = () => {
           />
         </div>
 
-        <div className="form-actions">
+        <div className="form-actions2">
           <button type="submit">Subir propiedad</button>
         </div>
       </form>

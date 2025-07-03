@@ -39,7 +39,6 @@ const MyReservations = () => {
 
       if (!res.ok) throw new Error("Error al cancelar reserva");
 
-      // Filtrar la reserva cancelada del estado
       setReservations((prev) => prev.filter((r) => r.id !== id));
       alert("Reserva cancelada con éxito.");
     } catch (error) {
@@ -67,22 +66,34 @@ const MyReservations = () => {
         const data = await res.json();
         console.log("Reservas recibidas:", data);
 
-        const reservasDetalladas = data.map((reserva) => {
-          const start = new Date(reserva.checkInDate);
-          const end = new Date(reserva.checkOutDate);
-          const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
-          const subtotal = reserva.property.pricePerNight * nights;
-          const taxes = Math.floor(subtotal * 0.1);
-          const total = subtotal + taxes;
+        const reservasDetalladas = await Promise.all(
+          data.map(async (reserva) => {
+            const resProp = await fetch(
+              `http://localhost:5021/api/property/${reserva.propertyId}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
 
-          return {
+            const property = await resProp.json();
 
-            
-            ...reserva,
-            nights,
-            totalPrice: total,
-          };
-        });
+            const start = new Date(reserva.checkInDate);
+            const end = new Date(reserva.checkOutDate);
+            const nights = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+            const subtotal = property.pricePerNight * nights;
+            const taxes = Math.floor(subtotal * 0.1);
+            const total = subtotal + taxes;
+
+            return {
+              ...reserva,
+              property,
+              nights,
+              totalPrice: total,
+            };
+          })
+        );
 
         setReservations(reservasDetalladas);
       } catch (error) {
@@ -97,57 +108,71 @@ const MyReservations = () => {
   }, [token, email]);
 
   return (
-    <div className="reservation-form">
-      < Header/>
-      <h2 style={{ textAlign: "center" }}>Mis Reservas</h2>
-
+    <div className="page-container">
+      <Header />
+      <h2 className="titulo-reservas">Mis Reservas</h2>
       {loading ? (
         <p className="form-message">Cargando tus reservas...</p>
       ) : reservations.length === 0 ? (
         <p className="form-message error">No tenés reservas aún.</p>
       ) : (
-        reservations.map((reserva) => (
-          <div className="form-row" key={reserva.id}>
-            <div className="form-group full-width">
-              <label>
-                <strong>Reserva #{reserva.id}</strong>
-              </label>
-              <p>
-                <strong>Propiedad:</strong> {reserva.property.type} en{" "}
-                {reserva.property.city}, {reserva.property.province}
-              </p>
-              <p>
-                <strong>Descripción:</strong> {reserva.property.description}
-              </p>
-              <p>
-                <strong>Fecha de ingreso:</strong>{" "}
-                {reserva.checkInDate?.split("T")[0]}
-              </p>
-              <p>
-                <strong>Fecha de salida:</strong>{" "}
-                {reserva.checkOutDate?.split("T")[0]}
-              </p>
-              <p>
-                <strong>Noches:</strong> {reserva.nights}
-              </p>
-              <p>
-                <strong>Precio total:</strong> ${reserva.totalPrice}
-              </p>
-              <p>
-                <strong>Estado:</strong> {getStatusText(reserva.state)}
-              </p>
+        <div className="lista-reservas">
+          {reservations.map((reserva) => (
+            <div key={reserva.id} className="reserva-card">
+              <div className="card-reserva-encabezado">
+                <div className="img-reserva-placeholder">
+                  {reserva.property.imageNames?.length > 0 ? (
+                    <img
+                      src={`http://localhost:5021/api/image/${encodeURIComponent(reserva.property.imageNames[0])}`}
+                      alt="Imagen de propiedad"
+                      className="img-reserva"
+                      onError={() => console.log("Error al cargar imagen")}
+                    />
+                  ) : (
+                    <p>Sin imagen</p>
+                  )}
+                </div>
+                <div className="info-reserva">
+                  <h3>{reserva.property.type}</h3>
+                  <p>
+                    <strong>Ubicación:</strong> {reserva.property.city},{" "}
+                    {reserva.property.province}
+                  </p>
+                  <p>
+                    <strong>Descripción:</strong>{" "}
+                    {reserva.property.description}
+                  </p>
+                  <p>
+                    <strong>Ingreso:</strong>{" "}
+                    {reserva.checkInDate?.split("T")[0]}
+                  </p>
+                  <p>
+                    <strong>Salida:</strong>{" "}
+                    {reserva.checkOutDate?.split("T")[0]}
+                  </p>
+                  <p>
+                    <strong>Noches:</strong> {reserva.nights}
+                  </p>
+                  <p>
+                    <strong>Total:</strong> ${reserva.totalPrice}
+                  </p>
+                  <p>
+                    <strong>Estado:</strong> {getStatusText(reserva.state)}
+                  </p>
 
-              {reserva.state !== 3 && ( // Mostrar botón solo si no está cancelada
-                <button
-                  className="btn btn-danger mt-2"
-                  onClick={() => handleCancel(reserva.id)}
-                >
-                  Cancelar reserva
-                </button>
-              )}
+                  {reserva.state !== 3 && (
+                    <button
+                      className="cancelar-btn"
+                      onClick={() => handleCancel(reserva.id)}
+                    >
+                      Cancelar reserva
+                    </button>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        ))
+          ))}
+        </div>
       )}
       <Footer />
     </div>
@@ -155,3 +180,4 @@ const MyReservations = () => {
 };
 
 export default MyReservations;
+

@@ -98,7 +98,7 @@ const PaymentPage = () => {
                   checked={paymentMethod === "Efectivo"}
                   onChange={(e) => setPaymentMethod(e.target.value)}
                 />
-                Tarjeta
+                Efectivo
               </label>
               <label>
                 <input
